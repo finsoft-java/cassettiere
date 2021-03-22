@@ -6,21 +6,21 @@
       <th mat-header-cell *matHeaderCellDef>
         {{col.title}}
       </th>
-      <td mat-cell *matCellDef="let row">
+      <td mat-cell *matCellDef="let row; let rowNum = index;">
        
-        <div *ngIf="!row.isEdit">
+        <div *ngIf="rowNum !== editRowNumber">
             <div class="btn-edit" *ngIf="col.data === '$$actions'; spanHeader" >
-              <button mat-raised-button color="primary" (click)="beginEdit(row)">{{labels.edit}}</button>
-              <button mat-raised-button color="warn" (click)="deleteRow(row)">{{labels.delete}}</button>
+              <button mat-raised-button color="primary" (click)="beginEdit(rowNum)">{{labels.edit}}</button>
+              <button mat-raised-button color="warn" (click)="deleteRow(rowNum)">{{labels.delete}}</button>
             </div>
             <span #spanHeader>
               {{row[col.data]}}
             </span>
           </div>
-          <div *ngIf="row.isEdit">
+          <div *ngIf="rowNum === editRowNumber">
             <div class="btn-edit" *ngIf="col.data === '$$actions'; else dataField">
-                <button mat-raised-button color="primary" (click)="saveRow(row)">{{labels.save}}</button>
-                <button mat-raised-button color="warn" (click)="toggleRow(row);">{{labels.undo}}</button>
+                <button mat-raised-button color="primary" (click)="saveRow(rowNum)">{{labels.save}}</button>
+                <button mat-raised-button color="warn" (click)="undoChange(rowNum);">{{labels.undo}}</button>
             </div>
             <ng-template #dataField>
               <mat-form-field>

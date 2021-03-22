@@ -53,7 +53,8 @@ export class MatEditTableComponent<T> implements OnInit {
   matDataSource: MatTableDataSource<T> = new MatTableDataSource();
   displayedColumns: string[] = [];
 
-  oldRow: T | undefined;
+  editRowNumber = -1;
+  oldRow: T = {} as T;
 
   constructor() { }
 
@@ -69,33 +70,41 @@ export class MatEditTableComponent<T> implements OnInit {
   }
 
   createRow(): void {
-    const newRow: any = {};
+    const newRow = {} as T;
     this.dataSource.push(newRow);
-    this.beginEdit(newRow);
+    this.beginEdit(this.dataSource.length - 1);
   }
 
-  toggleRow(row: any): void {
-    row.isEdit = !row.isEdit;
+  beginEdit(rowNum: number): void {
+    this.editRowNumber = rowNum;
+    console.log('Editing row', rowNum);
+    const row = this.dataSource[rowNum];
+    Object.assign(this.oldRow, row);
   }
 
-  beginEdit(row: T): void {
-    this.oldRow = row;
-    this.toggleRow(row);
-  }
-
-  saveRow(row: T): void {
-    this.toggleRow(row);
+  saveRow(rowNum: number): void {
+    this.editRowNumber = -1;
+    const row = this.dataSource[rowNum];
     console.log('Emitting save row:', row);
     this.save.emit(row);
+    // TODO prima di aggiornare la tabella dovrei appurare che la webservice sia andata a buon fine
   }
 
-  deleteRow(row: T): void {
+  deleteRow(rowNum: number): void {
+    // TODO dovrei dare un messaggio di conferma
+    this.editRowNumber = -1;
+    const row = this.dataSource[rowNum];
     console.log('Emitting delete row:', row);
     this.delete.emit(row);
+    this.dataSource.splice(rowNum, 1);
+    this.matDataSource = new MatTableDataSource(this.dataSource);
+    // TODO prima di eliminare la tabella dovrei appurare che la webservice sia andata a buon fine
   }
 
-  undoChange(row: T): void {
-    this.toggleRow(row);
+  undoChange(rowNum: number): void {
+    this.editRowNumber = -1;
+    const row = this.dataSource[rowNum];
+    console.log('Undo', row, this.oldRow);
     Object.assign(row, this.oldRow);
 
     // ora dovrei ripristinare la vecchia riga
