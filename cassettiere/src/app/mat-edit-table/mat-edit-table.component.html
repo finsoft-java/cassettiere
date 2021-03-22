@@ -1,7 +1,9 @@
 <div>
+    <button mat-raised-button color="primary" style="float: right;margin: 0px 0px 20px 0px;" (click)="exportCsv()">{{labels.exportCsv}}</button>
+    <button mat-raised-button color="primary" style="float: right;margin: 0px 0px 20px 0px;" (click)="exportXlsx()">{{labels.exportXlsx}}</button>
     <button mat-raised-button color="primary" style="float: right;margin: 0px 0px 20px 0px;" (click)="createRow()">{{labels.add}}</button>
 </div>
-<table mat-table [dataSource]="matDataSource" class="mat-elevation-z8">
+<table mat-table [dataSource]="matDataSource" class="mat-elevation-z8" id="edittable">
     <ng-container matColumnDef="{{col.data}}" *ngFor="let col of columns">
       <th mat-header-cell *matHeaderCellDef>
         {{col.title}}

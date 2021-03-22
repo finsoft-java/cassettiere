@@ -10,12 +10,17 @@ export interface ColumnDefinition {
   type?: string;
 }
 
+/**
+ * Etichette sui buttons
+ */
 export interface MatEditTableLabels {
   add: string;
   edit: string;
   undo: string;
   save: string;
   delete: string;
+  exportXlsx: string;
+  exportCsv: string;
 }
 
 @Component({
@@ -35,7 +40,9 @@ export class MatEditTableComponent<T> implements OnInit {
     edit: 'Modifica',
     undo: 'Annulla',
     delete: 'Elimina',
-    save: 'Salva'
+    save: 'Salva',
+    exportXlsx: 'Export XLSX',
+    exportCsv: 'Export CSV'
   };
 
   @Input()
@@ -55,6 +62,7 @@ export class MatEditTableComponent<T> implements OnInit {
 
   editRowNumber = -1;
   oldRow: T = {} as T;
+  creating = false;
 
   constructor() { }
 
@@ -65,13 +73,15 @@ export class MatEditTableComponent<T> implements OnInit {
       title: '',
       type: ''
     });
-    this.matDataSource = new MatTableDataSource(this.dataSource);
+    this.matDataSource.data = this.dataSource;
     this.columns.forEach(x => this.displayedColumns.push(x.data));
   }
 
   createRow(): void {
     const newRow = {} as T;
     this.dataSource.push(newRow);
+    this.matDataSource.data = this.dataSource;
+    this.creating = true;
     this.beginEdit(this.dataSource.length - 1);
   }
 
@@ -87,6 +97,7 @@ export class MatEditTableComponent<T> implements OnInit {
     const row = this.dataSource[rowNum];
     console.log('Emitting save row:', row);
     this.save.emit(row);
+    this.creating = false;
     // TODO prima di aggiornare la tabella dovrei appurare che la webservice sia andata a buon fine
   }
 
@@ -97,18 +108,27 @@ export class MatEditTableComponent<T> implements OnInit {
     console.log('Emitting delete row:', row);
     this.delete.emit(row);
     this.dataSource.splice(rowNum, 1);
-    this.matDataSource = new MatTableDataSource(this.dataSource);
+    this.matDataSource.data = this.dataSource;
     // TODO prima di eliminare la tabella dovrei appurare che la webservice sia andata a buon fine
   }
 
   undoChange(rowNum: number): void {
-    this.editRowNumber = -1;
-    const row = this.dataSource[rowNum];
-    console.log('Undo', row, this.oldRow);
-    Object.assign(row, this.oldRow);
-
-    // ora dovrei ripristinare la vecchia riga
-
+    console.log('Undo');
+    if (this.creating) {
+      this.deleteRow(rowNum);
+    } else {
+      this.editRowNumber = -1;
+      const row = this.dataSource[rowNum];
+      Object.assign(row, this.oldRow);
+    }
+    this.creating = false;
   }
 
+  exportCsv(): void {
+    console.log('TODO');
+  }
+
+  exportXlsx(): void {
+    console.log('TODO');
+  }
 }
