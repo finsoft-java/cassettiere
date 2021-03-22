@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import * as XLSX from 'xlsx';
 
 /**
  * DataTable-like column definition structure
@@ -129,6 +130,9 @@ export class MatEditTableComponent<T> implements OnInit {
   }
 
   exportXlsx(): void {
-    console.log('TODO');
+    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(this.data);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Data');
+    XLSX.writeFile(wb, 'Export.xlsx');
   }
 }
