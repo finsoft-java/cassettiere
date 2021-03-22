@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { ColumnDefinition } from '../mat-edit-table/mat-edit-table.component';
+import { Area } from '../_models';
 
 @Component({
   selector: 'app-home',
@@ -8,40 +9,50 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class HomeComponent implements OnInit {
 
-  dataSource: MatTableDataSource<any>;
+  // Questi servono per la mat-table
+  dataSource: Area[] = [];
+  columns: ColumnDefinition[] = [
+    {
+      title: 'Codice',
+      data: 'codice',
+      type: 'text'
+    },
+    {
+      title: 'Descrizione',
+      data: 'descrizione',
+      type: 'text'
+    }
+  ];
 
   constructor() { }
 
-  ngOnInit() {
-    this.dataSource = new MatTableDataSource<any>(this.getData());
+  ngOnInit(): void {
+    this.dataSource = this.getData();
   }
 
-  getData() {
+  getData(): Area[] {
     return [
       {
-        area: 'M1',
+        codice: 'M1',
         descrizione: 'Area M1'
       },
       {
-        area: 'M2',
+        codice: 'M2',
         descrizione: 'Area M2'
       },
       {
-        area: 'M3',
+        codice: 'M3',
         descrizione: 'Area M3'
       },
       {
-        area: 'M5',
+        codice: 'M5',
         descrizione: 'Area M5'
       },
       {
-        area: 'M6',
+        codice: 'M6',
         descrizione: 'Area M6'
       },
     ];
   }
 
-  nuovaArea() {
-    console.log('TODO');
-  }
 }

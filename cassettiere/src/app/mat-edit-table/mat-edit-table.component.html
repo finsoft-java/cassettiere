@@ -1,0 +1,36 @@
+<div>
+    <button mat-raised-button color="primary" style="float: right;margin: 0px 0px 20px 0px;" (click)="createRow()">{{labels.add}}</button>
+</div>
+<table mat-table [dataSource]="matDataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="{{col.data}}" *ngFor="let col of columns">
+      <th mat-header-cell *matHeaderCellDef>
+        {{col.title}}
+      </th>
+      <td mat-cell *matCellDef="let row">
+       
+        <div *ngIf="!row.isEdit">
+            <div class="btn-edit" *ngIf="col.data === '$$actions'; spanHeader" >
+              <button mat-raised-button color="primary" (click)="beginEdit(row)">{{labels.edit}}</button>
+              <button mat-raised-button color="warn" (click)="deleteRow(row)">{{labels.delete}}</button>
+            </div>
+            <span #spanHeader>
+              {{row[col.data]}}
+            </span>
+          </div>
+          <div *ngIf="row.isEdit">
+            <div class="btn-edit" *ngIf="col.data === '$$actions'; else dataField">
+                <button mat-raised-button color="primary" (click)="saveRow(row)">{{labels.save}}</button>
+                <button mat-raised-button color="warn" (click)="toggleRow(row);">{{labels.undo}}</button>
+            </div>
+            <ng-template #dataField>
+              <mat-form-field>
+                <!--mat-label>{{col}}</mat-label-->
+                <input matInput type="{{col.type}}" [(ngModel)]="row[col.data]" />
+              </mat-form-field>
+            </ng-template>
+          </div>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
