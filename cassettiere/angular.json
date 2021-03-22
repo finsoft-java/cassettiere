@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angularDataTable": {
+    "cassettiere": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angularDataTable",
+            "outputPath": "dist/cassettiere",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -23,13 +23,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
-              "node_modules/datatables.net-dt/css/jquery.dataTables.css"
+              "src/styles.css"
             ],
-            "scripts": [
-              "node_modules/jquery/dist/jquery.js",
-              "node_modules/datatables.net/js/jquery.dataTables.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -61,18 +57,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angularDataTable:build"
+            "browserTarget": "cassettiere:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "angularDataTable:build:production"
+              "browserTarget": "cassettiere:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angularDataTable:build"
+            "browserTarget": "cassettiere:build"
           }
         },
         "test": {
@@ -106,7 +102,7 @@
         }
       }
     },
-    "angularDataTable-e2e": {
+    "cassettiere-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -115,11 +111,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angularDataTable:serve"
+            "devServerTarget": "cassettiere:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "angularDataTable:serve:production"
+              "devServerTarget": "cassettiere:serve:production"
             }
           }
         },
@@ -135,5 +131,5 @@
       }
     }
   },
-  "defaultProject": "angularDataTable"
+  "defaultProject": "cassettiere"
 }

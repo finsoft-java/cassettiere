@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,16 +6,5 @@ import { Component, ViewChild, OnInit } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'angularDataTable';
-  
-  @ViewChild('dataTable') table;
-  dataTable: any;
-  
-  constructor(){
-  }
-
-  ngOnInit(): void {
-    this.dataTable = $(this.table.nativeElement);
-    this.dataTable.DataTable();
-  }
+  title = 'cassettiere';
 }

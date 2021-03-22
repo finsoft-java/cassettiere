@@ -1,6 +1,6 @@
-# AngularDataTable
+# Cassettiere
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.2.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.4.
 
 ## Development server
 
@@ -25,5 +25,3 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-
-https://medium.com/ramsatt/integrate-datatable-with-angular-6-application-part-1-zero-configuration-9c8dd44da5fa
