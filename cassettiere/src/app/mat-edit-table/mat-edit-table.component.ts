@@ -239,10 +239,28 @@ export class MatEditTableComponent<T> implements OnInit {
     return row;
   }
 
+  getSheetMatrix(): any[][] {
+    const matrix = Array();
+    let rowNum = 0;
+    this.data.forEach(row => {
+      const matrixRow = Array();
+      let colNum = 0;
+      this.columns.forEach(col => {
+        if (col.data !== this.ACTIONS_INDEX) {
+          matrixRow.push(this.renderCell(col, row, rowNum, colNum++));
+        }
+      });
+      matrix.push(matrixRow);
+      ++rowNum;
+    });
+    return matrix;
+  }
+
   createWorksheet(): XLSX.WorkSheet {
     const header = [this.getSheetHeader()];
+    // TODO how to style header?!?
     const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(header);
-    XLSX.utils.sheet_add_json(ws, this.data, { skipHeader: true, origin: -1, header:  this.getSheetDataColumns()});
+    XLSX.utils.sheet_add_aoa(ws, this.getSheetMatrix(), { origin: -1});
     return ws;
   }
 
