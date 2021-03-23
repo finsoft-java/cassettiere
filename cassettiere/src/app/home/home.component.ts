@@ -1,9 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { ColumnDefinition } from '../mat-edit-table/mat-edit-table.component';
-import { Area, ListBean } from '../_models';
+import { Area } from '../_models';
 import { AreeService } from '../_services/aree.service';
 
 @Component({

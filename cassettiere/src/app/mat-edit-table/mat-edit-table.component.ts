@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { Observable } from 'rxjs';
 import { ListBean, ValueBean } from '../_models';
+import { MatPaginator } from '@angular/material/paginator';
 
 /**
  * DataTable-like column definition structure
@@ -65,6 +66,11 @@ export class MatEditTableComponent<T> implements OnInit {
   @Input()
   service!: HttpCrudService<T>;
 
+  @Input()
+  pagination: 'client' | 'server' | null = null;
+  @Input()
+  pageSizeOptions: number[] = [5, 10, 20];
+
   @Output()
   create: EventEmitter<T> = new EventEmitter();
   @Output()
@@ -73,6 +79,9 @@ export class MatEditTableComponent<T> implements OnInit {
   delete: EventEmitter<T> = new EventEmitter();
   @Output()
   errorMessage: EventEmitter<any> = new EventEmitter();
+
+  @ViewChild(MatPaginator, { static: true })
+  paginator!: MatPaginator;
 
   // Questi sono i parametri che si aspetta il mat-table:
   dataSource: MatTableDataSource<T> = new MatTableDataSource();
@@ -99,6 +108,12 @@ export class MatEditTableComponent<T> implements OnInit {
       type: ''
     });
     this.columns.forEach(x => this.displayedColumns.push(x.data));
+
+    if (this.pagination === 'client') {
+      this.dataSource.paginator = this.paginator;
+    } else if (this.pagination === 'server') {
+      console.error('Server-side pagination not implemented');
+    }
     this.refresh();
   }
 
@@ -125,10 +140,10 @@ export class MatEditTableComponent<T> implements OnInit {
 
   createRow(): void {
     const newRow = {} as T;
-    this.data.push(newRow);
+    this.data.unshift(newRow);
     this.dataSource.data = this.data;
     this.creating = true;
-    this.beginEdit(this.data.length - 1);
+    this.beginEdit(0);
   }
 
   beginEdit(rowNum: number): void {

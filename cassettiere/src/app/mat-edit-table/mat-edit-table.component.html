@@ -1,8 +1,8 @@
 <div>
-  <button mat-raised-button color="primary" style="float: right;margin: 0px 0px 20px 0px;" [disabled]="!buttonsEnabled" (click)="refresh()">{{labels.refresh}}</button>
-  <button mat-raised-button color="primary" style="float: right;margin: 0px 0px 20px 0px;" [disabled]="!buttonsEnabled" (click)="exportCsv()">{{labels.exportCsv}}</button>
+  <button mat-raised-button color="secondary" style="float: right;margin: 0px 0px 20px 0px;" [disabled]="!buttonsEnabled" (click)="exportCsv()">{{labels.exportCsv}}</button>
   <button mat-raised-button color="secondary" style="float: right;margin: 0px 0px 20px 0px;" [disabled]="!buttonsEnabled" (click)="exportXlsx()">{{labels.exportXlsx}}</button>
-  <button mat-raised-button color="secondary" style="float: right;margin: 0px 0px 20px 0px;" [disabled]="!buttonsEnabled" (click)="createRow()">{{labels.add}}</button>
+  <button mat-raised-button color="primary" style="float: right;margin: 0px 0px 20px 0px;" [disabled]="!buttonsEnabled" (click)="createRow()">{{labels.add}}</button>
+  <button mat-raised-button color="primary" style="float: right;margin: 0px 0px 20px 0px;" [disabled]="!buttonsEnabled" (click)="refresh()">{{labels.refresh}}</button>
 </div>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" id="edittable">
     <ng-container matColumnDef="{{col.data}}" *ngFor="let col of columns">
@@ -37,3 +37,5 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+
+<mat-paginator [style.visibility]="pagination !== null ? 'visible' : 'hidden'" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons></mat-paginator>
