@@ -1,3 +1,3 @@
 ﻿export * from './area';
-export * from './list.bean';
-export * from './value.bean';
+export * from './ListBean';
+export * from './ValueBean';
