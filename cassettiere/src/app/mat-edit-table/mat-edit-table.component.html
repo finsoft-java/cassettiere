@@ -34,7 +34,10 @@
             <ng-template #dataField>
               <mat-form-field>
                 <mat-label>{{col.title}}</mat-label>
-                <input matInput type="{{col.type}}" [(ngModel)]="row[col.data]" />
+                <input *ngIf="col.type !== 'select'" matInput type="{{col.type}}" [(ngModel)]="row[col.data]" />
+                <select *ngIf="col.type === 'select'" matInput [(ngModel)]="row[col.data]" >
+                  <option *ngFor="let opt in col.options" [ngValue]="opt.value">{{ opt.label }}</option>
+                </select>
               </mat-form-field>
             </ng-template>
           </div>

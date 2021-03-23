@@ -7,4 +7,10 @@ export interface ColumnDefinition<T> {
   type?: string;
   width?: string;
   render?: (data: any, row?: T, rowNum?: number, colNum?: number) => string | null; // Puoi usarlo per formattare le date
+  options?: LabelValue[];
+}
+
+export interface LabelValue {
+  label: string;
+  value: any;
 }
