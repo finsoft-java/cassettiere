@@ -1,6 +1,9 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ColumnDefinition } from '../mat-edit-table/mat-edit-table.component';
-import { Area } from '../_models';
+import { Area, ListBean } from '../_models';
 import { AreeService } from '../_services/aree.service';
 
 @Component({
@@ -10,9 +13,9 @@ import { AreeService } from '../_services/aree.service';
 })
 export class HomeComponent implements OnInit {
 
-  // Questi servono per la mat-table
-  dataSource: Area[] = [];
-  columns: ColumnDefinition[] = [
+  service: AreeService;
+  datePipe: DatePipe = new DatePipe('en-US');
+  columns: ColumnDefinition<Area>[] = [
     {
       title: 'Codice',
       data: 'codice',
@@ -22,19 +25,20 @@ export class HomeComponent implements OnInit {
       title: 'Descrizione',
       data: 'descrizione',
       type: 'text'
+    },
+    {
+      title: 'Data creazione',
+      data: 'creationDate',
+      type: 'date',
+      render: x => this.datePipe.transform(x, 'dd/MM/YYYY')
     }
   ];
 
-  constructor(private areeSvc: AreeService) { }
-
-  ngOnInit(): void {
-    this.getAll();
+  constructor(private areeSvc: AreeService) {
+    this.service = areeSvc;
   }
 
-  getAll(): void {
-    this.areeSvc.getMockData().subscribe(
-      response => this.dataSource = response.data
-    );
+  ngOnInit(): void {
   }
 
 }

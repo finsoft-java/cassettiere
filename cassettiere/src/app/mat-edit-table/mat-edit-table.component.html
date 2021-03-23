@@ -1,7 +1,8 @@
 <div>
-    <button mat-raised-button color="primary" style="float: right;margin: 0px 0px 20px 0px;" (click)="exportCsv()">{{labels.exportCsv}}</button>
-    <button mat-raised-button color="primary" style="float: right;margin: 0px 0px 20px 0px;" (click)="exportXlsx()">{{labels.exportXlsx}}</button>
-    <button mat-raised-button color="primary" style="float: right;margin: 0px 0px 20px 0px;" (click)="createRow()">{{labels.add}}</button>
+  <button mat-raised-button color="primary" style="float: right;margin: 0px 0px 20px 0px;" [disabled]="!buttonsEnabled" (click)="refresh()">{{labels.refresh}}</button>
+  <button mat-raised-button color="primary" style="float: right;margin: 0px 0px 20px 0px;" [disabled]="!buttonsEnabled" (click)="exportCsv()">{{labels.exportCsv}}</button>
+  <button mat-raised-button color="secondary" style="float: right;margin: 0px 0px 20px 0px;" [disabled]="!buttonsEnabled" (click)="exportXlsx()">{{labels.exportXlsx}}</button>
+  <button mat-raised-button color="secondary" style="float: right;margin: 0px 0px 20px 0px;" [disabled]="!buttonsEnabled" (click)="createRow()">{{labels.add}}</button>
 </div>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" id="edittable">
     <ng-container matColumnDef="{{col.data}}" *ngFor="let col of columns">
@@ -11,22 +12,22 @@
       <td mat-cell *matCellDef="let row; let rowNum = index;">
        
         <div *ngIf="rowNum !== editRowNumber">
-            <div class="btn-edit" *ngIf="col.data === ACTIONS_INDEX; spanHeader" >
-              <button mat-raised-button color="primary" (click)="beginEdit(rowNum)">{{labels.edit}}</button>
-              <button mat-raised-button color="warn" (click)="deleteRow(rowNum)">{{labels.delete}}</button>
+            <div *ngIf="col.data === ACTIONS_INDEX; spanHeader" >
+              <button mat-raised-button color="primary" [disabled]="!buttonsEnabled" (click)="beginEdit(rowNum)">{{labels.edit}}</button>
+              <button mat-raised-button color="warn" [disabled]="!buttonsEnabled" (click)="deleteRow(rowNum)">{{labels.delete}}</button>
             </div>
             <span #spanHeader>
-              {{row[col.data]}}
+              {{ renderCell(col, row, rowNum, -1) }}
             </span>
           </div>
           <div *ngIf="rowNum === editRowNumber">
-            <div class="btn-edit" *ngIf="col.data === ACTIONS_INDEX; else dataField">
-                <button mat-raised-button color="primary" (click)="saveRow(rowNum)">{{labels.save}}</button>
-                <button mat-raised-button color="warn" (click)="undoChange(rowNum);">{{labels.undo}}</button>
+            <div *ngIf="col.data === ACTIONS_INDEX; else dataField">
+                <button mat-raised-button color="primary" [disabled]="!buttonsEnabled" (click)="saveRow(rowNum)">{{labels.save}}</button>
+                <button mat-raised-button color="secondary" [disabled]="!buttonsEnabled" (click)="undoChange(rowNum);">{{labels.undo}}</button>
             </div>
             <ng-template #dataField>
               <mat-form-field>
-                <!--mat-label>{{col}}</mat-label-->
+                <mat-label>{{col.title}}</mat-label>
                 <input matInput type="{{col.type}}" [(ngModel)]="row[col.data]" />
               </mat-form-field>
             </ng-template>
