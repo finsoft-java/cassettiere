@@ -27,7 +27,8 @@ export class MatEditTableComponent<T> implements OnInit {
     save: 'Salva',
     refresh: 'Refresh',
     exportXlsx: 'Export XLSX',
-    exportCsv: 'Export CSV'
+    exportCsv: 'Export CSV',
+    search: 'Search...'
   };
 
   @Input()
@@ -40,6 +41,9 @@ export class MatEditTableComponent<T> implements OnInit {
   pagination: 'client' | 'server' | null = null;
   @Input()
   pageSizeOptions: number[] = [5, 10, 20];
+
+  @Input()
+  search = false;
 
   @Output()
   create: EventEmitter<T> = new EventEmitter();
@@ -62,6 +66,7 @@ export class MatEditTableComponent<T> implements OnInit {
   editRowNumber = -1;
   oldRow: T = {} as T;
   buttonsEnabled = true;
+  searchString = '';
 
   ACTIONS_INDEX = '$$actions';
   XLSX_FILE_NAME = 'Export.xlsx';
@@ -89,8 +94,14 @@ export class MatEditTableComponent<T> implements OnInit {
 
   refresh(): void {
     console.log('Refreshing');
+    this.searchString = '';
+    this.doSearch();
+  }
+
+  doSearch(): void {
+    console.log('Do search...');
     this.buttonsEnabled = false;
-    this.service.getAll().subscribe(
+    this.service.getAll(undefined, undefined, this.searchString).subscribe(
       listBean => {
         this.dataSource.data = this.data = listBean.data;
         this.buttonsEnabled = true;

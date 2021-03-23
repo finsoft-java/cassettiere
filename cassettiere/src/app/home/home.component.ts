@@ -17,17 +17,20 @@ export class HomeComponent implements OnInit {
     {
       title: 'Codice',
       data: 'codice',
-      type: 'text'
+      type: 'text',
+      width: '20%'
     },
     {
       title: 'Descrizione',
       data: 'descrizione',
-      type: 'text'
+      type: 'text',
+      width: '40%'
     },
     {
       title: 'Data creazione',
       data: 'creationDate',
       type: 'date',
+      width: '20%',
       render: x => this.datePipe.transform(x, 'dd/MM/YYYY')
     }
   ];

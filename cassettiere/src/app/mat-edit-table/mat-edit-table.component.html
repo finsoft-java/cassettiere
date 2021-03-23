@@ -4,12 +4,18 @@
   <button mat-raised-button color="primary" style="float: right;margin: 0px 0px 20px 0px;" [disabled]="!buttonsEnabled" (click)="beginCreate()">{{labels.add}}</button>
   <button mat-raised-button color="primary" style="float: right;margin: 0px 0px 20px 0px;" [disabled]="!buttonsEnabled" (click)="refresh()">{{labels.refresh}}</button>
 </div>
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" id="edittable">
+
+<mat-form-field *ngIf="search">
+  <mat-label>{{labels.search}}</mat-label>
+  <input matInput [(ngModel)]="searchString" (change)="doSearch()"/>
+</mat-form-field>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width:100%" id="edittable">
     <ng-container matColumnDef="{{col.data}}" *ngFor="let col of columns">
       <th mat-header-cell *matHeaderCellDef>
         {{col.title}}
       </th>
-      <td mat-cell *matCellDef="let row; let rowNum = index;">
+      <td mat-cell *matCellDef="let row; let rowNum = index;" [style.width]="col.width">
        
         <div *ngIf="rowNum !== editRowNumber">
             <div *ngIf="col.data === ACTIONS_INDEX; spanHeader" >
