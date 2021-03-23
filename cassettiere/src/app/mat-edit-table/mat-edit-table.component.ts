@@ -1,41 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-import { Observable } from 'rxjs';
-import { ListBean, ValueBean } from '../_models';
-import { MatPaginator } from '@angular/material/paginator';
-
-/**
- * DataTable-like column definition structure
- */
-export interface ColumnDefinition<T> {
-  title: string;
-  data: string;
-  type?: string;
-  render?: (data: any, row?: T, rowNum?: number, colNum?: number) => string | null; // Puoi usarlo per formattare le date
-}
-
-export interface HttpCrudService<T> {
-  getAll(page?: number, size?: number, ...args: any[]): Observable<ListBean<T>>;
-  create(obj: T): Observable<ValueBean<T>>;
-  update(obj: T): Observable<ValueBean<T>>;
-  delete(obj: T): Observable<void>;
-}
-
-/**
- * Etichette sui buttons
- */
-export interface MatEditTableLabels {
-  add: string;
-  edit: string;
-  undo: string;
-  save: string;
-  delete: string;
-  exportXlsx: string;
-  exportCsv: string;
-  refresh: string;
-}
+import { MatEditTableLabels } from './MatEditTableLabels';
+import { HttpCrudService } from '../_services/HttpCrudService';
+import { ColumnDefinition } from './ColumnDefinition';
 
 @Component({
   selector: 'app-mat-edit-table',

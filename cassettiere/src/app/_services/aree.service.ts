@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpCrudService } from '../mat-edit-table/mat-edit-table.component';
+import { HttpCrudService } from './HttpCrudService';
 import { Area, ListBean, ValueBean } from '../_models';
 
 @Injectable({
