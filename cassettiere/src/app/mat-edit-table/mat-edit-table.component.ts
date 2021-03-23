@@ -108,7 +108,7 @@ export class MatEditTableComponent<T> implements OnInit {
     return col.render ? col.render(x, row, rowNum, colNum) : x;
   }
 
-  createRow(): void {
+  beginCreate(): void {
     const newRow = {} as T;
     this.data.unshift(newRow);
     this.dataSource.data = this.data;
@@ -124,41 +124,53 @@ export class MatEditTableComponent<T> implements OnInit {
   }
 
   saveRow(rowNum: number): void {
+    if (this.creating) {
+      this.createRow(rowNum);
+    } else {
+      this.updateRow(rowNum);
+    }
+  }
+
+  createRow(rowNum: number): void {
     this.buttonsEnabled = false;
     this.editRowNumber = -1;
     const row = this.data[rowNum];
-    if (this.creating) {
-      this.service.create(row).subscribe(
-        response => {
-          console.log('Emitting create row:', row);
-          this.create.emit(row);
-          Object.assign(row, response.value);
-          this.buttonsEnabled = true;
-        },
-        error => {
-          this.editRowNumber = rowNum;
-          console.log('Emitting error:', error);
-          this.errorMessage.emit(error);
-          this.buttonsEnabled = true;
-        }
-      );
-    } else {
-      this.service.update(row).subscribe(
-        response => {
-          console.log('Emitting update row:', row);
-          this.update.emit(row);
-          Object.assign(row, response.value);
-          this.buttonsEnabled = true;
-        },
-        error => {
-          this.editRowNumber = rowNum;
-          console.log('Emitting error:', error);
-          this.errorMessage.emit(error);
-          this.buttonsEnabled = true;
-        }
-      );
-    }
-    this.creating = false;
+    this.service.create(row).subscribe(
+      response => {
+        console.log('Emitting create row:', row);
+        this.create.emit(row);
+        Object.assign(row, response.value);
+        this.buttonsEnabled = true;
+        this.creating = false;
+      },
+      error => {
+        this.editRowNumber = rowNum;
+        console.log('Emitting error:', error);
+        this.errorMessage.emit(error);
+        this.buttonsEnabled = true;
+        // creating remains true
+      }
+    );
+  }
+
+  updateRow(rowNum: number): void {
+    this.buttonsEnabled = false;
+    this.editRowNumber = -1;
+    const row = this.data[rowNum];
+    this.service.update(row).subscribe(
+      response => {
+        console.log('Emitting update row:', row);
+        this.update.emit(row);
+        Object.assign(row, response.value);
+        this.buttonsEnabled = true;
+      },
+      error => {
+        this.editRowNumber = rowNum;
+        console.log('Emitting error:', error);
+        this.errorMessage.emit(error);
+        this.buttonsEnabled = true;
+      }
+    );
   }
 
   deleteRow(rowNum: number): void {
