@@ -88,6 +88,7 @@ export class MatEditTableComponent<T> implements OnInit {
   }
 
   refresh(): void {
+    console.log('Refreshing');
     this.buttonsEnabled = false;
     this.service.getAll().subscribe(
       listBean => {

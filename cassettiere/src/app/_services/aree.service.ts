@@ -45,7 +45,9 @@ export class AreeService implements HttpCrudService<Area> {
   getAll(): Observable<ListBean<Area>> {
     // TODO return this.http.get<ListBean<Area>>('/some/url');
     return new Observable( observer => {
-      observer.next(this.mockData);
+      // JSON parse/stringify serve per eseguire una deep copy
+      const list: ListBean<Area> = JSON.parse(JSON.stringify(this.mockData));
+      observer.next(list);
       observer.complete();
     });
   }
