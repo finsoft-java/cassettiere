@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ColumnDefinition } from '../mat-edit-table/mat-edit-table.component';
 import { Area } from '../_models';
+import { AreeService } from '../_services/aree.service';
 
 @Component({
   selector: 'app-home',
@@ -24,35 +25,16 @@ export class HomeComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(private areeSvc: AreeService) { }
 
   ngOnInit(): void {
-    this.dataSource = this.getData();
+    this.getAll();
   }
 
-  getData(): Area[] {
-    return [
-      {
-        codice: 'M1',
-        descrizione: 'Area M1'
-      },
-      {
-        codice: 'M2',
-        descrizione: 'Area M2'
-      },
-      {
-        codice: 'M3',
-        descrizione: 'Area M3'
-      },
-      {
-        codice: 'M5',
-        descrizione: 'Area M5'
-      },
-      {
-        codice: 'M6',
-        descrizione: 'Area M6'
-      },
-    ];
+  getAll(): void {
+    this.areeSvc.getMockData().subscribe(
+      response => this.dataSource = response.data
+    );
   }
 
 }

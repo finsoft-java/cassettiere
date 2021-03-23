@@ -3,7 +3,7 @@
     <button mat-raised-button color="primary" style="float: right;margin: 0px 0px 20px 0px;" (click)="exportXlsx()">{{labels.exportXlsx}}</button>
     <button mat-raised-button color="primary" style="float: right;margin: 0px 0px 20px 0px;" (click)="createRow()">{{labels.add}}</button>
 </div>
-<table mat-table [dataSource]="matDataSource" class="mat-elevation-z8" id="edittable">
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" id="edittable">
     <ng-container matColumnDef="{{col.data}}" *ngFor="let col of columns">
       <th mat-header-cell *matHeaderCellDef>
         {{col.title}}
@@ -11,7 +11,7 @@
       <td mat-cell *matCellDef="let row; let rowNum = index;">
        
         <div *ngIf="rowNum !== editRowNumber">
-            <div class="btn-edit" *ngIf="col.data === '$$actions'; spanHeader" >
+            <div class="btn-edit" *ngIf="col.data === ACTIONS_INDEX; spanHeader" >
               <button mat-raised-button color="primary" (click)="beginEdit(rowNum)">{{labels.edit}}</button>
               <button mat-raised-button color="warn" (click)="deleteRow(rowNum)">{{labels.delete}}</button>
             </div>
@@ -20,7 +20,7 @@
             </span>
           </div>
           <div *ngIf="rowNum === editRowNumber">
-            <div class="btn-edit" *ngIf="col.data === '$$actions'; else dataField">
+            <div class="btn-edit" *ngIf="col.data === ACTIONS_INDEX; else dataField">
                 <button mat-raised-button color="primary" (click)="saveRow(rowNum)">{{labels.save}}</button>
                 <button mat-raised-button color="warn" (click)="undoChange(rowNum);">{{labels.undo}}</button>
             </div>
