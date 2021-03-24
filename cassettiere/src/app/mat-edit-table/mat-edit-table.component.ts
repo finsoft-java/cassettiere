@@ -5,7 +5,9 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { MatEditTableLabels } from './MatEditTableLabels';
 import { HttpCrudService } from '../_services/HttpCrudService';
-import { ColumnDefinition } from './ColumnDefinition';
+import { ColumnDefinition, LabelValue } from './ColumnDefinition';
+import { Observable } from 'rxjs';
+import { ListBean } from '../_models';
 
 @Component({
   selector: 'app-mat-edit-table',
@@ -133,6 +135,16 @@ export class MatEditTableComponent<T> implements OnInit {
     console.log('Editing row', rowNum);
     const row = this.data[rowNum];
     Object.assign(this.oldRow, row);
+    this.columns.filter(col => !!col.asyncOptions).forEach(
+      col => {
+        const f = col.asyncOptions as (row?: T) => Observable<LabelValue[]>;
+        f(row).subscribe(
+          options => {
+            col.options = options;
+          }
+        );
+      }
+    );
   }
 
   saveRow(rowNum: number): void {
