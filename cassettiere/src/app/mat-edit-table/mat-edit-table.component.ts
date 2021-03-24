@@ -7,7 +7,6 @@ import { MatEditTableLabels } from './MatEditTableLabels';
 import { HttpCrudService } from '../_services/HttpCrudService';
 import { ColumnDefinition, LabelValue } from './ColumnDefinition';
 import { Observable } from 'rxjs';
-import { ListBean } from '../_models';
 
 @Component({
   selector: 'app-mat-edit-table',

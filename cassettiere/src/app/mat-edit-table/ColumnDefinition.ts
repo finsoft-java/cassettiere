@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 export interface ColumnDefinition<T> {
   /** Titolo della colonna */
   title: string;
-  /** Nome dell'attributo dell'oggetto. Non obbligatorio se usi render. */
+  /** Nome dell'attributo dell'oggetto. E' obbligatorio ma puo' essere fittizio. */
   data: string;
   /** input type: text/number/date/hidden/select/... */
   type?: string;
