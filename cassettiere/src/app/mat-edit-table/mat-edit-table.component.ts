@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { MatEditTableLabels } from './MatEditTableLabels';
@@ -62,6 +62,11 @@ export class MatEditTableComponent<T> implements OnInit {
   dataSource: MatTableDataSource<T> = new MatTableDataSource();
   displayedColumns: string[] = [];
 
+  // Questi sono i parametri del paginator:
+  paginatorLength ? = 0;
+  pageSize ? = 10;
+  pageIndex ? = 0;
+
   data: T[] = [];
   creating = false;
   editRowNumber = -1;
@@ -85,28 +90,41 @@ export class MatEditTableComponent<T> implements OnInit {
     });
     this.columns.forEach(x => this.displayedColumns.push(x.data));
 
-    if (this.pagination === 'client') {
+    if (this.pagination !== null) {
       this.dataSource.paginator = this.paginator;
-    } else if (this.pagination === 'server') {
-      console.error('Server-side pagination not implemented');
     }
-    this.refresh();
+    if (this.pagination !== 'server') {
+      this.pageIndex = undefined;
+      this.pageSize = undefined;
+    }
+
+    this.getAll();
   }
 
   refresh(): void {
     console.log('Refreshing');
     this.searchString = '';
-    this.doSearch();
+    if (this.pagination !== null) {
+      this.pageIndex = 0;
+    }
+    this.getAll();
   }
 
-  doSearch(): void {
-    console.log('Do search...');
+  handlePageEvent(event: PageEvent): void {
+    this.paginatorLength = event.length;
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.getAll();
+  }
+
+  getAll(): void {
+    console.log('Get all...');
     this.buttonsEnabled = false;
-    this.service.getAll(undefined, undefined, this.searchString).subscribe(
+    this.service.getAll(this.pageIndex, this.pageSize, this.searchString).subscribe(
       listBean => {
         this.dataSource.data = this.data = listBean.data;
         this.buttonsEnabled = true;
-        // may use listBean.count for pagination
+        this.paginatorLength = listBean.count;
       },
       error => {
         this.buttonsEnabled = true;

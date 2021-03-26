@@ -7,7 +7,7 @@
 
 <mat-form-field *ngIf="search">
   <mat-label>{{labels.search}}</mat-label>
-  <input matInput [(ngModel)]="searchString" (change)="doSearch()"/>
+  <input matInput [(ngModel)]="searchString" (change)="getAll()"/>
 </mat-form-field>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width:100%" id="edittable">
@@ -36,7 +36,7 @@
                 <mat-label>{{col.title}}</mat-label>
                 <input *ngIf="col.type !== 'select'" matInput type="{{col.type}}" [(ngModel)]="row[col.data]" />
                 <select *ngIf="col.type === 'select'" matInput [(ngModel)]="row[col.data]" >
-                  <option *ngFor="let opt in col.options" [ngValue]="opt.value">{{ opt.label }}</option>
+                  <option *ngFor="let opt of col.options" [ngValue]="opt.value">{{ opt.label }}</option>
                 </select>
               </mat-form-field>
             </ng-template>
@@ -47,4 +47,20 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
-<mat-paginator [style.visibility]="pagination !== null ? 'visible' : 'hidden'" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons></mat-paginator>
+<mat-paginator
+  *ngIf="pagination==='client'"
+  [pageSizeOptions]="pageSizeOptions"
+  showFirstLastButtons
+  >
+</mat-paginator>
+
+<mat-paginator
+  *ngIf="pagination==='server'"
+  (page)="handlePageEvent($event)"
+  [length]="paginatorLength"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  [pageIndex]="pageIndex"
+  showFirstLastButtons
+  >
+</mat-paginator>
