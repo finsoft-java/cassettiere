@@ -1,3 +1,55 @@
-<h1>Hello world</h1>
+<mat-drawer-container class="example-container" autosize>
+    <mat-drawer #drawer class="example-sidenav" mode="side">
+        <nav style="padding:15px;">
+            <button mat-menu-item (click)="router_frontend.navigate(['home']); drawer.toggle()">
+                <span>Aree</span>
+            </button>
+            <button mat-menu-item (click)="router_frontend.navigate(['storico-operazioni']); drawer.toggle()">
+                <span>Storico Operazioni</span>
+            </button>
+            <!--<button mat-menu-item (click)="router_frontend.navigate(['importazione-lul']); drawer.toggle()" disabled >-->
+            <button mat-menu-item (click)="router_frontend.navigate(['ubicazioni']); drawer.toggle()" >
+                <span>Ubicazioni</span>
+            </button>
+            <!--<button mat-menu-item (click)="router_frontend.navigate(['importazione-rapportini']); drawer.toggle()" disabled>-->
+            <button mat-menu-item (click)="router_frontend.navigate(['report-segnalazioni']); drawer.toggle()">
+                <span>Report segnalazioni attive</span>
+            </button>
+            <button mat-menu-item (click)="router_frontend.navigate(['report-ubicazioni']); drawer.toggle()">
+            <!--<button mat-menu-item (click)="router_frontend.navigate(['esportazione-rapportini']); drawer.toggle()" disabled>-->
+                <span>Report stato ubicazioni</span>
+            </button>
+            <button mat-menu-item (click)="logout(); drawer.toggle()">
+                <span>Logout</span>
+            </button>
+        </nav>
+    </mat-drawer>
 
-<router-outlet></router-outlet>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation" *ngIf="!menuDisabled">
+        <div class="container">
+            <div class="navbar-header">
+                <nav style="padding:15px;">
+                    <div class="example-sidenav-content">
+                      <button mat-icon-button (click)="drawer.toggle()" aria-label="Example icon-button with a menu">
+                        <mat-icon>menu</mat-icon>
+                      </button>
+                    </div>
+                </nav>
+            </div>
+            <div class="logo"><img src="assets/img/logo.png"></div>
+        </div>
+    </div>
+    <div class="content" role="main">
+        <div class="container" style="padding-top: 30px;padding-bottom:30px;">
+            <alert></alert>
+            <router-outlet></router-outlet>
+    </div>
+<!--
+<footer style="background-color: black;color:#fff;padding:30px;">
+    <div class="container">
+        Finsoft 2021
+    </div>
+</footer>
+-->
+</div>
+</mat-drawer-container>

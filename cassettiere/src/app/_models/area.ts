@@ -4,3 +4,7 @@ export interface Area {
   descrizione: string;
   creationDate: Date;
 }
+export class User {
+  username: string = '';
+  password:string = '';
+}
