@@ -1,3 +1,5 @@
+import { JwtInterceptor } from './_helpers/jwt.interceptor';
+import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { MatEditTableComponent } from './mat-edit-table/mat-edit-table.component';
 import { HomeComponent } from './home/home.component';
 import { AlertComponent } from './_components/alert.component';
@@ -27,6 +29,7 @@ import { StoricoOperazioniComponent } from './storico-operazioni/storico-operazi
 import { UbicazioniComponent } from './ubicazioni/ubicazioni.component';
 import { ReportSegnalazioniComponent } from './report-segnalazioni/report-segnalazioni.component';
 import { ReportUbicazioniComponent } from './report-ubicazioni/report-ubicazioni.component';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -39,7 +42,8 @@ import { ReportUbicazioniComponent } from './report-ubicazioni/report-ubicazioni
     StoricoOperazioniComponent,
     UbicazioniComponent,
     ReportSegnalazioniComponent,
-    ReportUbicazioniComponent
+    ReportUbicazioniComponent,
+    LoginComponent
   ],
   imports: [
     HttpClientModule,
@@ -64,11 +68,8 @@ import { ReportUbicazioniComponent } from './report-ubicazioni/report-ubicazioni
     MatDatepickerModule,
     MatCheckboxModule
   ],
-  providers: [
-    // TODO
-    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
-  ],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+              { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

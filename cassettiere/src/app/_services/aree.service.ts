@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpCrudService } from './HttpCrudService';
 import { Area, ListBean, ValueBean } from '../_models';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import { Area, ListBean, ValueBean } from '../_models';
 export class AreeService implements HttpCrudService<Area> {
 
   constructor(private http: HttpClient) { }
+  isMock:boolean = true;
 
   mockData: ListBean<Area> = {
     data: [
@@ -44,12 +46,17 @@ export class AreeService implements HttpCrudService<Area> {
 
   getAll(): Observable<ListBean<Area>> {
     // TODO return this.http.get<ListBean<Area>>('/some/url');
-    return new Observable( observer => {
-      // JSON parse/stringify serve per eseguire una deep copy
-      const list: ListBean<Area> = JSON.parse(JSON.stringify(this.mockData));
-      observer.next(list);
-      observer.complete();
-    });
+    this.isMock = false;
+    if(this.isMock){
+      return new Observable( observer => {
+        // JSON parse/stringify serve per eseguire una deep copy
+        const list: ListBean<Area> = JSON.parse(JSON.stringify(this.mockData));
+        observer.next(list);
+        observer.complete();
+      });
+    } else {
+      return this.http.get<ListBean<Area>>(environment.wsUrl+`Aree.php`);
+    } 
   }
 
   create(obj: Area): Observable<ValueBean<Area>> {

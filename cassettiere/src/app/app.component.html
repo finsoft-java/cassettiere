@@ -7,16 +7,13 @@
             <button mat-menu-item (click)="router_frontend.navigate(['storico-operazioni']); drawer.toggle()">
                 <span>Storico Operazioni</span>
             </button>
-            <!--<button mat-menu-item (click)="router_frontend.navigate(['importazione-lul']); drawer.toggle()" disabled >-->
             <button mat-menu-item (click)="router_frontend.navigate(['ubicazioni']); drawer.toggle()" >
                 <span>Ubicazioni</span>
             </button>
-            <!--<button mat-menu-item (click)="router_frontend.navigate(['importazione-rapportini']); drawer.toggle()" disabled>-->
             <button mat-menu-item (click)="router_frontend.navigate(['report-segnalazioni']); drawer.toggle()">
                 <span>Report segnalazioni attive</span>
             </button>
             <button mat-menu-item (click)="router_frontend.navigate(['report-ubicazioni']); drawer.toggle()">
-            <!--<button mat-menu-item (click)="router_frontend.navigate(['esportazione-rapportini']); drawer.toggle()" disabled>-->
                 <span>Report stato ubicazioni</span>
             </button>
             <button mat-menu-item (click)="logout(); drawer.toggle()">
@@ -36,7 +33,6 @@
                     </div>
                 </nav>
             </div>
-            <div class="logo"><img src="assets/img/logo.png"></div>
         </div>
     </div>
     <div class="content" role="main">
