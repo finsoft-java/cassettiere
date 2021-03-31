@@ -158,6 +158,7 @@ export class MatEditTableComponent<T> implements OnInit {
         const f = col.asyncOptions as (row?: T) => Observable<LabelValue[]>;
         f(row).subscribe(
           options => {
+            console.log(options);
             col.options = options;
           }
         );

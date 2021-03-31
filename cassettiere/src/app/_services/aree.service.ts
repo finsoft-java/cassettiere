@@ -45,7 +45,6 @@ export class AreeService implements HttpCrudService<Area> {
   };
 
   getAll(): Observable<ListBean<Area>> {
-    // TODO return this.http.get<ListBean<Area>>('/some/url');
     this.isMock = false;
     if(this.isMock){
       return new Observable( observer => {
@@ -60,19 +59,28 @@ export class AreeService implements HttpCrudService<Area> {
   }
 
   create(obj: Area): Observable<ValueBean<Area>> {
-    // TODO return this.http.post<ValueBean<Area>>('/some/url');
-    return new Observable( observer => {
-      observer.next({ value: obj });
-      observer.complete();
-    });
+    this.isMock = false;
+    if(this.isMock){
+      return new Observable( observer => {
+        observer.next({ value: obj });
+        observer.complete();
+      });
+    }else{
+      return this.http.post<ValueBean<Area>>(environment.wsUrl+`Aree.php`,obj);
+    }
   }
 
   update(obj: Area): Observable<ValueBean<Area>> {
     // TODO return this.http.put<ValueBean<Area>>('/some/url');
-    return new Observable( observer => {
-      observer.next({ value: obj });
-      observer.complete();
-    });
+    this.isMock = false;
+    if(this.isMock){
+      return new Observable( observer => {
+        observer.next({ value: obj });
+        observer.complete();
+      });
+    }else{
+      return this.http.put<ValueBean<Area>>(environment.wsUrl+`Aree.php`,obj);
+    }
   }
 
   delete(obj: Area): Observable<void> {

@@ -17,18 +17,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_logged_user_JWT();
 
-$id_area = isset($_GET['id_area']) ? $con->escape_string($_GET['id_area']) : null;
+$cod_area = isset($_GET['COD_AREA']) ? $con->escape_string($_GET['COD_AREA']) : null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         [$aree, $count] = $areeManager->get_aree();
           
         header('Content-Type: application/json');
         echo json_encode(['data' => $aree, 'count' => $count]);
-} elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //==========================================================
     $postdata = file_get_contents("php://input");
     $json_data = json_decode($postdata);
-    $id_area = '';
     
     if(isset($json_data->ID_PROGETTO)){
         $id_area = $json_data->ID_PROGETTO;
@@ -37,45 +36,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (!$json_data) {
         print_error(400, "Missing JSON data");
     }
-    if ($id_area) {
-        print_error(400, "id_area must be null when creating new project");
-    }
-    $progetto = $areeManager->crea($json_data);
+    $area = $areeManager->crea($json_data);
     
     header('Content-Type: application/json');
-    echo json_encode(['value' => $progetto]);
+    echo json_encode(['value' => $area]);
     
-} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+} elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     //==========================================================
     $postdata = file_get_contents("php://input");
     $json_data = json_decode($postdata);
     if (!$json_data) {
         print_error(400, "Missing JSON data");
     }
-    $progetto_su_db = $areeManager->get_progetto($json_data->ID_PROGETTO);
-    if (!$progetto_su_db) {
+    $area_su_db = $areeManager->get_area($json_data->COD_AREA);
+    if (!$area_su_db) {
         print_error(404, 'Not found');
     }
-    $areeManager->aggiorna($progetto_su_db, $json_data);
+    $areeManager->aggiorna($area_su_db, $json_data);
     
-    $progetto_su_db = $areeManager->get_progetto($json_data->ID_PROGETTO);
+    $area_su_db = $areeManager->get_area($json_data->COD_AREA);
     header('Content-Type: application/json');
-    echo json_encode(['value' => $progetto_su_db]);
+    echo json_encode(['value' => $area_su_db]);
     
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     //==========================================================
     if (!$id_area) {
         print_error(400, 'Missing id_area');
     }
-    $progetto_su_db = $areeManager->get_progetto($id_area);
-    if (!$progetto_su_db) {
+    $area_su_db = $areeManager->get_area($id_area);
+    if (!$area_su_db) {
         print_error(404, 'Not found');
-    }
-    if (!$progetto_su_db->utente_puo_modificarlo()) {
-        print_error(403, "Utente non autorizzato a modificare questo Progetto.");
-    }
-    if ($progetto_su_db->is_gia_compilato()) {
-        print_error(403, "Non e' possibile eliminare un progetto con questionari già compilati.");
     }
     
     $areeManager->elimina($id_area);

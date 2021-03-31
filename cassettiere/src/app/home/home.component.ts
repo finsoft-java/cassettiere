@@ -10,7 +10,7 @@ import { AreeService } from '../_services/aree.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+  
   service: AreeService;
   datePipe: DatePipe = new DatePipe('en-US');
   columns: ColumnDefinition<Area>[] = [

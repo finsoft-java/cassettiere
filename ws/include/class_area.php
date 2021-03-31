@@ -16,24 +16,26 @@ class AreeManager {
         $aree = select_list($sql1 . $sql);        
         return [$aree, $count];
     }
+    
+    function get_area($cod_area) {
+        $sql = "SELECT * FROM aree p WHERE p.cod_area = '$cod_area'";
+        return select_single($sql);
+    }
 
     function crea($json_data) {
         global $con, $logged_user;
         $sql = insert("aree", ["COD_AREA" => $json_data->COD_AREA,
-                                   "DESCRIZIONE" => $con->escape_string($json_data->TITOLO)
+                                   "DESCRIZIONE" => $con->escape_string($json_data->DESCRIZIONE)
                                   ]);
         mysqli_query($con, $sql);
         if ($con ->error) {
             print_error(500, $con ->error);
         }
-        $id_progetto = mysqli_insert_id($con);
-        return $this->get_progetto($id_progetto);
+        return $this->get_area($json_data->COD_AREA);
     }
     
     function aggiorna($progetto, $json_data) {
-        global $con, $STATO_PROGETTO;
-        $titolo = $con->escape_string($json_data->TITOLO);
-        
+        global $con, $STATO_PROGETTO;        
         $sql = update("aree", ["COD_AREA" => $json_data->COD_AREA,
                                "DESCRIZIONE" => $con->escape_string($json_data->DESCRIZIONE)], 
                                ["COD_AREA" => $json_data->COD_AREA]);
