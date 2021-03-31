@@ -60,15 +60,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     //==========================================================
-    if (!$id_area) {
-        print_error(400, 'Missing id_area');
+    if (!$cod_area) {
+        print_error(400, 'Missing cod_area');
     }
-    $area_su_db = $areeManager->get_area($id_area);
+    $area_su_db = $areeManager->get_area($cod_area);
     if (!$area_su_db) {
         print_error(404, 'Not found');
     }
     
-    $areeManager->elimina($id_area);
+    $areeManager->elimina($cod_area);
     
 } else {
     //==========================================================

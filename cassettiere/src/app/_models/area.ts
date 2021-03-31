@@ -1,8 +1,7 @@
 
 export interface Area {
-  codice: string;
-  descrizione: string;
-  creationDate: Date;
+  COD_AREA: string;
+  DESCRIZIONE: string;
 }
 export class User {
   username: string = '';

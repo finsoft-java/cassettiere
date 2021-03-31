@@ -16,29 +16,24 @@ export class AreeService implements HttpCrudService<Area> {
   mockData: ListBean<Area> = {
     data: [
       {
-        codice: 'M1',
-        descrizione: 'Area M1',
-        creationDate: new Date('2021-01-03')
+        COD_AREA: 'M1',
+        DESCRIZIONE: 'Area M1'
       },
       {
-        codice: 'M2',
-        descrizione: 'Area M2',
-        creationDate: new Date('2021-01-03')
+        COD_AREA: 'M2',
+        DESCRIZIONE: 'Area M2'
       },
       {
-        codice: 'M3',
-        descrizione: 'Area M3',
-        creationDate: new Date('2021-01-04')
+        COD_AREA: 'M3',
+        DESCRIZIONE: 'Area M3'
       },
       {
-        codice: 'M5',
-        descrizione: 'Area M5',
-        creationDate: new Date('2021-01-03')
+        COD_AREA: 'M5',
+        DESCRIZIONE: 'Area M5'
       },
       {
-        codice: 'M6',
-        descrizione: 'Area M6',
-        creationDate: new Date('2021-01-05')
+        COD_AREA: 'M6',
+        DESCRIZIONE: 'Area M6'
       },
     ],
     count: 5
@@ -71,7 +66,6 @@ export class AreeService implements HttpCrudService<Area> {
   }
 
   update(obj: Area): Observable<ValueBean<Area>> {
-    // TODO return this.http.put<ValueBean<Area>>('/some/url');
     this.isMock = false;
     if(this.isMock){
       return new Observable( observer => {
@@ -84,10 +78,15 @@ export class AreeService implements HttpCrudService<Area> {
   }
 
   delete(obj: Area): Observable<void> {
-    // TODO return this.http.delete<void>('/some/url');
-    return new Observable( observer => {
-      observer.next(undefined);
-      observer.complete();
-    });
+    console.log(obj);
+    this.isMock = false;
+    if(this.isMock){
+      return new Observable( observer => {
+        observer.next(undefined);
+        observer.complete();
+      });
+    }else{      
+      return this.http.delete<any>(environment.wsUrl+`Aree.php?COD_AREA=${obj.COD_AREA}`);
+    }
   }
 }
