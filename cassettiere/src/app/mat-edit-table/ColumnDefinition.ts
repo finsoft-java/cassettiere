@@ -18,6 +18,8 @@ export interface ColumnDefinition<T> {
   options?: LabelValue[];
   /** funzione per caricare asincronamente le options */
   asyncOptions?: (row?: T) => Observable<LabelValue[]>;
+  /** Se true, il campo è abilitato solo in inserimento */
+  disabled?: boolean;
 }
 
 export interface LabelValue {

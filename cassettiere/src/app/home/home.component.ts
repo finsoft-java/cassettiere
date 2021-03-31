@@ -10,7 +10,7 @@ import { AreeService } from '../_services/aree.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  
+
   service: AreeService;
   datePipe: DatePipe = new DatePipe('en-US');
   columns: ColumnDefinition<Area>[] = [
@@ -18,7 +18,8 @@ export class HomeComponent implements OnInit {
       title: 'Codice',
       data: 'COD_AREA',
       type: 'text',
-      width: '40%'
+      width: '40%',
+      disabled: true
     },
     {
       title: 'Descrizione',
