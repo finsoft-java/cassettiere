@@ -1,8 +1,8 @@
 <div>
   <button mat-raised-button color="secondary" style="float: right;margin: 0px 0px 20px 0px;" [disabled]="!buttonsEnabled" (click)="exportCsv()">{{labels.exportCsv}}</button>
-  <button mat-raised-button color="secondary" style="float: right;margin: 0px 0px 20px 0px;" [disabled]="!buttonsEnabled" (click)="exportXlsx()">{{labels.exportXlsx}}</button>
-  <button mat-raised-button color="primary" style="float: right;margin: 0px 0px 20px 0px;" [disabled]="!buttonsEnabled" (click)="beginCreate()">{{labels.add}}</button>
-  <button mat-raised-button color="primary" style="float: right;margin: 0px 0px 20px 0px;" [disabled]="!buttonsEnabled" (click)="refresh()">{{labels.refresh}}</button>
+  <button mat-raised-button color="secondary" style="float: right;margin: 0px 10px 20px 0px;" [disabled]="!buttonsEnabled" (click)="exportXlsx()">{{labels.exportXlsx}}</button>
+  <button mat-raised-button color="primary" style="float: right;margin: 0px 10px 20px 0px;" [disabled]="!buttonsEnabled" (click)="beginCreate()">{{labels.add}}</button>
+  <button mat-raised-button color="primary" style="float: right;margin: 0px 10px 20px 0px;" [disabled]="!buttonsEnabled" (click)="refresh()">{{labels.refresh}}</button>
 </div>
 
 <mat-form-field *ngIf="search">
