@@ -12,40 +12,43 @@ import { Ubicazione } from '../_models';
 })
 export class UbicazioniComponent implements OnInit {
   arrayAree: LabelValue[] = [];
+  arrayEsaurimento: LabelValue[] = [];
   service:  UbicazioniService;
   columns: ColumnDefinition<Ubicazione>[] = [
     {
       title: 'Cod. Ubicazione',
       data: 'COD_UBICAZIONE',
       type: 'text',
-      width: '15%',
+      width: '20%',
       disabled: true
     },
     {
       title: 'Cod. Articolo',
       data: 'COD_ARTICOLO_CONTENUTO',
       type: 'text',
-      width: '15%'
+      width: '20%'
     },
     {
       title: 'Qnt. Prevista',
       data: 'QUANTITA_PREVISTA',
       type: 'text',
-      width: '15%'
+      width: '10%'
     },
     {
       title: 'Cod. Area',
       data: 'COD_AREA',
       type: 'select',
       options: this.arrayAree,//{label-value}
-      width: '15%',
+      width: '25%',
       render: (data,row) => row?.COD_AREA+" - "+row?.DESCRIZIONE_AREA
     },
     {
       title: 'Esaurimento',
       data: 'SEGNALAZIONE_ESAURIMENTO',
-      type: 'text',
-      width: '10%'
+      type: 'select',
+      options: this.arrayEsaurimento,//{label-value}
+      width: '5%',
+      render: (data) => data == 'N' ? 'No' : 'Si'
     }
   ];
 
@@ -65,5 +68,7 @@ export class UbicazioniComponent implements OnInit {
         
       }
     );
+
+    this.arrayEsaurimento.push({label:'No',value:'N'},{label:'Si',value:'Y'});
   }
 }

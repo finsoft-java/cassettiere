@@ -87,7 +87,7 @@ export class UbicazioniService implements HttpCrudService<Ubicazione> {
         observer.complete();
       });
     }else{      
-      return this.http.delete<any>(environment.wsUrl+`Ubicazioni.php?COD_AREA=${obj.COD_AREA}`);
+      return this.http.delete<any>(environment.wsUrl+`Ubicazioni.php?COD_UBICAZIONE=${obj.COD_UBICAZIONE}`);
     }
   }
 }

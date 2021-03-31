@@ -1,0 +1,11 @@
+:host ::ng-deep .mat-form-field-infix {
+    display: block;
+    position: relative;
+    flex: auto;
+    min-width: 0;
+    width: auto;
+}
+
+.mat-header-cell,.ng-star-inserted{
+    text-align: center;
+}
