@@ -68,7 +68,6 @@ export class UbicazioniComponent implements OnInit {
         
       }
     );
-
     this.arrayEsaurimento.push({label:'No',value:'N'},{label:'Si',value:'Y'});
   }
 }
