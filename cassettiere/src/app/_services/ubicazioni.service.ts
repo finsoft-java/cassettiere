@@ -1,60 +1,60 @@
+import { Articolo } from './../_models/area';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpCrudService } from './HttpCrudService';
-import { Area, ListBean, ValueBean } from '../_models';
+import { Ubicazione, ListBean, ValueBean } from '../_models';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AreeService implements HttpCrudService<Area> {
+export class UbicazioniService implements HttpCrudService<Ubicazione> {
 
   constructor(private http: HttpClient) { }
   isMock:boolean = true;
 
-  mockData: ListBean<Area> = {
+  mockData: ListBean<Articolo> = {
     data: [
       {
-        COD_AREA: 'M1',
-        DESCRIZIONE: 'Area M1'
+        ID_ARTICOLO: '1',
+        DESCRIZIONE: 'PRODOTTO M1'
       },
       {
-        COD_AREA: 'M2',
-        DESCRIZIONE: 'Area M2'
+        ID_ARTICOLO: '2',
+        DESCRIZIONE: 'PRODOTTO M2'
       },
       {
-        COD_AREA: 'M3',
-        DESCRIZIONE: 'Area M3'
+        ID_ARTICOLO: '3',
+        DESCRIZIONE: 'PRODOTTO M3'
       },
       {
-        COD_AREA: 'M5',
-        DESCRIZIONE: 'Area M5'
+        ID_ARTICOLO: '4',
+        DESCRIZIONE: 'PRODOTTO M4'
       },
       {
-        COD_AREA: 'M6',
-        DESCRIZIONE: 'Area M6'
-      },
+        ID_ARTICOLO: '5',
+        DESCRIZIONE: 'PRODOTTO M5'
+      }
     ],
     count: 5
   };
 
-  getAll(): Observable<ListBean<Area>> {
-    console.log('aaaa');
+  getAll(): Observable<ListBean<Ubicazione>> {
     this.isMock = false;
     if(this.isMock){
       return new Observable( observer => {
         // JSON parse/stringify serve per eseguire una deep copy
-        const list: ListBean<Area> = JSON.parse(JSON.stringify(this.mockData));
+        const list: ListBean<Ubicazione> = JSON.parse(JSON.stringify(this.mockData));
         observer.next(list);
         observer.complete();
       });
     } else {
-      return this.http.get<ListBean<Area>>(environment.wsUrl+`Aree.php`);
+      return this.http.get<ListBean<Ubicazione>>(environment.wsUrl+`Ubicazioni.php`);
     } 
   }
 
-  create(obj: Area): Observable<ValueBean<Area>> {
+  create(obj: Ubicazione): Observable<ValueBean<Ubicazione>> {
     this.isMock = false;
     if(this.isMock){
       return new Observable( observer => {
@@ -62,11 +62,11 @@ export class AreeService implements HttpCrudService<Area> {
         observer.complete();
       });
     }else{
-      return this.http.post<ValueBean<Area>>(environment.wsUrl+`Aree.php`,obj);
+      return this.http.post<ValueBean<Ubicazione>>(environment.wsUrl+`Ubicazioni.php`,obj);
     }
   }
 
-  update(obj: Area): Observable<ValueBean<Area>> {
+  update(obj: Ubicazione): Observable<ValueBean<Ubicazione>> {
     this.isMock = false;
     if(this.isMock){
       return new Observable( observer => {
@@ -74,11 +74,11 @@ export class AreeService implements HttpCrudService<Area> {
         observer.complete();
       });
     }else{
-      return this.http.put<ValueBean<Area>>(environment.wsUrl+`Aree.php`,obj);
+      return this.http.put<ValueBean<Ubicazione>>(environment.wsUrl+`Ubicazioni.php`,obj);
     }
   }
 
-  delete(obj: Area): Observable<void> {
+  delete(obj: Ubicazione): Observable<void> {
     console.log(obj);
     this.isMock = false;
     if(this.isMock){
@@ -87,7 +87,7 @@ export class AreeService implements HttpCrudService<Area> {
         observer.complete();
       });
     }else{      
-      return this.http.delete<any>(environment.wsUrl+`Aree.php?COD_AREA=${obj.COD_AREA}`);
+      return this.http.delete<any>(environment.wsUrl+`Ubicazioni.php?COD_AREA=${obj.COD_AREA}`);
     }
   }
 }
