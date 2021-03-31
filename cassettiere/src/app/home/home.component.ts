@@ -16,22 +16,15 @@ export class HomeComponent implements OnInit {
   columns: ColumnDefinition<Area>[] = [
     {
       title: 'Codice',
-      data: 'codice',
-      type: 'text',
-      width: '20%'
-    },
-    {
-      title: 'Descrizione',
-      data: 'descrizione',
+      data: 'COD_AREA',
       type: 'text',
       width: '40%'
     },
     {
-      title: 'Data creazione',
-      data: 'creationDate',
-      type: 'date',
-      width: '20%',
-      render: x => this.datePipe.transform(x, 'dd/MM/YYYY')
+      title: 'Descrizione',
+      data: 'DESCRIZIONE',
+      type: 'text',
+      width: '40%'
     }
   ];
 

@@ -20,7 +20,7 @@ require_logged_user_JWT();
 $id_area = isset($_GET['id_area']) ? $con->escape_string($_GET['id_area']) : null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        [$aree, $count] = $areeManager->get_aree($top, $skip, $orderby);
+        [$aree, $count] = $areeManager->get_aree();
           
         header('Content-Type: application/json');
         echo json_encode(['data' => $aree, 'count' => $count]);

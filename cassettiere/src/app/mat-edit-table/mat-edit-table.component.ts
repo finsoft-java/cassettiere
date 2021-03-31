@@ -123,6 +123,7 @@ export class MatEditTableComponent<T> implements OnInit {
     this.service.getAll(this.pageIndex, this.pageSize, this.searchString).subscribe(
       listBean => {
         this.dataSource.data = this.data = listBean.data;
+        console.log(this.dataSource.data);
         this.buttonsEnabled = true;
         this.paginatorLength = listBean.count;
       },
