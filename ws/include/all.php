@@ -12,3 +12,4 @@ include("costanti.php");
 include("functions.php");
 include("class_area.php");
 include("class_ubicazione.php");
+include("class_storicoOperazione.php");

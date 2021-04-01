@@ -18,14 +18,14 @@ export class HomeComponent implements OnInit {
       title: 'Codice',
       data: 'COD_AREA',
       type: 'text',
-      width: '40%',
+      width: '30%',
       disabled: true
     },
     {
       title: 'Descrizione',
       data: 'DESCRIZIONE',
       type: 'text',
-      width: '40%'
+      width: '50%'
     }
   ];
 
