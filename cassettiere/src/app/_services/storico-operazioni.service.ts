@@ -30,7 +30,7 @@ export class StoricoOperazioniService {
     count: 5
   };
 
-  getAll(): Observable<ListBean<StoricoOperazione>> {
+  getAll(filter: any): Observable<ListBean<StoricoOperazione>> {
     this.isMock = false;
     if(this.isMock){
       return new Observable( observer => {
@@ -40,7 +40,7 @@ export class StoricoOperazioniService {
         observer.complete();
       });
     } else {
-      return this.http.get<ListBean<StoricoOperazione>>(environment.wsUrl+`StoricoOperazioni.php`);
+      return this.http.get<ListBean<StoricoOperazione>>(environment.wsUrl+`StoricoOperazioni.php`,{ params: filter });
     } 
   }
 

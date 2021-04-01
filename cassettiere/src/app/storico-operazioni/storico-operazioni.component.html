@@ -1,6 +1,30 @@
 <h2>
     Storico Operazioni
 </h2>
+
+<mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-description>
+        Pannello Filtri
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-form-field appearance="fill" style="margin-right:15px;">
+        <mat-label>Cerca</mat-label>
+        <input matInput [(ngModel)]="filter.searchString">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Range Data</mat-label>
+        <mat-date-range-input [rangePicker]="picker" [formGroup]="range">
+          <input matStartDate placeholder="Start date" formControlName="start">
+          <input matEndDate placeholder="End date" formControlName="end">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+    <button mat-raised-button color="primary" style="margin-right:15px;" (click)="filterRow()">Filtra</button>
+  </mat-expansion-panel>
+
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <!--- Note that these columns can be defined in any order.

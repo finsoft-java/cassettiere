@@ -24,6 +24,7 @@
     "@angular/router": "~11.2.6",
     "ng-material-multilevel-menu": "^5.5.3",
     "ngx-take-until-destroy": "^5.4.0",
+    "moment": "^2.29.1",
     "bootstrap": "^4.6.0",
     "file-saver": "^2.0.5",
     "rxjs": "~6.6.0",

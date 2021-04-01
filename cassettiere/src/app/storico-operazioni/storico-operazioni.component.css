@@ -1,5 +1,6 @@
 table{
-    width:100%
+    width:100%;
+    margin-top:15px;
 }
 th,tr,td{
     text-align: center !important;

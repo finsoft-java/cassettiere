@@ -30,7 +30,8 @@ import { UbicazioniComponent } from './ubicazioni/ubicazioni.component';
 import { ReportSegnalazioniComponent } from './report-segnalazioni/report-segnalazioni.component';
 import { ReportUbicazioniComponent } from './report-ubicazioni/report-ubicazioni.component';
 import { LoginComponent } from './login/login.component';
-
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -66,7 +67,9 @@ import { LoginComponent } from './login/login.component';
     MatFormFieldModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatExpansionModule,
+    MatAutocompleteModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
               { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
