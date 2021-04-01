@@ -20,6 +20,8 @@ export interface ColumnDefinition<T> {
   asyncOptions?: (row?: T) => Observable<LabelValue[]>;
   /** Se true, il campo è abilitato solo in inserimento */
   disabled?: boolean;
+  /** Funzione callback per l'evento onChange */
+  onChangeCallback?: (event: Event) => void;
 }
 
 export interface LabelValue {

@@ -36,15 +36,10 @@
               display: block;
               margin: 0px auto;margin-top:10px;">
                 <mat-label>{{col.title}}</mat-label>
-                <input *ngIf="col.type !== 'select'" matInput type="{{col.type}}" [(ngModel)]="row[col.data]" [disabled]="col.disabled != null && (col.disabled && !creating) "/>
-                <mat-select *ngIf="col.type === 'select'" matInput [(ngModel)]="row[col.data]" [disabled]="col.disabled != null && (col.disabled && !creating)">
+                <input *ngIf="col.type !== 'select'" matInput type="{{col.type}}" [(ngModel)]="row[col.data]" [disabled]="col.disabled != null && (col.disabled && !creating)" (change)="onChangeCell($event, col)"/>
+                <mat-select *ngIf="col.type === 'select'" matInput [(ngModel)]="row[col.data]" [disabled]="col.disabled != null && (col.disabled && !creating)" (change)="onChangeCell($event, col)">
                   <mat-option *ngFor="let opt of col.options" value="{{opt.value}}">{{ opt.label }}</mat-option>
                 </mat-select>
-<!--
-                <select *ngIf="col.type === 'select'" matInput [(ngModel)]="row[col.data]" [disabled]="col.disabled != null && (col.disabled && !creating)">
-                  <option *ngFor="let opt of col.options" [ngValue]="opt.value">{{ opt.label }}</option>
-                </select>
-   -->
               </mat-form-field>
             </ng-template>
           </div>
