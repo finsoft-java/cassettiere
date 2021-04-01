@@ -140,6 +140,12 @@ export class MatEditTableComponent<T> implements OnInit {
     return col.render ? col.render(x, row, rowNum, colNum) : x;
   }
 
+  onChangeCell(event: Event, col: ColumnDefinition<T>): void {
+    if (col.onChangeCallback) {
+      col.onChangeCallback(event);
+    }
+  }
+
   beginCreate(): void {
     const newRow = {} as T;
     this.data.unshift(newRow);
