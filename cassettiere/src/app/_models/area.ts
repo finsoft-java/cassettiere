@@ -12,21 +12,23 @@ export interface Articolo {
 export interface Ubicazione {
   COD_UBICAZIONE: string;
   COD_ARTICOLO_CONTENUTO: string;
-  QUANTITA_PREVISTA:number;
+  QUANTITA_PREVISTA: number;
   COD_AREA: string;
   SEGNALAZIONE_ESAURIMENTO: string;
   DESCRIZIONE_AREA: string;
 }
+
 export interface StoricoOperazione {
-  ID_OPERAZIONE : number;
+  ID_OPERAZIONE: number;
   COD_UTENTE: string;
-  COD_OPERAZIONE :string;
+  COD_OPERAZIONE: string;
   COD_ARTICOLO: string;
   COD_UBICAZIONE: string;
   COD_AREA: string;
   TIMESTAMP: string;
 }
+
 export class User {
-  username: string = '';
-  password:string = '';
+  username = '';
+  password = '';
 }
