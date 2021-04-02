@@ -7,6 +7,7 @@ import { MatEditTableLabels } from './MatEditTableLabels';
 import { HttpCrudService } from '../_services/HttpCrudService';
 import { ColumnDefinition, LabelValue } from './ColumnDefinition';
 import { Observable } from 'rxjs';
+import { MockService } from '.';
 
 @Component({
   selector: 'app-mat-edit-table',
@@ -36,7 +37,10 @@ export class MatEditTableComponent<T> implements OnInit {
   columns: ColumnDefinition<T>[] = [];
 
   @Input()
-  service!: HttpCrudService<T>;
+  editable = true;
+
+  @Input()
+  service: HttpCrudService<T> = new MockService<T>();
 
   @Input()
   pagination: 'client' | 'server' | null = null;
@@ -82,12 +86,14 @@ export class MatEditTableComponent<T> implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.columns.push({
-      // Una colonna per le azioni
-      data: this.ACTIONS_INDEX,
-      title: '',
-      type: ''
-    });
+    if (this.editable) {
+      this.columns.push({
+        // Una colonna per le azioni
+        data: this.ACTIONS_INDEX,
+        title: '',
+        type: ''
+      });
+    }
     this.columns.forEach(x => this.displayedColumns.push(x.data));
 
     if (this.pagination !== null) {
