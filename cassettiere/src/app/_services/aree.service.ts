@@ -12,7 +12,7 @@ export class AreeService implements HttpCrudService<Area> {
 
   constructor(private http: HttpClient) { }
 
-  isMock = true;
+  isMock = false;
   mockData: ListBean<Area> = {
     data: [
       {
@@ -40,8 +40,6 @@ export class AreeService implements HttpCrudService<Area> {
   };
 
   getAll(): Observable<ListBean<Area>> {
-    console.log('aaaa');
-    this.isMock = false;
     if (this.isMock) {
       return new Observable( observer => {
         // JSON parse/stringify serve per eseguire una deep copy
@@ -55,7 +53,6 @@ export class AreeService implements HttpCrudService<Area> {
   }
 
   create(obj: Area): Observable<ValueBean<Area>> {
-    this.isMock = false;
     if (this.isMock) {
       return new Observable( observer => {
         observer.next({ value: obj });
@@ -67,7 +64,6 @@ export class AreeService implements HttpCrudService<Area> {
   }
 
   update(obj: Area): Observable<ValueBean<Area>> {
-    this.isMock = false;
     if (this.isMock) {
       return new Observable( observer => {
         observer.next({ value: obj });
@@ -79,8 +75,6 @@ export class AreeService implements HttpCrudService<Area> {
   }
 
   delete(obj: Area): Observable<void> {
-    console.log(obj);
-    this.isMock = false;
     if (this.isMock) {
       return new Observable( observer => {
         observer.next(undefined);
