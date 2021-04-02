@@ -11,8 +11,8 @@ import { environment } from 'src/environments/environment';
 export class AreeService implements HttpCrudService<Area> {
 
   constructor(private http: HttpClient) { }
-  isMock:boolean = true;
 
+  isMock = true;
   mockData: ListBean<Area> = {
     data: [
       {
@@ -42,7 +42,7 @@ export class AreeService implements HttpCrudService<Area> {
   getAll(): Observable<ListBean<Area>> {
     console.log('aaaa');
     this.isMock = false;
-    if(this.isMock){
+    if (this.isMock) {
       return new Observable( observer => {
         // JSON parse/stringify serve per eseguire una deep copy
         const list: ListBean<Area> = JSON.parse(JSON.stringify(this.mockData));
@@ -50,44 +50,44 @@ export class AreeService implements HttpCrudService<Area> {
         observer.complete();
       });
     } else {
-      return this.http.get<ListBean<Area>>(environment.wsUrl+`Aree.php`);
-    } 
+      return this.http.get<ListBean<Area>>(environment.wsUrl + 'Aree.php');
+    }
   }
 
   create(obj: Area): Observable<ValueBean<Area>> {
     this.isMock = false;
-    if(this.isMock){
+    if (this.isMock) {
       return new Observable( observer => {
         observer.next({ value: obj });
         observer.complete();
       });
-    }else{
-      return this.http.post<ValueBean<Area>>(environment.wsUrl+`Aree.php`,obj);
+    } else {
+      return this.http.post<ValueBean<Area>>(environment.wsUrl + 'Aree.php', obj);
     }
   }
 
   update(obj: Area): Observable<ValueBean<Area>> {
     this.isMock = false;
-    if(this.isMock){
+    if (this.isMock) {
       return new Observable( observer => {
         observer.next({ value: obj });
         observer.complete();
       });
-    }else{
-      return this.http.put<ValueBean<Area>>(environment.wsUrl+`Aree.php`,obj);
+    } else {
+      return this.http.put<ValueBean<Area>>(environment.wsUrl + 'Aree.php', obj);
     }
   }
 
   delete(obj: Area): Observable<void> {
     console.log(obj);
     this.isMock = false;
-    if(this.isMock){
+    if (this.isMock) {
       return new Observable( observer => {
         observer.next(undefined);
         observer.complete();
       });
-    }else{      
-      return this.http.delete<any>(environment.wsUrl+`Aree.php?COD_AREA=${obj.COD_AREA}`);
+    } else {
+      return this.http.delete<any>(environment.wsUrl + `Aree.php?COD_AREA=${obj.COD_AREA}`);
     }
   }
 }
