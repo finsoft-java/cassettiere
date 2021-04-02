@@ -48,13 +48,18 @@ export class StoricoOperazioniComponent implements OnInit {
 
   filterRow(){
 
-    this.filter.searchString = this.filter.searchString.trim();
+    delete this.filter["DATA_INIZIO"];
+    delete this.filter["DATA_FINE"];
+
     if(this.range.value.end != null)
       this.filter.DATA_FINE = formatDate(this.range.value.end ,"YYYY-MM-dd","en-GB");
 
-    if(this.range.value.start != null) 
+    if(this.range.value.start != null)
       this.filter.DATA_INIZIO = formatDate(this.range.value.start ,"YYYY-MM-dd","en-GB");
     
+    if(this.filter.searchString) 
+      this.filter.searchString = this.filter.searchString.trim();
+      
     this.storOpSvc.getAll(this.filter).subscribe(
       response => {
         console.log(response);
