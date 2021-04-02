@@ -11,7 +11,7 @@ export class MockService<T> implements HttpCrudService<T> {
 
     constructor() { }
 
-    getAll(): Observable<ListBean<T>> {
+    getAll(parameters: any): Observable<ListBean<T>> {
         return new Observable( observer => {
           observer.next({data: [], count: 0});
           observer.complete();

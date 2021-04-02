@@ -126,7 +126,11 @@ export class MatEditTableComponent<T> implements OnInit {
   getAll(): void {
     console.log('Get all...');
     this.buttonsEnabled = false;
-    this.service.getAll(this.pageIndex, this.pageSize, this.searchString).subscribe(
+    this.service.getAll({
+      page: this.pageIndex,
+      size: this.pageSize,
+      search: this.searchString || ''
+    }).subscribe(
       listBean => {
         this.dataSource.data = this.data = listBean.data;
         console.log(this.dataSource.data);

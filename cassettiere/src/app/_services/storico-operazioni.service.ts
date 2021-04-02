@@ -10,10 +10,10 @@ import { MockService } from '../mat-edit-table';
 @Injectable({
   providedIn: 'root'
 })
-export class StoricoOperazioniService /* TODO extends MockService<StoricoOperazione> */ {
+export class StoricoOperazioniService extends MockService<StoricoOperazione> {
 
   constructor(private http: HttpClient) {
-    // TODO super();
+    super();
   }
 
   isMock = true;
