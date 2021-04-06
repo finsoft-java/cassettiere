@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         if(isset($_GET['searchString'])) {
             $searchString = $_GET['searchString'];
         }
-        [$ubicazioni, $count] = $ubicazioneManager->get_ubicazioni_in_esaurimento($searchString);
+        [$ubicazioni, $count] = $storicoOperazioneManager->get_segnalazioni_attive($searchString);
           
         header('Content-Type: application/json');
         echo json_encode(['data' => $ubicazioni, 'count' => $count]);

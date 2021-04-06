@@ -58,25 +58,6 @@ class UbicazioniManager {
             print_error(500, $con ->error);
         }
     }
-    
-    function get_ubicazioni_in_esaurimento($searchString) {
-        global $con;
-        
-        $sql0 = "SELECT COUNT(*) AS cnt ";
-        $sql1 = "SELECT ub.COD_UBICAZIONE,ub.COD_ARTICOLO_CONTENUTO, ub.QUANTITA_PREVISTA ,ub.COD_AREA, ar.DESCRIZIONE as DESCRIZIONE_AREA ";
-        
-        $sql = "FROM ubicazioni ub join aree ar on ub.cod_area = ar.COD_AREA ";
-        $sql .= "WHERE SEGNALAZIONE_ESAURIMENTO='Y' ";
-        
-        if ($searchString != null) {
-            $sql .= "AND (ub.COD_UBICAZIONE like '%$searchString%' or ub.COD_ARTICOLO_CONTENUTO like '%$searchString%' or ub.COD_AREA  like '%$searchString%' or ar.DESCRIZIONE  like '%$searchString%' ) ";
-        }
-
-        $sql .= "ORDER BY ub.COD_UBICAZIONE DESC ";
-        $count = select_single_value($sql0 . $sql);
-        $ubicazioni = select_list($sql1 . $sql);        
-        return [$ubicazioni, $count];
-    }
 
 }
 ?>

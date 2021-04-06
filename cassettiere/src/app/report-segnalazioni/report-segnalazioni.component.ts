@@ -15,6 +15,11 @@ export class ReportSegnalazioniComponent implements OnInit {
   myControl = new FormControl();
   columns: ColumnDefinition<Ubicazione>[] = [
     {
+      title: 'Area',
+      data: 'COD_AREA',
+      render: (data, row) => data + ' ' + row?.DESCRIZIONE_AREA
+    },
+    {
       title: 'Ubicazione',
       data: 'COD_UBICAZIONE'
     },
@@ -27,9 +32,12 @@ export class ReportSegnalazioniComponent implements OnInit {
       data: 'QUANTITA_PREVISTA'
     },
     {
-      title: 'Area',
-      data: 'COD_AREA',
-      render: (data, row) => data + ' ' + row?.DESCRIZIONE_AREA
+      title: 'Utente segnalante',
+      data: 'COD_UTENTE'
+    },
+    {
+      title: 'Timestamp segnalazione',
+      data: 'TIMESTAMP'
     }
   ];
   service!: ReportSegnalazioniService;

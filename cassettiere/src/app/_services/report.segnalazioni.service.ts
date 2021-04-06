@@ -13,6 +13,6 @@ export class ReportSegnalazioniService extends MockService<Ubicazione> {
   constructor(private http: HttpClient) { super(); }
 
   getAll(filter: any): Observable<ListBean<any>> {
-    return this.http.get<ListBean<any>>(environment.wsUrl + 'UbicazioniInEsaurimento.php', { params: filter });
+    return this.http.get<ListBean<any>>(environment.wsUrl + 'SegnalazioniAttive.php', { params: filter });
   }
 }
