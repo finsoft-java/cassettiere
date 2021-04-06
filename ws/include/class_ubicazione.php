@@ -11,7 +11,7 @@ class UbicazioniManager {
         $sql1 = "SELECT ub.COD_UBICAZIONE,ub.COD_ARTICOLO_CONTENUTO,ub.SEGNALAZIONE_ESAURIMENTO, ub.QUANTITA_PREVISTA ,ub.COD_AREA, ar.DESCRIZIONE as DESCRIZIONE_AREA ";
         
         $sql = "FROM ubicazioni ub join aree ar on ub.cod_area = ar.COD_AREA";
-        $sql .= " ORDER BY ub.COD_UBICAZIONE DESC";
+        $sql .= " ORDER BY ub.COD_AREA, ub.COD_UBICAZIONE";
         $count = select_single_value($sql0 . $sql);
         $ubicazioni = select_list($sql1 . $sql);        
         return [$ubicazioni, $count];
