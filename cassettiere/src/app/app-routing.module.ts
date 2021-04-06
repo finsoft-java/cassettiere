@@ -6,16 +6,16 @@ import { UbicazioniComponent } from './ubicazioni/ubicazioni.component';
 import { StoricoOperazioniComponent } from './storico-operazioni/storico-operazioni.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
+import { AreeComponent } from './aree/aree.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
+  { path: 'aree', component: AreeComponent, canActivate: [AuthGuard]},
   { path: 'storico-operazioni', component: StoricoOperazioniComponent, canActivate: [AuthGuard]},
   { path: 'ubicazioni', component: UbicazioniComponent, canActivate: [AuthGuard]},
   { path: 'report-segnalazioni', component: ReportSegnalazioniComponent, canActivate: [AuthGuard]},
   { path: 'report-ubicazioni', component: ReportUbicazioniComponent, canActivate: [AuthGuard]},
-  { path: '**', redirectTo: 'home' }];
+  { path: '**', redirectTo: 'report-segnalazioni' }];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -1,9 +1,9 @@
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { MatEditTableComponent } from './mat-edit-table/mat-edit-table.component';
-import { HomeComponent } from './home/home.component';
+import { AreeComponent } from './aree/aree.component';
 import { AlertComponent } from './_components/alert.component';
-import { HttpClient, HttpClientModule, HttpHandler, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HttpHandler, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
@@ -30,14 +30,14 @@ import { UbicazioniComponent } from './ubicazioni/ubicazioni.component';
 import { ReportSegnalazioniComponent } from './report-segnalazioni/report-segnalazioni.component';
 import { ReportUbicazioniComponent } from './report-ubicazioni/report-ubicazioni.component';
 import { LoginComponent } from './login/login.component';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    AreeComponent,
     MatEditTableComponent,
     AlertComponent,
     StoricoOperazioniComponent,
