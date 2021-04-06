@@ -17,59 +17,76 @@ import { formatDate } from '@angular/common';
   ]
 })
 export class StoricoOperazioniComponent implements OnInit {
-  displayedColumns: string[] = ['ID_OPERAZIONE', 'COD_UTENTE', 'COD_OPERAZIONE', 'COD_ARTICOLO','COD_UBICAZIONE','COD_AREA','DATA'];
-  dataSource:StoricoOperazione[] = [];
-  filter:any={};
+  filter: any = {};
   range = new FormGroup({
     start: new FormControl(),
     end: new FormControl()
   });
   myControl = new FormControl();
+  columns: ColumnDefinition<StoricoOperazione>[] = [
+    {
+      title: 'ID Operazione',
+      data: 'ID_OPERAZIONE'
+    },
+    {
+      title: 'Utente',
+      data: 'COD_UTENTE'
+    },
+    {
+      title: 'Operazione',
+      data: 'COD_OPERAZIONE'
+    },
+    {
+      title: 'Articolo',
+      data: 'COD_ARTICOLO'
+    },
+    {
+      title: 'Ubicazione',
+      data: 'COD_UBICAZIONE'
+    },
+    {
+      title: 'Area',
+      data: 'COD_AREA'
+    },
+    {
+      title: 'Timestamp',
+      data: 'TIMESTAMP'
+    }
+  ];
+  service!: StoricoOperazioniService;
 
   constructor(private storOpSvc: StoricoOperazioniService) {
-    const today = new Date();
-    const month = today.getMonth();
-    const year = today.getFullYear();
+    this.service = storOpSvc;
   }
 
   ngOnInit(): void {
-    
-    this.storOpSvc.getAll(null).subscribe(
-      response => {
-        console.log(response);
-        this.dataSource = response["data"];
-        console.log(this.dataSource);
-      },
-      error => {
-        
-      }
-    );
   }
 
-  filterRow(){
+  filterRow(editTableComponent: any): void {
 
-    delete this.filter["DATA_INIZIO"];
-    delete this.filter["DATA_FINE"];
+    delete this.filter.DATA_INIZIO;
+    delete this.filter.DATA_FINE;
 
-    if(this.range.value.end != null)
-      this.filter.DATA_FINE = formatDate(this.range.value.end ,"YYYY-MM-dd","en-GB");
+    if (this.range.value.end != null) {
+      this.filter.DATA_FINE = formatDate(this.range.value.end , 'YYYY-MM-dd', 'en-GB');
+    }
 
-    if(this.range.value.start != null)
-      this.filter.DATA_INIZIO = formatDate(this.range.value.start ,"YYYY-MM-dd","en-GB");
-    
-    if(this.filter.searchString) 
+    if (this.range.value.start != null) {
+      this.filter.DATA_INIZIO = formatDate(this.range.value.start , 'YYYY-MM-dd', 'en-GB');
+    }
+
+    if (this.filter.searchString) {
       this.filter.searchString = this.filter.searchString.trim();
-      
-    this.storOpSvc.getAll(this.filter).subscribe(
-      response => {
-        console.log(response);
-        this.dataSource = response["data"];
-        console.log(this.dataSource);
-      },
-      error => {
-        
-      }
-    );;
+    }
+
+    editTableComponent.filter(this.filter);
+  }
+
+  resetFilter(editTableComponent: any): void {
+    delete this.filter.DATA_INIZIO;
+    delete this.filter.DATA_FINE;
+    delete this.filter.searchString;
+    editTableComponent.filter(this.filter);
   }
 
 }

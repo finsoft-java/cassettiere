@@ -29,8 +29,7 @@ export class MatEditTableComponent<T> implements OnInit {
     save: 'Salva',
     refresh: 'Refresh',
     exportXlsx: 'Export XLSX',
-    exportCsv: 'Export CSV',
-    search: 'Search...'
+    exportCsv: 'Export CSV'
   };
 
   @Input()
@@ -47,8 +46,6 @@ export class MatEditTableComponent<T> implements OnInit {
   @Input()
   pageSizeOptions: number[] = [5, 10, 20];
 
-  @Input()
-  search = false;
 
   @Output()
   create: EventEmitter<T> = new EventEmitter();
@@ -76,7 +73,7 @@ export class MatEditTableComponent<T> implements OnInit {
   editRowNumber = -1;
   oldRow: T = {} as T;
   buttonsEnabled = true;
-  searchString = '';
+  filtro: any = {};
 
   ACTIONS_INDEX = '$$actions';
   XLSX_FILE_NAME = 'Export.xlsx';
@@ -109,7 +106,6 @@ export class MatEditTableComponent<T> implements OnInit {
 
   refresh(): void {
     console.log('Refreshing');
-    this.searchString = '';
     if (this.pagination !== null) {
       this.pageIndex = 0;
     }
@@ -123,14 +119,19 @@ export class MatEditTableComponent<T> implements OnInit {
     this.getAll();
   }
 
+  filter(filter: any): void {
+    this.filtro = filter;
+    this.getAll();
+  }
+
   getAll(): void {
     console.log('Get all...');
     this.buttonsEnabled = false;
-    this.service.getAll({
-      page: this.pageIndex,
-      size: this.pageSize,
-      search: this.searchString || ''
-    }).subscribe(
+    if (this.pagination === 'server') {
+      this.filtro.page = this.pageIndex;
+      this.filtro.size = this.pageSize;
+    }
+    this.service.getAll(this.filtro).subscribe(
       listBean => {
         this.dataSource.data = this.data = listBean.data;
         console.log(this.dataSource.data);
