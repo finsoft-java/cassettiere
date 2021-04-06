@@ -4,7 +4,7 @@ $storicoOperazioneManager = new storicoOperazioniManager();
 
 class storicoOperazioniManager {
     
-    function get_storicoOperazioni($searchString,$dataInizio,$dataFine) {
+    function get_storicoOperazioni($searchString, $dataInizio, $dataFine) {
         global $con;
         
         $sql0 = "SELECT COUNT(*) AS cnt ";

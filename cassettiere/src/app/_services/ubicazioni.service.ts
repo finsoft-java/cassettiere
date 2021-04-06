@@ -40,7 +40,7 @@ export class UbicazioniService implements HttpCrudService<Ubicazione> {
     count: 5
   };
 
-  getAll(): Observable<ListBean<any>> {
+  getAll(filter?: any): Observable<ListBean<any>> {
     this.isMock = false;
     if (this.isMock) {
       return new Observable( observer => {
@@ -50,7 +50,7 @@ export class UbicazioniService implements HttpCrudService<Ubicazione> {
         observer.complete();
       });
     } else {
-      return this.http.get<ListBean<any>>(environment.wsUrl + 'Ubicazioni.php');
+      return this.http.get<ListBean<any>>(environment.wsUrl + 'Ubicazioni.php', { params: filter || {}});
     }
   }
 
