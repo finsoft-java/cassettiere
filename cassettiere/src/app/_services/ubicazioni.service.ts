@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 export class UbicazioniService implements HttpCrudService<Ubicazione> {
 
   constructor(private http: HttpClient) { }
-  isMock:boolean = true;
+  isMock = true;
 
   mockData: ListBean<Articolo> = {
     data: [
@@ -42,7 +42,7 @@ export class UbicazioniService implements HttpCrudService<Ubicazione> {
 
   getAll(): Observable<ListBean<Ubicazione>> {
     this.isMock = false;
-    if(this.isMock){
+    if (this.isMock) {
       return new Observable( observer => {
         // JSON parse/stringify serve per eseguire una deep copy
         const list: ListBean<Ubicazione> = JSON.parse(JSON.stringify(this.mockData));
@@ -50,44 +50,44 @@ export class UbicazioniService implements HttpCrudService<Ubicazione> {
         observer.complete();
       });
     } else {
-      return this.http.get<ListBean<Ubicazione>>(environment.wsUrl+`Ubicazioni.php`);
-    } 
+      return this.http.get<ListBean<Ubicazione>>(environment.wsUrl + 'Ubicazioni.php');
+    }
   }
 
   create(obj: Ubicazione): Observable<ValueBean<Ubicazione>> {
     this.isMock = false;
-    if(this.isMock){
+    if (this.isMock) {
       return new Observable( observer => {
         observer.next({ value: obj });
         observer.complete();
       });
-    }else{
-      return this.http.post<ValueBean<Ubicazione>>(environment.wsUrl+`Ubicazioni.php`,obj);
+    } else {
+      return this.http.post<ValueBean<Ubicazione>>(environment.wsUrl + 'Ubicazioni.php', obj);
     }
   }
 
   update(obj: Ubicazione): Observable<ValueBean<Ubicazione>> {
     this.isMock = false;
-    if(this.isMock){
+    if (this.isMock) {
       return new Observable( observer => {
         observer.next({ value: obj });
         observer.complete();
       });
-    }else{
-      return this.http.put<ValueBean<Ubicazione>>(environment.wsUrl+`Ubicazioni.php`,obj);
+    } else {
+      return this.http.put<ValueBean<Ubicazione>>(environment.wsUrl + 'Ubicazioni.php', obj);
     }
   }
 
   delete(obj: Ubicazione): Observable<void> {
     console.log(obj);
     this.isMock = false;
-    if(this.isMock){
+    if (this.isMock) {
       return new Observable( observer => {
         observer.next(undefined);
         observer.complete();
       });
-    }else{      
-      return this.http.delete<any>(environment.wsUrl+`Ubicazioni.php?COD_UBICAZIONE=${obj.COD_UBICAZIONE}`);
+    } else {
+      return this.http.delete<any>(environment.wsUrl + `Ubicazioni.php?COD_UBICAZIONE=${obj.COD_UBICAZIONE}`);
     }
   }
 }

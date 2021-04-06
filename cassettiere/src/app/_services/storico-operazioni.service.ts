@@ -3,18 +3,20 @@ import { Articolo } from '../_models/area';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpCrudService } from './HttpCrudService';
-import { Ubicazione, ListBean, ValueBean } from '../_models';
+import { ListBean } from '../_models';
 import { environment } from 'src/environments/environment';
+import { MockService } from '../mat-edit-table';
 
 @Injectable({
   providedIn: 'root'
 })
-export class StoricoOperazioniService {
+export class StoricoOperazioniService extends MockService<StoricoOperazione> {
 
-  constructor(private http: HttpClient) { }
-  isMock:boolean = true;
+  constructor(private http: HttpClient) {
+    super();
+  }
 
+  isMock = true;
   mockData: ListBean<StoricoOperazione> = {
     data: [
       {
@@ -32,7 +34,7 @@ export class StoricoOperazioniService {
 
   getAll(filter: any): Observable<ListBean<StoricoOperazione>> {
     this.isMock = false;
-    if(this.isMock){
+    if (this.isMock){
       return new Observable( observer => {
         // JSON parse/stringify serve per eseguire una deep copy
         const list: ListBean<StoricoOperazione> = JSON.parse(JSON.stringify(this.mockData));
@@ -40,8 +42,8 @@ export class StoricoOperazioniService {
         observer.complete();
       });
     } else {
-      return this.http.get<ListBean<StoricoOperazione>>(environment.wsUrl+`StoricoOperazioni.php`,{ params: filter });
-    } 
+      return this.http.get<ListBean<StoricoOperazione>>(environment.wsUrl + 'StoricoOperazioni.php', { params: filter });
+    }
   }
 
 }
