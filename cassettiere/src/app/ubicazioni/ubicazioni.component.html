@@ -1,8 +1,76 @@
 <h2>
     Ubicazioni
 </h2>
+<!--
 <app-mat-edit-table
     [columns]="columns"
     [service]="service"
     >
 </app-mat-edit-table>
+-->
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="ubicazione">
+        <!-- INPUT-->
+        <th mat-header-cell *matHeaderCellDef> Cod. Ubicazione </th>
+        <td mat-cell *matCellDef="let element">
+            <label *ngIf="!element.isEditable"> {{element.COD_UBICAZIONE}} </label>
+            <!--<input matInput [value]="element.descrizione" [(ngModel)]="element.descrizione">-->
+            <div style="display: block;margin: 0px auto;width: 250px;">
+                <input class="form-control" style="display: inline-block;width: 220px;margin-right: 15px;border: 1px solid;padding: 0px 15px;" *ngIf="element.isEditable" matInput [(ngModel)]="element.COD_UBICAZIONE">
+            </div>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="articolo">
+        <th mat-header-cell *matHeaderCellDef> Cod. Articolo </th>
+        <td mat-cell *matCellDef="let element">
+            <label *ngIf="!element.isEditable"> {{element.COD_ARTICOLO_CONTENUTO}} </label>
+            <div style="display: block;margin: 0px auto;width: 250px;position:relative;">
+                <input class="form-control" style="display: inline-block;width: 220px;border-radius: 0px;margin-right: 15px;border: 1px solid;padding: 0px 15px;" *ngIf="element.isEditable" matInput [(ngModel)]="element.COD_ARTICOLO_CONTENUTO" (input)="onSearchChange(element.COD_ARTICOLO_CONTENUTO)"  required>
+                <div style="position: absolute;width: 220px; background-color: #fff; border: 1px solid; left: 7px;height: 80px;" *ngIf="search_box">
+                    <div ></div>
+                </div>
+            </div>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="qnt">
+        <th mat-header-cell *matHeaderCellDef> Qnt. Prevista </th>
+        <td mat-cell *matCellDef="let element">
+            <label *ngIf="!element.isEditable"> {{element.QUANTITA_PREVISTA}} </label>
+            <div style="display: block;margin: 0px auto;width: 250px;">
+                <input class="form-control" style="display: inline-block;width: 220px;margin-right: 15px;border: 1px solid;padding: 0px 15px;" *ngIf="element.isEditable" matInput [(ngModel)]="element.QUANTITA_PREVISTA" required>
+            </div>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="area">
+        <th mat-header-cell *matHeaderCellDef> Cod. Area </th>
+        <td mat-cell *matCellDef="let element">
+            <label *ngIf="!element.isEditable"> {{element.COD_AREA}} </label>
+            <div style="display: block;margin: 0px auto;width: 250px;">
+                <input class="form-control" style="display: inline-block;width: 220px;margin-right: 15px;border: 1px solid;padding: 0px 15px;" *ngIf="element.isEditable" matInput [(ngModel)]="element.COD_AREA" required>
+            </div>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="esaurimento">
+        <th mat-header-cell *matHeaderCellDef> Esaurimento </th>
+        <td mat-cell *matCellDef="let element">
+            <label *ngIf="!element.isEditable"> {{element.SEGNALAZIONE_ESAURIMENTO}} </label>
+            <div style="display: block;margin: 0px auto;width: 250px;">
+                <input class="form-control" style="display: inline-block;width: 220px;margin-right: 15px;border: 1px solid;padding: 0px 15px;" *ngIf="element.isEditable" matInput [(ngModel)]="element.SEGNALAZIONE_ESAURIMENTO" required>
+            </div>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Azione </th>
+        <td mat-cell *matCellDef="let row">
+            <button *ngIf="!row.isEditable" mat-raised-button color="primary" style="margin-right:10px;" (click)="getRecord(row)">Modifica</button>
+            <button *ngIf="!row.isEditable" mat-raised-button color="warn" (click)="deleteChange(row)">Elimina</button>
+            <button *ngIf="row.isEditable" mat-raised-button color="primary" (click)="salvaModifica(row)">Salva</button>
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

@@ -40,21 +40,21 @@ export class UbicazioniService implements HttpCrudService<Ubicazione> {
     count: 5
   };
 
-  getAll(): Observable<ListBean<Ubicazione>> {
+  getAll(): Observable<ListBean<any>> {
     this.isMock = false;
     if (this.isMock) {
       return new Observable( observer => {
         // JSON parse/stringify serve per eseguire una deep copy
-        const list: ListBean<Ubicazione> = JSON.parse(JSON.stringify(this.mockData));
+        const list: ListBean<any> = JSON.parse(JSON.stringify(this.mockData));
         observer.next(list);
         observer.complete();
       });
     } else {
-      return this.http.get<ListBean<Ubicazione>>(environment.wsUrl + 'Ubicazioni.php');
+      return this.http.get<ListBean<any>>(environment.wsUrl + 'Ubicazioni.php');
     }
   }
 
-  create(obj: Ubicazione): Observable<ValueBean<Ubicazione>> {
+  create(obj: any): Observable<ValueBean<any>> {
     this.isMock = false;
     if (this.isMock) {
       return new Observable( observer => {
@@ -62,11 +62,11 @@ export class UbicazioniService implements HttpCrudService<Ubicazione> {
         observer.complete();
       });
     } else {
-      return this.http.post<ValueBean<Ubicazione>>(environment.wsUrl + 'Ubicazioni.php', obj);
+      return this.http.post<ValueBean<any>>(environment.wsUrl + 'Ubicazioni.php', obj);
     }
   }
 
-  update(obj: Ubicazione): Observable<ValueBean<Ubicazione>> {
+  update(obj: any): Observable<ValueBean<any>> {
     this.isMock = false;
     if (this.isMock) {
       return new Observable( observer => {
@@ -74,11 +74,11 @@ export class UbicazioniService implements HttpCrudService<Ubicazione> {
         observer.complete();
       });
     } else {
-      return this.http.put<ValueBean<Ubicazione>>(environment.wsUrl + 'Ubicazioni.php', obj);
+      return this.http.put<ValueBean<any>>(environment.wsUrl + 'Ubicazioni.php', obj);
     }
   }
 
-  delete(obj: Ubicazione): Observable<void> {
+  delete(obj: any): Observable<void> {
     console.log(obj);
     this.isMock = false;
     if (this.isMock) {
