@@ -17,10 +17,39 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class UbicazioniComponent implements OnInit {
   arrayAree: LabelValue[] = [];
   arrayEsaurimento: LabelValue[] = [];
-  service:  UbicazioniService;
+  service: UbicazioniService;
   dataSource = new MatTableDataSource<[]>();
   search_box?: any[];
-  displayedColumns: string[] = ['ubicazione','articolo', 'qnt','area','esaurimento', 'actions'];
+  displayedColumns: string[] = ['ubicazione','articolo', 'qnt', 'area', 'esaurimento', 'actions'];
+
+  
+  columns: ColumnDefinition<Ubicazione>[] = [
+    {
+      title: 'Cod. Ubicazione',
+      data: 'COD_UBICAZIONE',
+      disabled: true
+    },
+    {
+      title: 'Cod. Articolo',
+      data: 'COD_ARTICOLO',
+      type: 'combo'
+    },
+    {
+      title: 'Qnt. prevista',
+      data: 'QUANTITA_PREVISTA'
+    },
+    {
+      title: 'Area',
+      data: 'COD_AREA',
+      type: 'select',
+      options: this.arrayAree
+    },
+    {
+      title: 'In esaurimento',
+      data: 'SEGNALAZIONE_ESAURIMENTO',
+      render: (data) => (data === 'N' ? 'No' : 'Sì')
+    }
+  ];
   
   public bankCtrl: FormControl = new FormControl();
   public bankFilterCtrl: FormControl = new FormControl();
