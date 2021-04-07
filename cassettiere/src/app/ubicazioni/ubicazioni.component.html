@@ -30,10 +30,10 @@
             <label *ngIf="!element.isEditable"> {{element.COD_ARTICOLO_CONTENUTO}} </label>
             <div style="display: block;margin: 0px auto;width: 150px;position:relative;">
                 <!--<input class="form-control" style="display: inline-block;width: 220px;border-radius: 0px;margin-right: 15px;border: 1px solid;padding: 0px 15px;" *ngIf="element.isEditable" matInput [(ngModel)]="element.COD_ARTICOLO_CONTENUTO" (input)="onSearchChange(element.COD_ARTICOLO_CONTENUTO)"  required>-->
-                <mat-form-field *ngIf="element.isEditable" style="display: inline-block;width: 110px;">
+                <mat-form-field appearance="fill" *ngIf="element.isEditable" style="display: inline-block;width: 110px;">
                     <mat-select [formControl]="bankCtrl" placeholder="Articolo" #singleSelect>
                       <mat-option>
-                        <ngx-mat-select-search [formControl]="bankFilterCtrl" (input)="onSearchChange(bankFilterCtrl)"></ngx-mat-select-search>
+                        <ngx-mat-select-search [formControl]="bankFilterCtrl" (input)="onSearchChange(bankFilterCtrl)" placeholderLabel="Cerca" noEntriesFoundLabel="Nessun articolo con questo nome"></ngx-mat-select-search>
                       </mat-option>
                       <mat-option *ngFor="let searc of search_box" [value]="searc">
                         {{searc.name}}
