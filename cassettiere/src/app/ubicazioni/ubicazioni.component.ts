@@ -1,3 +1,4 @@
+import { FormControl } from '@angular/forms';
 import { AlertService } from './../_services/alert.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { AreeService } from './../_services/aree.service';
@@ -20,45 +21,10 @@ export class UbicazioniComponent implements OnInit {
   dataSource = new MatTableDataSource<[]>();
   search_box?: any[];
   displayedColumns: string[] = ['ubicazione','articolo', 'qnt','area','esaurimento', 'actions'];
-/*
-  columns: ColumnDefinition<Ubicazione>[] = [
-    {
-      title: 'Cod. Ubicazione',
-      data: 'COD_UBICAZIONE',
-      type: 'text',
-      width: '20%',
-      disabled: true
-    },
-    {
-      title: 'Cod. Articolo',
-      data: 'COD_ARTICOLO_CONTENUTO',
-      type: 'text',
-      width: '20%'
-    },
-    {
-      title: 'Qnt. Prevista',
-      data: 'QUANTITA_PREVISTA',
-      type: 'text',
-      width: '10%'
-    },
-    {
-      title: 'Cod. Area',
-      data: 'COD_AREA',
-      type: 'select',
-      options: this.arrayAree,//{label-value}
-      width: '25%',
-      render: (data,row) => row?.COD_AREA+" - "+row?.DESCRIZIONE_AREA
-    },
-    {
-      title: 'Esaurimento',
-      data: 'SEGNALAZIONE_ESAURIMENTO',
-      type: 'select',
-      options: this.arrayEsaurimento,//{label-value}
-      width: '5%',
-      render: (data) => data == 'N' ? 'No' : 'Si'
-    }
-  ];*/
-
+  
+  public bankCtrl: FormControl = new FormControl();
+  public bankFilterCtrl: FormControl = new FormControl();
+  
   constructor(private ubicSvc: UbicazioniService,private areeSvc: AreeService, 
     private alertService: AlertService,
     private route: ActivatedRoute,
@@ -89,6 +55,10 @@ export class UbicazioniComponent implements OnInit {
           this.alertService.error("Impossibile eliminare il record");
         });
   }
+  
+  newUbicazione(){
+    
+  }
   salvaModifica(prgSpesa: any){
     if(prgSpesa.COD_UBICAZIONE == null){
         this.ubicSvc.create(prgSpesa)
@@ -96,7 +66,7 @@ export class UbicazioniComponent implements OnInit {
           this.dataSource.data.splice(-1, 1);
           this.dataSource.data.push(response["value"][0]);
           this.dataSource.data = this.dataSource.data;
-          this.alertService.success("Spesa salvata con successo");
+          this.alertService.success("Ubicazione salvata con successo");
           prgSpesa.isEditable=false;
         },
         error => {
