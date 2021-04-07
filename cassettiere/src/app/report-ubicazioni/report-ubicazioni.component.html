@@ -4,7 +4,7 @@
 
 <div>
   <div *ngFor="let u of ubicazioni" class="boxverde" (click)="setArea(u.COD_AREA,myTable)">
-    {{ u.COD_AREA }}
+    <div class="boxcodarea">{{ u.COD_AREA }}</div>
     <div [style.width]="'' + (u.IN_ESAURIMENTO/u.NUM_UBICAZIONI*100) + '%'" class="boxrosso"></div>
   </div>
 </div>
