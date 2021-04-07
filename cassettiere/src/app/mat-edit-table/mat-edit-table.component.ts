@@ -46,6 +46,8 @@ export class MatEditTableComponent<T> implements OnInit {
   @Input()
   pageSizeOptions: number[] = [5, 10, 20];
 
+  @Input()
+  formattazioneCondizionale?: (row: T) => any; // map of style attributes
 
   @Output()
   create: EventEmitter<T> = new EventEmitter();
@@ -252,6 +254,14 @@ export class MatEditTableComponent<T> implements OnInit {
         this.buttonsEnabled = true;
       }
     );
+  }
+
+  getFormattazioneCondizionale(row: T): any {
+    if (this.formattazioneCondizionale) {
+      return this.formattazioneCondizionale(row);
+    } else {
+      return null;
+    }
   }
 
   undoChange(rowNum: number): void {

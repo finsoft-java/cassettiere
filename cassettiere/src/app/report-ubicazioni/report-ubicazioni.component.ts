@@ -12,11 +12,6 @@ export class ReportUbicazioniComponent implements OnInit {
 
   columns: ColumnDefinition<Ubicazione>[] = [
     {
-      title: 'Area',
-      data: 'COD_AREA',
-      render: (data, row) => data + ' ' + row?.DESCRIZIONE_AREA
-    },
-    {
       title: 'Ubicazione',
       data: 'COD_UBICAZIONE'
     },
@@ -29,12 +24,9 @@ export class ReportUbicazioniComponent implements OnInit {
       data: 'QUANTITA_PREVISTA'
     },
     {
-      title: 'Utente segnalante',
-      data: 'COD_UTENTE'
-    },
-    {
-      title: 'Timestamp segnalazione',
-      data: 'TIMESTAMP'
+      title: 'In esaurimento',
+      data: 'SEGNALAZIONE_ESAURIMENTO',
+      render: (data) => (data === 'N' ? 'No' : 'Sì')
     }
   ];
   service: ReportUbicazioniService;
@@ -65,4 +57,9 @@ export class ReportUbicazioniComponent implements OnInit {
     this.showTable = true;
   }
 
+  formattazioneCondizionale(row: Ubicazione): any {
+    return {
+      color: (row.SEGNALAZIONE_ESAURIMENTO === 'N') ? null : 'red'
+    };
+  }
 }

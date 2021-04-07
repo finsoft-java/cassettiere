@@ -19,9 +19,10 @@ require_logged_user_JWT();
 
 $cod_ubicazione = isset($_GET['COD_UBICAZIONE']) ? $con->escape_string($_GET['COD_UBICAZIONE']) : null;
 $cod_area = isset($_GET['COD_AREA']) ? $con->escape_string($_GET['COD_AREA']) : null;
+$sort = isset($_GET['SORT']) ? $con->escape_string($_GET['SORT']) : null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        [$ubicazioni, $count] = $ubicazioneManager->get_ubicazioni($cod_area);
+        [$ubicazioni, $count] = $ubicazioneManager->get_ubicazioni($cod_area, $sort);
           
         header('Content-Type: application/json');
         echo json_encode(['data' => $ubicazioni, 'count' => $count]);
