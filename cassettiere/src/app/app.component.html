@@ -1,20 +1,20 @@
 <mat-drawer-container class="example-container" autosize>
     <mat-drawer #drawer class="example-sidenav" mode="side">
         <nav style="padding:15px;">
-            <button mat-menu-item (click)="router_frontend.navigate(['home']); drawer.toggle()">
-                <span>Aree</span>
+            <button mat-menu-item (click)="routerFrontend.navigate(['report-segnalazioni']); drawer.toggle()">
+                <span>Segnalazioni attive</span>
             </button>
-            <button mat-menu-item (click)="router_frontend.navigate(['storico-operazioni']); drawer.toggle()">
-                <span>Storico Operazioni</span>
+            <button mat-menu-item (click)="routerFrontend.navigate(['report-ubicazioni']); drawer.toggle()">
+                <span>Stato ubicazioni</span>
             </button>
-            <button mat-menu-item (click)="router_frontend.navigate(['ubicazioni']); drawer.toggle()" >
-                <span>Ubicazioni</span>
+            <button mat-menu-item (click)="routerFrontend.navigate(['storico-operazioni']); drawer.toggle()">
+                <span>Storico operazioni</span>
             </button>
-            <button mat-menu-item (click)="router_frontend.navigate(['report-segnalazioni']); drawer.toggle()">
-                <span>Report segnalazioni attive</span>
+            <button mat-menu-item (click)="routerFrontend.navigate(['aree']); drawer.toggle()">
+                <span>Anagrafica Aree</span>
             </button>
-            <button mat-menu-item (click)="router_frontend.navigate(['report-ubicazioni']); drawer.toggle()">
-                <span>Report stato ubicazioni</span>
+            <button mat-menu-item (click)="routerFrontend.navigate(['ubicazioni']); drawer.toggle()" >
+                <span>Anagrafica Ubicazioni</span>
             </button>
             <button mat-menu-item (click)="logout(); drawer.toggle()">
                 <span>Logout</span>

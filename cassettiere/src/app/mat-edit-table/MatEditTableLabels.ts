@@ -11,5 +11,4 @@ export interface MatEditTableLabels {
   exportXlsx: string;
   exportCsv: string;
   refresh: string;
-  search: string;
 }

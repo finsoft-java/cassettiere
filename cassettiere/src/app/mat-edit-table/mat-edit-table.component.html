@@ -5,10 +5,7 @@
   <button mat-raised-button color="primary" style="float: right;margin: 0px 10px 20px 0px;" [disabled]="!buttonsEnabled" (click)="refresh()">{{labels.refresh}}</button>
 </div>
 
-<mat-form-field *ngIf="search">
-  <mat-label>{{labels.search}}</mat-label>
-  <input matInput [(ngModel)]="searchString" (change)="getAll()"/>
-</mat-form-field>
+<ng-content></ng-content>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width:100%" id="edittable">
     <ng-container matColumnDef="{{col.data}}" *ngFor="let col of columns">

@@ -5,11 +5,11 @@ import { Area } from '../_models';
 import { AreeService } from '../_services/aree.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-aree',
+  templateUrl: './aree.component.html',
+  styleUrls: ['./aree.component.css']
 })
-export class HomeComponent implements OnInit {
+export class AreeComponent implements OnInit {
 
   service: AreeService;
   datePipe: DatePipe = new DatePipe('en-US');

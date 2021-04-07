@@ -16,7 +16,7 @@ export class StoricoOperazioniService extends MockService<StoricoOperazione> {
     super();
   }
 
-  isMock = true;
+  isMock = false;
   mockData: ListBean<StoricoOperazione> = {
     data: [
       {
@@ -33,7 +33,6 @@ export class StoricoOperazioniService extends MockService<StoricoOperazione> {
   };
 
   getAll(filter: any): Observable<ListBean<StoricoOperazione>> {
-    this.isMock = false;
     if (this.isMock){
       return new Observable( observer => {
         // JSON parse/stringify serve per eseguire una deep copy

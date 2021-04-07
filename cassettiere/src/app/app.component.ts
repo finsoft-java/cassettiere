@@ -10,27 +10,27 @@ import { filter } from 'rxjs/operators';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'cassettiere';
-  router_frontend: Router;
+  routerFrontend: Router;
   showFiller = false;
-  isLogged: boolean = false;
-  _subscription: Subscription = new Subscription;
-  currentUserSubject: User = new User;
+  isLogged = false;
+  subscription: Subscription = new Subscription();
+  currentUserSubject: User = new User();
   menuDisabled = true;
 
   constructor(private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService) {
-    this.router_frontend = router;
+    this.routerFrontend = router;
   }
 
   ngOnInit(): void {
-    let url = window.location.href.endsWith('login');
+    const url = window.location.href.endsWith('login');
     let token = localStorage.getItem('currentUser');
 
-    this._subscription = this.authenticationService.nameChange.subscribe((value) => {
+    this.subscription = this.authenticationService.nameChange.subscribe((value) => {
       this.currentUserSubject.username = value;
     });
-    if(token == null){
+    if (token == null) {
       token = '';
     }
     this.currentUserSubject.username = token;
@@ -39,18 +39,17 @@ export class AppComponent {
     } else {
       this.isLogged = false;
     }
-    
+
     this.router.events.pipe(filter((evt: Event) => evt instanceof NavigationEnd)).subscribe((evt: Event) => {
-        this.menuDisabled = ((<NavigationEnd>evt).url == '/login');
+        this.menuDisabled = ((evt as NavigationEnd).url === '/login');
     });
   }
 
-  logout(){
+  logout(): void {
     this.authenticationService.logout();
   }
 
-  changeIcon(){
-
+  changeIcon(): void {
   }
 
 }
