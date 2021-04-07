@@ -13,3 +13,4 @@ include("functions.php");
 include("class_area.php");
 include("class_ubicazione.php");
 include("class_storicoOperazione.php");
+include("class_panthera.php");
