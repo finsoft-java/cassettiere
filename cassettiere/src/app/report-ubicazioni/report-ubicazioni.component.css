@@ -12,6 +12,14 @@
     position: absolute;
     width:100%;
     text-align: center;
+    top: 50%;
+    font-size: 40px;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 
 .boxrosso {
