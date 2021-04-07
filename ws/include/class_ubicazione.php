@@ -4,7 +4,7 @@ $ubicazioneManager = new UbicazioniManager();
 
 class UbicazioniManager {
     
-    function get_ubicazioni($codArea = null, $sort = null) {
+    function get_ubicazioni($codArea = null, $orderby = null) {
         global $con;
         
         $sql0 = "SELECT COUNT(*) AS cnt ";
@@ -14,8 +14,9 @@ class UbicazioniManager {
         if ($codArea) {
             $sql .= "AND ub.COD_AREA='$codArea'";
         }
-        if ($sort) {
-            $sql .= " ORDER BY $sort";
+        if ($orderby && preg_match("/^[a-zA-Z0-9,_ ]+$/", $orderby)) {
+            // avoid SQL-injection
+            $sql .= " ORDER BY $orderby";
         } else {
             $sql .= " ORDER BY ub.COD_AREA, ub.COD_UBICAZIONE";
         }
