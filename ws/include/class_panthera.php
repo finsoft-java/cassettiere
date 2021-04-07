@@ -115,8 +115,8 @@ class PantheraManager {
     function get_articoli($top=null, $skip=null, $search=null) {
         if ($this->mock) {
             $articoli = [ [ 'COD_ARTICOLO' => 'AAAAA', 'DESCRIZIONE' => 'Carote' ],
-                      [ 'COD_ARTICOLO' => 'BBBB', 'NOME' => 'Patate' ],
-                      [ 'COD_ARTICOLO' => 'ZZZZZZ', 'NOME' => 'Zucchine' ]
+                      [ 'COD_ARTICOLO' => 'BBBB', 'DESCRIZIONE' => 'Patate' ],
+                      [ 'COD_ARTICOLO' => 'ZZZZZZ', 'DESCRIZIONE' => 'Zucchine' ]
                      ];
             $count = 1000;
         } else {

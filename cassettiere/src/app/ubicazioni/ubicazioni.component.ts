@@ -21,40 +21,9 @@ export class UbicazioniComponent implements OnInit {
   dataSource = new MatTableDataSource<[]>();
   search_box?: any[];
   displayedColumns: string[] = ['ubicazione','articolo', 'qnt', 'area', 'esaurimento', 'actions'];
-
   
-  columns: ColumnDefinition<Ubicazione>[] = [
-    {
-      title: 'Cod. Ubicazione',
-      data: 'COD_UBICAZIONE',
-      disabled: true
-    },
-    {
-      title: 'Cod. Articolo',
-      data: 'COD_ARTICOLO',
-      type: 'combo'
-    },
-    {
-      title: 'Qnt. prevista',
-      data: 'QUANTITA_PREVISTA'
-    },
-    {
-      title: 'Area',
-      data: 'COD_AREA',
-      type: 'select',
-      options: this.arrayAree
-    },
-    {
-      title: 'In esaurimento',
-      data: 'SEGNALAZIONE_ESAURIMENTO',
-      type: 'select',
-      options: [{label: 'Sì', value: 'Y'}, {label: 'No', value: 'N'}],
-      render: (data) => (data === 'N' ? 'No' : 'Sì')
-    }
-  ];
-  
-  public bankCtrl: FormControl = new FormControl();
-  public bankFilterCtrl: FormControl = new FormControl();
+  public articolo: FormControl = new FormControl();
+  public articolo_search: FormControl = new FormControl();
   
   constructor(private ubicSvc: UbicazioniService,private areeSvc: AreeService, 
     private alertService: AlertService,
@@ -88,7 +57,19 @@ export class UbicazioniComponent implements OnInit {
   }
   
   newUbicazione(){
+    let obj:any = {
+      COD_AREA: "",
+      COD_ARTICOLO_CONTENUTO: "",
+      COD_UBICAZIONE: "",
+      DESCRIZIONE_AREA: "",
+      QUANTITA_PREVISTA: "",
+      SEGNALAZIONE_ESAURIMENTO: "N",
+      isEditable:true
+    }
+    console.log(this.dataSource.data);
     
+    this.dataSource.data.push(obj);
+    console.log(this.dataSource.data);
   }
   salvaModifica(prgSpesa: any){
     if(prgSpesa.COD_UBICAZIONE == null){
