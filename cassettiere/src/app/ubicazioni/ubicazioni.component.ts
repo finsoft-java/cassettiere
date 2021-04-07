@@ -47,6 +47,8 @@ export class UbicazioniComponent implements OnInit {
     {
       title: 'In esaurimento',
       data: 'SEGNALAZIONE_ESAURIMENTO',
+      type: 'select',
+      options: [{label: 'Sì', value: 'Y'}, {label: 'No', value: 'N'}],
       render: (data) => (data === 'N' ? 'No' : 'Sì')
     }
   ];
