@@ -1,7 +1,18 @@
-<p>report-ubicazioni works!</p>
+<h2>
+  Stato ubicazioni
+</h2>
 
+<div>
+  <div *ngFor="let u of ubicazioni" class="boxverde" (click)="setArea(u.COD_AREA,myTable)">
+    {{ u.COD_AREA }}
+    <div [style.width]="'' + (u.IN_ESAURIMENTO/u.NUM_UBICAZIONI*100) + '%'" class="boxrosso"></div>
+  </div>
+</div>
 
-Qui ci dovranno essere due schermate successive<br/>
-La prima fa una query sulla vista REPORT_UBICAZIONI_PER_AREA<br/>
-La seconda fa una query sulla tabella UBICAZIONI filtrata per COD_AREA
-
+<app-mat-edit-table [style.visibility]="showTable ? 'visible' : 'hidden'"
+  [editable]="false"
+  [columns]="columns"
+  [service]="service"
+  #myTable
+>
+</app-mat-edit-table>

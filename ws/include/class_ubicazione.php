@@ -4,13 +4,16 @@ $ubicazioneManager = new UbicazioniManager();
 
 class UbicazioniManager {
     
-    function get_ubicazioni() {
+    function get_ubicazioni($codArea = null) {
         global $con;
         
         $sql0 = "SELECT COUNT(*) AS cnt ";
         $sql1 = "SELECT ub.COD_UBICAZIONE,ub.COD_ARTICOLO_CONTENUTO,ub.SEGNALAZIONE_ESAURIMENTO, ub.QUANTITA_PREVISTA ,ub.COD_AREA, ar.DESCRIZIONE as DESCRIZIONE_AREA ";
         
-        $sql = "FROM ubicazioni ub join aree ar on ub.cod_area = ar.COD_AREA";
+        $sql = "FROM ubicazioni ub join aree ar on ub.cod_area = ar.COD_AREA WHERE 1=1 ";
+        if ($codArea) {
+            $sql .= "AND ub.COD_AREA='$codArea'";
+        }
         $sql .= " ORDER BY ub.COD_AREA, ub.COD_UBICAZIONE";
         $count = select_single_value($sql0 . $sql);
         $ubicazioni = select_list($sql1 . $sql);        
@@ -59,5 +62,17 @@ class UbicazioniManager {
         }
     }
 
+    function get_ubicazioni_per_area() {
+        global $con;
+        
+        $sql0 = "SELECT COUNT(*) AS cnt ";
+        $sql1 = "SELECT * ";
+
+        $sql = "FROM report_ubicazioni_per_area ";
+        $sql .= "ORDER BY COD_AREA ";
+        $count = select_single_value($sql0 . $sql);
+        $ubicazioni = select_list($sql1 . $sql);        
+        return [$ubicazioni, $count];
+    }
 }
 ?>

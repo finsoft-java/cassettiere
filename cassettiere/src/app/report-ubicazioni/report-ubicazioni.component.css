@@ -1,0 +1,15 @@
+.boxverde {
+    width: 7cm;
+    height: 4cm;
+    float: left;
+    background-color: green;
+    text-align: center;
+    border: solid 1px;
+    margin: 5px;
+}
+
+.boxrosso {
+    height: 100%;
+    float: right;
+    background-color: red
+}

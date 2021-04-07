@@ -187,8 +187,10 @@ COMMIT;
 
 
 CREATE VIEW `report_ubicazioni_per_area`  AS
-SELECT `ubicazioni`.`COD_AREA` AS `COD_AREA`, count(0) AS `NUM_UBICAZIONI`, sum(case when `ubicazioni`.`SEGNALAZIONE_ESAURIMENTO` = 'N' then 0 else 1 end) AS `IN_ESAURIMENTO`
-FROM `ubicazioni` GROUP BY `ubicazioni`.`COD_AREA` ;
+SELECT `ubicazioni`.`COD_AREA` AS `COD_AREA`, aree.DESCRIZIONE, count(0) AS `NUM_UBICAZIONI`, sum(case when `ubicazioni`.`SEGNALAZIONE_ESAURIMENTO` = 'N' then 0 else 1 end) AS `IN_ESAURIMENTO`
+FROM `ubicazioni` 
+JOIN aree ON aree.COD_AREA=ubicazioni.COD_AREA
+GROUP BY `ubicazioni`.`COD_AREA`;
 
 CREATE VIEW report_segnalazioni_attive AS
 SELECT u.COD_UBICAZIONE,u.`COD_ARTICOLO_CONTENUTO`,u.`QUANTITA_PREVISTA`,u.`COD_AREA`,
