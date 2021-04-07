@@ -17,7 +17,7 @@ export class ReportSegnalazioniComponent implements OnInit {
     {
       title: 'Area',
       data: 'COD_AREA',
-      render: (data, row) => data + ' ' + row?.DESCRIZIONE_AREA
+      render: (data, row) => data + ' - ' + row?.DESCRIZIONE_AREA
     },
     {
       title: 'Ubicazione',
