@@ -15,7 +15,9 @@ body {
     float: none;
     text-align: center;
 }
-
+.content{
+    margin:30px 0px;
+}
 
 /* top bar */
 

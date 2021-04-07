@@ -27,8 +27,3 @@
     float: right;
     background-color: red
 }
-
-::ng-deep app-mat-edit-table{
-    float: left;
-    width: 100%;
-}
