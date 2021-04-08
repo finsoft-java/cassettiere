@@ -31,30 +31,35 @@ export class UbicazioniComponent implements OnInit {
     {
       title: 'Cod. Ubicazione',
       data: 'COD_UBICAZIONE',
-      disabled: true
+      disabled: true,
+      width: '15%'
     },
     {
       title: 'Cod. Articolo',
       data: 'COD_ARTICOLO_CONTENUTO',
-      type: 'combo'
+      type: 'combo',
+      width: '20%'
     },
     {
       title: 'Qnt. prevista',
       data: 'QUANTITA_PREVISTA',
-      type: 'number'
+      type: 'number',
+      width: '10%'
     },
     {
       title: 'Area',
       data: 'COD_AREA',
       type: 'select',
-      options: this.arrayAree
+      options: this.arrayAree,
+      width: '20%'
     },
     {
       title: 'In esaurimento',
       data: 'SEGNALAZIONE_ESAURIMENTO',
       type: 'select',
       options: [{label: 'Sì', value: 'Y'}, {label: 'No', value: 'N'}],
-      render: (data) => (data === 'N' ? 'No' : 'Sì')
+      render: (data) => (data === 'N' ? 'No' : 'Sì'),
+      width: '10%'
     }
   ];
 
