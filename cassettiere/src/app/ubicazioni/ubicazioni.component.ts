@@ -40,7 +40,8 @@ export class UbicazioniComponent implements OnInit {
     },
     {
       title: 'Qnt. prevista',
-      data: 'QUANTITA_PREVISTA'
+      data: 'QUANTITA_PREVISTA',
+      type: 'number'
     },
     {
       title: 'Area',
