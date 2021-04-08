@@ -1,3 +1,5 @@
+import { map } from 'rxjs/operators';
+import { ArticoliService } from './../_services/articoli.service';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -82,7 +84,7 @@ export class MatEditTableComponent<T> implements OnInit {
   XLSX_SHEET_NAME = 'Data';
   CSV_FILE_NAME = 'Export.csv';
 
-  constructor() { }
+  constructor(private articoliService: ArticoliService) { }
 
   ngOnInit(): void {
     if (this.editable) {
@@ -197,6 +199,7 @@ export class MatEditTableComponent<T> implements OnInit {
     this.buttonsEnabled = false;
     this.editRowNumber = -1;
     const row = this.data[rowNum];
+    console.log(this);
     this.service.create(row).subscribe(
       response => {
         console.log('Emitting create row:', row);
@@ -336,7 +339,20 @@ export class MatEditTableComponent<T> implements OnInit {
     saveAs(blob, this.CSV_FILE_NAME);
   }
 
-  onSearchChange($event: any, col: ColumnDefinition<T>): void {
-    console.log($event);
+  onSearchChange($event: Event, col: ColumnDefinition<T>,data: string): any {
+    
+    if(data.length < 3){
+      console.log('non faccio la chiamata < 3 caratteri');
+      return false;
+    }
+
+    this.articoliService.getAll({ top: 15, searchString: data })
+          .pipe(map(listBean => listBean.data.map( x => {
+            alert();
+              return {
+                label: x.ID_ARTICOLO + ' - ' + x.DESCRIZIONE,
+                value: x.ID_ARTICOLO
+              };
+            })));
   }
 }

@@ -121,33 +121,7 @@ export class UbicazioniComponent implements OnInit {
     this.dataSource.data.push(obj);
     console.log(this.dataSource.data);
   }
-  salvaModifica(prgSpesa: any){
-    if(prgSpesa.COD_UBICAZIONE == null){
-        this.ubicSvc.create(prgSpesa)
-        .subscribe(response => {
-          this.dataSource.data.splice(-1, 1);
-          this.dataSource.data.push(response["value"][0]);
-          this.dataSource.data = this.dataSource.data;
-          this.alertService.success("Ubicazione salvata con successo");
-          prgSpesa.isEditable=false;
-        },
-        error => {
-          this.alertService.error(error);
-        });
-    } else {
-      if(prgSpesa.IMPORTO != '' || prgSpesa.IMPORTO != null){
-        this.ubicSvc.update(prgSpesa)
-        .subscribe(response => {
-          this.alertService.success("Ubicazione modificata con successo");
-          prgSpesa.isEditable=false;
-        },
-        error => {
-          this.alertService.error(error);
-        });
-      }
-    }
-  }
-
+  
   ngOnInit(): void {
     this.areeSvc.getAll().subscribe(
       response => {
@@ -162,9 +136,6 @@ export class UbicazioniComponent implements OnInit {
     );
     this.arrayEsaurimento.push({label:'No',value:'N'},{label:'Si',value:'Y'});
     this.getUbicazioni();
-  }
-  onSearchChange(event:any){
-    console.log(event);
   }
 
   filterRow(editTableComponent: any): void {

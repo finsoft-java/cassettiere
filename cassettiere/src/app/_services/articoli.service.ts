@@ -40,6 +40,7 @@ export class ArticoliService extends MockService<Articolo> {
   };
 
   getAll(filter?: any): Observable<ListBean<Articolo>> {
+    console.log(filter);
     this.isMock = false;
     if (this.isMock) {
       return new Observable( observer => {
@@ -56,6 +57,7 @@ export class ArticoliService extends MockService<Articolo> {
         filter.top = 10;
       }
       return this.http.get<ListBean<any>>(environment.wsUrl + 'Articoli.php', { params: filter || {}});
+      
     }
   }
 
