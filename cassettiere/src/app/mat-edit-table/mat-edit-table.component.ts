@@ -1,15 +1,12 @@
-import { FormControl } from '@angular/forms';
-import { map } from 'rxjs/operators';
-import { ArticoliService } from './../_services/articoli.service';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { Observable } from 'rxjs';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { MatEditTableLabels } from './MatEditTableLabels';
 import { HttpCrudService } from '../_services/HttpCrudService';
 import { ColumnDefinition, LabelValue } from './ColumnDefinition';
-import { Observable } from 'rxjs';
 import { MockService } from '.';
 
 @Component({
@@ -79,15 +76,14 @@ export class MatEditTableComponent<T> implements OnInit {
   oldRow: T = {} as T;
   buttonsEnabled = true;
   filtro: any = {};
-  searchValue: string = "";
-  articolo: FormControl = new FormControl();
+  searchValue: string = '';
 
   ACTIONS_INDEX = '$$actions';
   XLSX_FILE_NAME = 'Export.xlsx';
   XLSX_SHEET_NAME = 'Data';
   CSV_FILE_NAME = 'Export.csv';
 
-  constructor(private articoliService: ArticoliService) { }
+  constructor() { }
 
   ngOnInit(): void {
     if (this.editable) {
@@ -164,6 +160,25 @@ export class MatEditTableComponent<T> implements OnInit {
     }
   }
 
+  onSearchChange(row: T, col: ColumnDefinition<T>, data: string): any {
+
+    (row as any)[col.data] = data;
+
+    if (data.length <= 3) {
+      // non faccio la chiamata < 3 caratteri
+      return false;
+    }
+
+    if (col.asyncOptions) {
+      col.asyncOptions(row).subscribe(
+        options => {
+          console.log('Received options', options);
+          col.options = options;
+        }
+      );
+    }
+  }
+
   beginCreate(): void {
     const newRow = {} as T;
     this.data.unshift(newRow);
@@ -182,7 +197,7 @@ export class MatEditTableComponent<T> implements OnInit {
         const f = col.asyncOptions as (row?: T) => Observable<LabelValue[]>;
         f(row).subscribe(
           options => {
-            console.log(options);
+            console.log('Received options', options);
             col.options = options;
           }
         );
@@ -342,20 +357,5 @@ export class MatEditTableComponent<T> implements OnInit {
     const csv = XLSX.utils.sheet_to_csv(ws, {FS: ';'});
     const blob = new Blob([csv], {type: 'text/csv;charset=UTF-8'});
     saveAs(blob, this.CSV_FILE_NAME);
-  }
-
-  onSearchChange($event: Event, col: ColumnDefinition<T>, data: string): any {
-    if (data.length <= 3) {
-      console.log('non faccio la chiamata < 3 caratteri');
-      return false;
-    }
-
-    this.articoliService.getAll({ top: 15, searchString: data })
-          .pipe(map(listBean => listBean.data.map( x => {
-              return {
-                label: x.ID_ARTICOLO + ' - ' + x.DESCRIZIONE,
-                value: x.ID_ARTICOLO
-              };
-            })));
   }
 }
