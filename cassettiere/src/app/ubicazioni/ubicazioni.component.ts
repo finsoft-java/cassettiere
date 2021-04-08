@@ -18,12 +18,7 @@ export class UbicazioniComponent implements OnInit {
   arrayAree: LabelValue[] = [];
   arrayEsaurimento: LabelValue[] = [];
   service: UbicazioniService;
-  dataSource = new MatTableDataSource<[]>();
-  searchBox?: any[];
-  displayedColumns: string[] = ['ubicazione', 'articolo', 'qnt', 'area', 'esaurimento', 'actions'];
   filter: any = {};
-
-  public articolo: FormControl = new FormControl();
 
   columns: ColumnDefinition<Ubicazione>[] = [
     {
@@ -37,7 +32,7 @@ export class UbicazioniComponent implements OnInit {
       data: 'COD_ARTICOLO_CONTENUTO',
       type: 'combo',
       asyncOptions: (row) => {
-        return this.articoliService.getAll({ top: 15, searchString: row?.COD_ARTICOLO_CONTENUTO })
+        return this.articoliService.getAll({ top: 15, search: row?.COD_ARTICOLO_CONTENUTO })
           .pipe(map(listBean => listBean.data.map( x => {
               return {
                 label: x.ID_ARTICOLO + ' - ' + x.DESCRIZIONE,
@@ -77,31 +72,6 @@ export class UbicazioniComponent implements OnInit {
     this.service = ubicSvc;
   }
 
-  getRecord(prgSpesa: any): void {
-    prgSpesa.isEditable = true;
-  }
-
-  getUbicazioni(): void{
-    this.ubicSvc.getAll()
-      .subscribe(response => {
-        this.dataSource = new MatTableDataSource<[]>(response['data']);
-      },
-      error => {
-        this.dataSource = new MatTableDataSource<[]>();
-      });
-  }
-
-  // tslint:disable-next-line: typedef
-  deleteChange(prgSpesa: any){
-    this.ubicSvc.delete(prgSpesa.ID_SPESA)
-        // tslint:disable-next-line: deprecation
-        .subscribe(response => {
-        },
-        error => {
-          this.alertService.error('Impossibile eliminare il record');
-        });
-  }
-
   ngOnInit(): void {
     // tslint:disable-next-line: deprecation
     this.areeSvc.getAll().subscribe(
@@ -115,20 +85,19 @@ export class UbicazioniComponent implements OnInit {
       }
     );
     this.arrayEsaurimento.push({label: 'No', value: 'N'}, {label: 'Si', value: 'Y'});
-    this.getUbicazioni();
   }
 
   filterRow(editTableComponent: any): void {
 
-    if (this.filter.searchString) {
-      this.filter.searchString = this.filter.searchString.trim();
+    if (this.filter.search) {
+      this.filter.search = this.filter.search.trim();
     }
     editTableComponent.filter(this.filter);
 
   }
 
   resetFilter(editTableComponent: any): void {
-    delete this.filter.searchString;
+    delete this.filter.search;
     editTableComponent.filter(this.filter);
   }
 }

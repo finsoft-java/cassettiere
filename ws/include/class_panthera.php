@@ -128,8 +128,8 @@ class PantheraManager {
             $sql1 = "SELECT COD_ARTICOLO,DESCRIZIONE ";
             $sql = "FROM THIP.ARTICOLI WHERE ID_AZIENDA='001'";
             if ($search) {
-                // FIXME dovrei evitare SQL injection...
-                $sql .= "WHERE COD_ARTICOLO LIKE '%$search%' OR DESCRIZIONE LIKE '%$search%' ";
+                $search = strtoupper($search);
+                $sql .= "WHERE upper(COD_ARTICOLO) LIKE '%$search%' OR DESCRIZIONE LIKE upper('%$search%') ";
             }
             $sql .= "ORDER BY 1 ";
 

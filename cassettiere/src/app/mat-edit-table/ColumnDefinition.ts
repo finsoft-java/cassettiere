@@ -8,7 +8,7 @@ export interface ColumnDefinition<T> {
   title: string;
   /** Nome dell'attributo dell'oggetto. E' obbligatorio ma puo' essere fittizio. */
   data: string;
-  /** input type: text/number/date/hidden/select/... */
+  /** input type: text/number/date/hidden/select/... oppure combo(=input+select) */
   type?: string;
   /** width style property */
   width?: string;

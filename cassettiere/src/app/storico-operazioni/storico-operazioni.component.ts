@@ -73,8 +73,8 @@ export class StoricoOperazioniComponent implements OnInit {
       this.filter.DATA_INIZIO = formatDate(this.range.value.start , 'YYYY-MM-dd', 'en-GB');
     }
 
-    if (this.filter.searchString) {
-      this.filter.searchString = this.filter.searchString.trim();
+    if (this.filter.search) {
+      this.filter.search = this.filter.search.trim();
     }
 
     editTableComponent.filter(this.filter);
@@ -83,7 +83,7 @@ export class StoricoOperazioniComponent implements OnInit {
   resetFilter(editTableComponent: any): void {
     delete this.filter.DATA_INIZIO;
     delete this.filter.DATA_FINE;
-    delete this.filter.searchString;
+    delete this.filter.search;
     editTableComponent.filter(this.filter);
   }
 

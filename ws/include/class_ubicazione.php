@@ -4,7 +4,7 @@ $ubicazioneManager = new UbicazioniManager();
 
 class UbicazioniManager {
     
-    function get_ubicazioni($codArea = null, $orderby = null) {
+    function get_ubicazioni($codArea=null, $search=null, $orderby=null) {
         global $con;
         
         $sql0 = "SELECT COUNT(*) AS cnt ";
@@ -13,6 +13,10 @@ class UbicazioniManager {
         $sql = "FROM ubicazioni ub join aree ar on ub.cod_area = ar.COD_AREA WHERE 1=1 ";
         if ($codArea) {
             $sql .= "AND ub.COD_AREA='$codArea'";
+        }
+        if ($search) {
+            $search = strtoupper($search);
+            $sql .= "AND (upper(ub.COD_AREA) like '%$search%' or upper(ub.COD_UBICAZIONE) like '%$search%' or upper(ub.COD_ARTICOLO_CONTENUTO) like '%$search%')";
         }
         if ($orderby && preg_match("/^[a-zA-Z0-9,_ ]+$/", $orderby)) {
             // avoid SQL-injection

@@ -19,7 +19,7 @@ export class ReportUbicazioniService extends MockService<Ubicazione> {
       filter = {};
     }
     filter.COD_AREA = this.codArea;
-    filter.SORT = 'SEGNALAZIONE_ESAURIMENTO DESC';
+    filter.sort = 'SEGNALAZIONE_ESAURIMENTO DESC';
     return this.http.get<ListBean<any>>(environment.wsUrl + 'Ubicazioni.php', { params: filter });
   }
 
