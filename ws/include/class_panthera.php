@@ -9,6 +9,10 @@ class PantheraManager {
         $this->conn = null;
     }
     
+    function escape_string($s) {
+        return ($this->conn) ? $this->conn->escape_string($s) : $s;
+    }
+
     function fmt_errors() {
         $errors = sqlsrv_errors();
         if (count($errors) >= 1) {
@@ -114,9 +118,9 @@ class PantheraManager {
 
     function get_articoli($top=null, $skip=null, $search=null) {
         if ($this->mock) {
-            $articoli = [ [ 'COD_ARTICOLO' => 'AAAAA', 'DESCRIZIONE' => 'Carote' ],
-                      [ 'COD_ARTICOLO' => 'BBBB', 'DESCRIZIONE' => 'Patate' ],
-                      [ 'COD_ARTICOLO' => 'ZZZZZZ', 'DESCRIZIONE' => 'Zucchine' ]
+            $articoli = [ [ 'ID_ARTICOLO' => 'AAAAA', 'DESCRIZIONE' => 'Carote' ],
+                      [ 'ID_ARTICOLO' => 'BBBB', 'DESCRIZIONE' => 'Patate' ],
+                      [ 'ID_ARTICOLO' => 'ZZZZZZ', 'DESCRIZIONE' => 'Zucchine' ]
                      ];
             $count = 1000;
         } else {

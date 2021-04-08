@@ -52,7 +52,9 @@ export class ArticoliService extends MockService<Articolo> {
       if (!filter) {
         filter = {};
       }
-      filter.top = 10;
+      if (!filter.top) {
+        filter.top = 10;
+      }
       return this.http.get<ListBean<any>>(environment.wsUrl + 'Articoli.php', { params: filter || {}});
     }
   }
