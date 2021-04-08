@@ -34,7 +34,7 @@ export class MatEditTableComponent<T> implements OnInit {
     exportXlsx: 'Export XLSX',
     exportCsv: 'Export CSV'
   };
-  
+
   @Input()
   columns: ColumnDefinition<T>[] = [];
 
@@ -79,7 +79,7 @@ export class MatEditTableComponent<T> implements OnInit {
   oldRow: T = {} as T;
   buttonsEnabled = true;
   filtro: any = {};
-  searchValue: string = "";
+  searchValue = '';
   articolo: FormControl = new FormControl();
 
   ACTIONS_INDEX = '$$actions';
@@ -164,7 +164,7 @@ export class MatEditTableComponent<T> implements OnInit {
     }
   }
 
-  beginCreate(): void {
+  beginCreate(): void{
     const newRow = {} as T;
     this.data.unshift(newRow);
     this.dataSource.data = this.data;
@@ -272,7 +272,7 @@ export class MatEditTableComponent<T> implements OnInit {
     }
   }
 
-  undoChange (rowNum: number): void {
+  undoChange(rowNum: number): void {
     console.log('Undo');
     this.editRowNumber = -1;
     if (this.creating) {
@@ -295,7 +295,7 @@ export class MatEditTableComponent<T> implements OnInit {
     return row;
   }
 
-  getSheetDataColumns (): any[] {
+  getSheetDataColumns(): any[] {
     const row = Array();
     this.columns.forEach(col => {
       if (col.data !== this.ACTIONS_INDEX) {

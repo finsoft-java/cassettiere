@@ -19,7 +19,9 @@ export class AppComponent implements OnInit {
   currentUserSubject: User = new User();
   menuDisabled = true;
 
-  constructor(private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private authenticationService: AuthenticationService) {
     this.routerFrontend = router;
   }
 

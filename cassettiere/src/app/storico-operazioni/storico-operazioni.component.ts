@@ -1,11 +1,9 @@
 import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { Observable } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ColumnDefinition } from './../mat-edit-table/ColumnDefinition';
 import { StoricoOperazione } from './../_models/area';
 import { StoricoOperazioniService } from './../_services/storico-operazioni.service';
 import { Component, OnInit } from '@angular/core';
-import { startWith, map, filter } from 'rxjs/operators';
 import { formatDate } from '@angular/common';
 
 @Component({

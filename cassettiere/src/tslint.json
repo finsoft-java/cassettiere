@@ -12,6 +12,13 @@
             "element",
             "app",
             "kebab-case"
-        ]
+        ],
+        "max-line-length": {
+            "options": [120]
+        },
+        "prefer-for-of": false,
+        "deprecation": false,
+        "no-string-literal": false,
+        "no-invalid-template-strings": true
     }
 }

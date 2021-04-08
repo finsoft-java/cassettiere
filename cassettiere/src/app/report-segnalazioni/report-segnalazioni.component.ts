@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { ColumnDefinition } from '../mat-edit-table';
 import { Ubicazione } from '../_models';
 import { ReportSegnalazioniService } from '../_services/report.segnalazioni.service';
-import { UbicazioniService } from '../_services/ubicazioni.service';
 
 @Component({
   selector: 'app-report-segnalazioni',

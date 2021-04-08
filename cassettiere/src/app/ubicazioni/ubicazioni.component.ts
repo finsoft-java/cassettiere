@@ -6,7 +6,6 @@ import { ColumnDefinition, LabelValue } from './../mat-edit-table/ColumnDefiniti
 import { UbicazioniService } from './../_services/ubicazioni.service';
 import { Component, OnInit } from '@angular/core';
 import { Ubicazione } from '../_models';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ArticoliService } from '../_services/articoli.service';
 import { map } from 'rxjs/operators';
 
@@ -20,13 +19,11 @@ export class UbicazioniComponent implements OnInit {
   arrayEsaurimento: LabelValue[] = [];
   service: UbicazioniService;
   dataSource = new MatTableDataSource<[]>();
-  search_box?: any[];
-  displayedColumns: string[] = ['ubicazione','articolo', 'qnt', 'area', 'esaurimento', 'actions'];
+  searchBox?: any[];
+  displayedColumns: string[] = ['ubicazione', 'articolo', 'qnt', 'area', 'esaurimento', 'actions'];
   filter: any = {};
-  
+
   public articolo: FormControl = new FormControl();
-  public articolo_search: FormControl = new FormControl();
-  
 
   columns: ColumnDefinition<Ubicazione>[] = [
     {
@@ -76,65 +73,48 @@ export class UbicazioniComponent implements OnInit {
   constructor(private ubicSvc: UbicazioniService,
               private areeSvc: AreeService,
               private alertService: AlertService,
-              private route: ActivatedRoute,
-              private router: Router,
               private articoliService: ArticoliService) {
     this.service = ubicSvc;
   }
 
-  getRecord(prgSpesa: any){
+  getRecord(prgSpesa: any): void {
     prgSpesa.isEditable = true;
   }
 
-  getUbicazioni(): void {
+  getUbicazioni(): void{
     this.ubicSvc.getAll()
       .subscribe(response => {
-        console.log(response);
-        this.dataSource = new MatTableDataSource<[]>(response["data"]);
+        this.dataSource = new MatTableDataSource<[]>(response['data']);
       },
       error => {
         this.dataSource = new MatTableDataSource<[]>();
       });
   }
-  
-  deleteChange(prgSpesa:any){
+
+  // tslint:disable-next-line: typedef
+  deleteChange(prgSpesa: any){
     this.ubicSvc.delete(prgSpesa.ID_SPESA)
+        // tslint:disable-next-line: deprecation
         .subscribe(response => {
         },
         error => {
-          this.alertService.error("Impossibile eliminare il record");
+          this.alertService.error('Impossibile eliminare il record');
         });
   }
-  
-  newUbicazione(){
-    let obj:any = {
-      COD_AREA: "",
-      COD_ARTICOLO_CONTENUTO: "",
-      COD_UBICAZIONE: "",
-      DESCRIZIONE_AREA: "",
-      QUANTITA_PREVISTA: "",
-      SEGNALAZIONE_ESAURIMENTO: "N",
-      isEditable:true
-    }
-    console.log(this.dataSource.data);
-    
-    this.dataSource.data.push(obj);
-    console.log(this.dataSource.data);
-  }
-  
+
   ngOnInit(): void {
+    // tslint:disable-next-line: deprecation
     this.areeSvc.getAll().subscribe(
       response => {
-        console.log(response);
-        for(let i =0; i < response.data.length; i++){
-          this.arrayAree.push({label:response.data[i].COD_AREA+" - "+response.data[i].DESCRIZIONE,value:response.data[i].COD_AREA});
+        for (let i = 0; i < response.data.length; i++) {
+          this.arrayAree.push({label: response.data[i].COD_AREA + ' - ' + response.data[i].DESCRIZIONE,
+          value: response.data[i].COD_AREA});
         }
       },
       error => {
-        
       }
     );
-    this.arrayEsaurimento.push({label:'No',value:'N'},{label:'Si',value:'Y'});
+    this.arrayEsaurimento.push({label: 'No', value: 'N'}, {label: 'Si', value: 'Y'});
     this.getUbicazioni();
   }
 
@@ -143,8 +123,8 @@ export class UbicazioniComponent implements OnInit {
     if (this.filter.searchString) {
       this.filter.searchString = this.filter.searchString.trim();
     }
-
     editTableComponent.filter(this.filter);
+
   }
 
   resetFilter(editTableComponent: any): void {
