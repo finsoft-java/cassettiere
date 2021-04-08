@@ -1,3 +1,4 @@
+import { FormControl } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { ArticoliService } from './../_services/articoli.service';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
@@ -33,7 +34,7 @@ export class MatEditTableComponent<T> implements OnInit {
     exportXlsx: 'Export XLSX',
     exportCsv: 'Export CSV'
   };
-
+  
   @Input()
   columns: ColumnDefinition<T>[] = [];
 
@@ -78,6 +79,8 @@ export class MatEditTableComponent<T> implements OnInit {
   oldRow: T = {} as T;
   buttonsEnabled = true;
   filtro: any = {};
+  searchValue: string = "";
+  articolo: FormControl = new FormControl();
 
   ACTIONS_INDEX = '$$actions';
   XLSX_FILE_NAME = 'Export.xlsx';
@@ -200,6 +203,7 @@ export class MatEditTableComponent<T> implements OnInit {
     this.editRowNumber = -1;
     const row = this.data[rowNum];
     console.log(this);
+
     this.service.create(row).subscribe(
       response => {
         console.log('Emitting create row:', row);
@@ -222,6 +226,7 @@ export class MatEditTableComponent<T> implements OnInit {
     this.buttonsEnabled = false;
     this.editRowNumber = -1;
     const row = this.data[rowNum];
+    console.log(this);
     this.service.update(row).subscribe(
       response => {
         console.log('Emitting update row:', row);
@@ -267,7 +272,7 @@ export class MatEditTableComponent<T> implements OnInit {
     }
   }
 
-  undoChange(rowNum: number): void {
+  undoChange (rowNum: number): void {
     console.log('Undo');
     this.editRowNumber = -1;
     if (this.creating) {
@@ -290,7 +295,7 @@ export class MatEditTableComponent<T> implements OnInit {
     return row;
   }
 
-  getSheetDataColumns(): any[] {
+  getSheetDataColumns (): any[] {
     const row = Array();
     this.columns.forEach(col => {
       if (col.data !== this.ACTIONS_INDEX) {
@@ -332,23 +337,21 @@ export class MatEditTableComponent<T> implements OnInit {
     XLSX.writeFile(wb, this.XLSX_FILE_NAME);
   }
 
-  exportCsv(): void {
+  exportCsv(): void{
     const ws = this.createWorksheet();
     const csv = XLSX.utils.sheet_to_csv(ws, {FS: ';'});
     const blob = new Blob([csv], {type: 'text/csv;charset=UTF-8'});
     saveAs(blob, this.CSV_FILE_NAME);
   }
 
-  onSearchChange($event: Event, col: ColumnDefinition<T>,data: string): any {
-    
-    if(data.length < 3){
+  onSearchChange($event: Event, col: ColumnDefinition<T>, data: string): any {
+    if (data.length <= 3) {
       console.log('non faccio la chiamata < 3 caratteri');
       return false;
     }
 
     this.articoliService.getAll({ top: 15, searchString: data })
           .pipe(map(listBean => listBean.data.map( x => {
-            alert();
               return {
                 label: x.ID_ARTICOLO + ' - ' + x.DESCRIZIONE,
                 value: x.ID_ARTICOLO
