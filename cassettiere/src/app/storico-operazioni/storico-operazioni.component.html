@@ -21,7 +21,7 @@
         <input matInput [(ngModel)]="filter.search">
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" style="margin-right:15px;">
         <mat-label>Range Data</mat-label>
         <mat-date-range-input [rangePicker]="picker" [formGroup]="range">
           <input matStartDate placeholder="Start date" formControlName="start">
@@ -30,7 +30,8 @@
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
     </mat-form-field>
+  
     <button mat-raised-button color="primary" style="margin-right:15px;" (click)="filterRow(myTable)">Filtra</button>
-    <button mat-raised-button color="primary" style="margin-right:15px;" (click)="resetFilter(myTable)">Reset</button>
+    <button mat-raised-button color="secondary" style="margin-right:15px;" (click)="resetFilter(myTable)">Reset</button>
   </mat-expansion-panel>
 </app-mat-edit-table>
