@@ -19,14 +19,7 @@ export class UbicazioniComponent implements OnInit {
   arrayAree: LabelValue[] = [];
   arrayEsaurimento: LabelValue[] = [];
   service: UbicazioniService;
-  dataSource = new MatTableDataSource<[]>();
-  search_box?: any[];
-  displayedColumns: string[] = ['ubicazione','articolo', 'qnt', 'area', 'esaurimento', 'actions'];
   filter: any = {};
-  
-  public articolo: FormControl = new FormControl();
-  public articolo_search: FormControl = new FormControl();
-  
 
   columns: ColumnDefinition<Ubicazione>[] = [
     {
@@ -81,46 +74,6 @@ export class UbicazioniComponent implements OnInit {
               private articoliService: ArticoliService) {
     this.service = ubicSvc;
   }
-
-  getRecord(prgSpesa: any){
-    prgSpesa.isEditable = true;
-  }
-
-  getUbicazioni(): void {
-    this.ubicSvc.getAll()
-      .subscribe(response => {
-        console.log(response);
-        this.dataSource = new MatTableDataSource<[]>(response["data"]);
-      },
-      error => {
-        this.dataSource = new MatTableDataSource<[]>();
-      });
-  }
-  
-  deleteChange(prgSpesa:any){
-    this.ubicSvc.delete(prgSpesa.ID_SPESA)
-        .subscribe(response => {
-        },
-        error => {
-          this.alertService.error("Impossibile eliminare il record");
-        });
-  }
-  
-  newUbicazione(){
-    let obj:any = {
-      COD_AREA: "",
-      COD_ARTICOLO_CONTENUTO: "",
-      COD_UBICAZIONE: "",
-      DESCRIZIONE_AREA: "",
-      QUANTITA_PREVISTA: "",
-      SEGNALAZIONE_ESAURIMENTO: "N",
-      isEditable:true
-    }
-    console.log(this.dataSource.data);
-    
-    this.dataSource.data.push(obj);
-    console.log(this.dataSource.data);
-  }
   
   ngOnInit(): void {
     this.areeSvc.getAll().subscribe(
@@ -135,7 +88,6 @@ export class UbicazioniComponent implements OnInit {
       }
     );
     this.arrayEsaurimento.push({label:'No',value:'N'},{label:'Si',value:'Y'});
-    this.getUbicazioni();
   }
 
   filterRow(editTableComponent: any): void {
