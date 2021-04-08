@@ -33,7 +33,7 @@ export class UbicazioniComponent implements OnInit {
       type: 'combo',
       asyncOptions: (row) => {
         return this.articoliService.getAll({ top: 15, search: row?.COD_ARTICOLO_CONTENUTO })
-          .pipe(map(listBean => listBean.data.map( x => {
+          .pipe(map(listBean => listBean.data.map(x => {
               return {
                 label: x.ID_ARTICOLO + ' - ' + x.DESCRIZIONE,
                 value: x.ID_ARTICOLO

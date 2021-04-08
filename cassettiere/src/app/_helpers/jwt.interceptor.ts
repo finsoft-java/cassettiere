@@ -1,4 +1,3 @@
-import { User } from './../_models/area';
 import { AuthenticationService } from './../_services/authentication.service';
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
@@ -10,10 +9,10 @@ export class JwtInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // add authorization header with jwt token if available
-        let currentUser = this.authenticationService.currentUserSubject;
+        const currentUser = this.authenticationService.currentUserSubject;
         if (currentUser && currentUser.username) {
             request = request.clone({
-                setHeaders: { 
+                setHeaders: {
                     Authorization: `Bearer ${currentUser.username}`
                 }
             });

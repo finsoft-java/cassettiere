@@ -19,6 +19,7 @@
         "prefer-for-of": false,
         "deprecation": false,
         "no-string-literal": false,
-        "no-invalid-template-strings": true
+        "no-invalid-template-strings": true,
+        "space-within-parens":true
     }
 }
