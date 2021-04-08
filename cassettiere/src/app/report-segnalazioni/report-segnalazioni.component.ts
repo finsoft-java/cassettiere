@@ -51,17 +51,17 @@ export class ReportSegnalazioniComponent implements OnInit {
 
   filterRow(editTableComponent: any): void {
 
-    if (this.filter.searchString) {
-      this.filter.searchString = this.filter.searchString.trim();
+    if (this.filter.search) {
+      this.filter.search = this.filter.search.trim();
     } else {
-      delete this.filter.searchString;
+      delete this.filter.search;
     }
 
     editTableComponent.filter(this.filter);
   }
 
   resetFilter(editTableComponent: any): void {
-    delete this.filter.searchString;
+    delete this.filter.search;
     editTableComponent.filter(this.filter);
   }
 

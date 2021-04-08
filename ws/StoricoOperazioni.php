@@ -12,11 +12,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 require_logged_user_JWT();
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $searchString = null;
+    $search = null;
     $dataInizio = null;
     $dataFine = null;
-    if(isset($_GET['searchString'])) {
-        $searchString = $_GET['searchString'];
+    if(isset($_GET['search'])) {
+        $search = $_GET['search'];
     }
     if(isset($_GET['DATA_INIZIO'])) {
         $dataInizio = $_GET['DATA_INIZIO'];
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if(isset($_GET['DATA_FINE'])) {
         $dataFine = $_GET['DATA_FINE'];
     }
-    [$storicoOperazioni, $count] = $storicoOperazioneManager->get_storicoOperazioni($searchString,$dataInizio,$dataFine);
+    [$storicoOperazioni, $count] = $storicoOperazioneManager->get_storicoOperazioni($search,$dataInizio,$dataFine);
         
     header('Content-Type: application/json');
     echo json_encode(['data' => $storicoOperazioni, 'count' => $count]);

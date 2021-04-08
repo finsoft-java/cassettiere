@@ -40,7 +40,7 @@ export class UbicazioniComponent implements OnInit {
       data: 'COD_ARTICOLO_CONTENUTO',
       type: 'combo',
       asyncOptions: (row) => {
-        return this.articoliService.getAll({ top: 15, searchString: row?.COD_ARTICOLO_CONTENUTO })
+        return this.articoliService.getAll({ top: 15, search: row?.COD_ARTICOLO_CONTENUTO })
           .pipe(map(listBean => listBean.data.map( x => {
               return {
                 label: x.ID_ARTICOLO + ' - ' + x.DESCRIZIONE,
@@ -140,15 +140,15 @@ export class UbicazioniComponent implements OnInit {
 
   filterRow(editTableComponent: any): void {
 
-    if (this.filter.searchString) {
-      this.filter.searchString = this.filter.searchString.trim();
+    if (this.filter.search) {
+      this.filter.search = this.filter.search.trim();
     }
 
     editTableComponent.filter(this.filter);
   }
 
   resetFilter(editTableComponent: any): void {
-    delete this.filter.searchString;
+    delete this.filter.search;
     editTableComponent.filter(this.filter);
   }
 }

@@ -16,11 +16,11 @@ require_logged_user_JWT();
 $cod_ubicazione = isset($_GET['COD_UBICAZIONE']) ? $con->escape_string($_GET['COD_UBICAZIONE']) : null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        $searchString = null;
-        if(isset($_GET['searchString'])) {
-            $searchString = $_GET['searchString'];
+        $search = null;
+        if(isset($_GET['search'])) {
+            $search = $_GET['search'];
         }
-        [$ubicazioni, $count] = $storicoOperazioneManager->get_segnalazioni_attive($searchString);
+        [$ubicazioni, $count] = $storicoOperazioneManager->get_segnalazioni_attive($search);
           
         header('Content-Type: application/json');
         echo json_encode(['data' => $ubicazioni, 'count' => $count]);

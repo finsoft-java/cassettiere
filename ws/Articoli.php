@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 require_logged_user_JWT();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $search = isset($_GET['searchString']) ? $panthera->escape_string($_GET['searchString']) : null;
+    $search = isset($_GET['search']) ? $panthera->escape_string($_GET['search']) : null;
     $top = isset($_GET['top']) ? $panthera->escape_string($_GET['top']) : null;
     $skip = isset($_GET['skip']) ? $panthera->escape_string($_GET['skip']) : null;
 

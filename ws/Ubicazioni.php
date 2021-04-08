@@ -18,14 +18,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 require_logged_user_JWT();
 
 $cod_ubicazione = isset($_GET['COD_UBICAZIONE']) ? $con->escape_string($_GET['COD_UBICAZIONE']) : null;
-$cod_area = isset($_GET['COD_AREA']) ? $con->escape_string($_GET['COD_AREA']) : null;
-$sort = isset($_GET['SORT']) ? $con->escape_string($_GET['SORT']) : null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        [$ubicazioni, $count] = $ubicazioneManager->get_ubicazioni($cod_area, $sort);
+    $cod_area = isset($_GET['COD_AREA']) ? $con->escape_string($_GET['COD_AREA']) : null;
+    $orderby = isset($_GET['orderby']) ? $con->escape_string($_GET['orderby']) : null;
+    $search = isset($_GET['search']) ? $con->escape_string($_GET['search']) : null;
+    [$ubicazioni, $count] = $ubicazioneManager->get_ubicazioni($cod_area, $search, $orderby);
           
-        header('Content-Type: application/json');
-        echo json_encode(['data' => $ubicazioni, 'count' => $count]);
+    header('Content-Type: application/json');
+    echo json_encode(['data' => $ubicazioni, 'count' => $count]);
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //==========================================================
     $postdata = file_get_contents("php://input");
