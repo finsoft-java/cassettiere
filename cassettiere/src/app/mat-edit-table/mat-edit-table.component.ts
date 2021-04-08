@@ -336,7 +336,7 @@ export class MatEditTableComponent<T> implements OnInit {
     saveAs(blob, this.CSV_FILE_NAME);
   }
 
-  onSearchChange() {
-    // TODO
+  onSearchChange($event: any, col: ColumnDefinition<T>): void {
+    console.log($event);
   }
 }

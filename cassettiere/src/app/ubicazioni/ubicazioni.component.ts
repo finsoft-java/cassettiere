@@ -3,11 +3,12 @@ import { AlertService } from './../_services/alert.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { AreeService } from './../_services/aree.service';
 import { ColumnDefinition, LabelValue } from './../mat-edit-table/ColumnDefinition';
-import { DatePipe } from '@angular/common';
 import { UbicazioniService } from './../_services/ubicazioni.service';
 import { Component, OnInit } from '@angular/core';
 import { Ubicazione } from '../_models';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ArticoliService } from '../_services/articoli.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-ubicazioni',
@@ -38,6 +39,15 @@ export class UbicazioniComponent implements OnInit {
       title: 'Cod. Articolo',
       data: 'COD_ARTICOLO_CONTENUTO',
       type: 'combo',
+      asyncOptions: (row) => {
+        return this.articoliService.getAll({ top: 15, searchString: row?.COD_ARTICOLO_CONTENUTO })
+          .pipe(map(listBean => listBean.data.map( x => {
+              return {
+                label: x.ID_ARTICOLO + ' - ' + x.DESCRIZIONE,
+                value: x.ID_ARTICOLO
+              };
+            })));
+      },
       width: '20%'
     },
     {
@@ -63,10 +73,12 @@ export class UbicazioniComponent implements OnInit {
     }
   ];
 
-  constructor(private ubicSvc: UbicazioniService,private areeSvc: AreeService, 
-    private alertService: AlertService,
-    private route: ActivatedRoute,
-    private router: Router) {
+  constructor(private ubicSvc: UbicazioniService,
+              private areeSvc: AreeService,
+              private alertService: AlertService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private articoliService: ArticoliService) {
     this.service = ubicSvc;
   }
 
