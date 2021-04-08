@@ -21,10 +21,42 @@ export class UbicazioniComponent implements OnInit {
   dataSource = new MatTableDataSource<[]>();
   search_box?: any[];
   displayedColumns: string[] = ['ubicazione','articolo', 'qnt', 'area', 'esaurimento', 'actions'];
+  filter: any = {};
   
   public articolo: FormControl = new FormControl();
   public articolo_search: FormControl = new FormControl();
   
+
+  columns: ColumnDefinition<Ubicazione>[] = [
+    {
+      title: 'Cod. Ubicazione',
+      data: 'COD_UBICAZIONE',
+      disabled: true
+    },
+    {
+      title: 'Cod. Articolo',
+      data: 'COD_ARTICOLO_CONTENUTO',
+      type: 'combo'
+    },
+    {
+      title: 'Qnt. prevista',
+      data: 'QUANTITA_PREVISTA'
+    },
+    {
+      title: 'Area',
+      data: 'COD_AREA',
+      type: 'select',
+      options: this.arrayAree
+    },
+    {
+      title: 'In esaurimento',
+      data: 'SEGNALAZIONE_ESAURIMENTO',
+      type: 'select',
+      options: [{label: 'Sì', value: 'Y'}, {label: 'No', value: 'N'}],
+      render: (data) => (data === 'N' ? 'No' : 'Sì')
+    }
+  ];
+
   constructor(private ubicSvc: UbicazioniService,private areeSvc: AreeService, 
     private alertService: AlertService,
     private route: ActivatedRoute,
@@ -115,5 +147,19 @@ export class UbicazioniComponent implements OnInit {
   }
   onSearchChange(event:any){
     console.log(event);
+  }
+
+  filterRow(editTableComponent: any): void {
+
+    if (this.filter.searchString) {
+      this.filter.searchString = this.filter.searchString.trim();
+    }
+
+    editTableComponent.filter(this.filter);
+  }
+
+  resetFilter(editTableComponent: any): void {
+    delete this.filter.searchString;
+    editTableComponent.filter(this.filter);
   }
 }

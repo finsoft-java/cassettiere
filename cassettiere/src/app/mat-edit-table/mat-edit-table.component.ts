@@ -335,4 +335,8 @@ export class MatEditTableComponent<T> implements OnInit {
     const blob = new Blob([csv], {type: 'text/csv;charset=UTF-8'});
     saveAs(blob, this.CSV_FILE_NAME);
   }
+
+  onSearchChange() {
+    // TODO
+  }
 }
