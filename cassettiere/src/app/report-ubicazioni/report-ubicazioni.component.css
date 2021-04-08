@@ -1,5 +1,5 @@
 .boxarea {
-    width: 8cm;
+    width: calc((100% / 3)  - 20px);
     height: 4cm;
     float: left;
     margin: 10px;
