@@ -82,8 +82,6 @@ export class MatEditTableComponent<T> implements OnInit {
   XLSX_SHEET_NAME = 'Data';
   CSV_FILE_NAME = 'Export.csv';
 
-  constructor() { }
-
   ngOnInit(): void {
     if (this.editable) {
       this.columns.push({
@@ -135,7 +133,8 @@ export class MatEditTableComponent<T> implements OnInit {
     }
     this.service.getAll(this.filtro).subscribe(
       listBean => {
-        this.dataSource.data = this.data = listBean.data;
+        this.dataSource.data = listBean.data;
+        this.data = listBean.data;
         console.log(this.dataSource.data);
         this.buttonsEnabled = true;
         this.paginatorLength = listBean.count;
