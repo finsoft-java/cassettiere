@@ -77,8 +77,6 @@ export class UbicazioniComponent implements OnInit {
             value: response.data[i].COD_AREA
           });
         }
-      },
-      error => {
       }
     );
     this.arrayEsaurimento.push({ label: 'No', value: 'N' }, { label: 'Si', value: 'Y' });

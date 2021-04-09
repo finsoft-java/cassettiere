@@ -9,7 +9,6 @@ import { ReportUbicazioniService } from '../_services/report.ubicazioni.service'
   styleUrls: ['./report-ubicazioni.component.css']
 })
 export class ReportUbicazioniComponent implements OnInit {
-
   columns: ColumnDefinition<Ubicazione>[] = [
     {
       title: 'Ubicazione',
@@ -51,15 +50,11 @@ export class ReportUbicazioniComponent implements OnInit {
   setArea(codArea: string, editTableComponent: any): void {
     this.showTable = false;
     this.service.codArea = codArea;
-    editTableComponent.filter({
-      COD_AREA: codArea
-    });
+    editTableComponent.filter({ COD_AREA: codArea });
     this.showTable = true;
   }
 
   formattazioneCondizionale(row: Ubicazione): any {
-    return {
-      color: (row.SEGNALAZIONE_ESAURIMENTO === 'N') ? null : 'red'
-    };
+    return { color: (row.SEGNALAZIONE_ESAURIMENTO === 'N') ? null : 'red' };
   }
 }
