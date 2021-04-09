@@ -5,7 +5,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { MatEditTableLabels } from './MatEditTableLabels';
 import { HttpCrudService } from '../_services/HttpCrudService';
-import { ColumnDefinition, LabelValue } from './ColumnDefinition';
+import { ColumnDefinition } from './ColumnDefinition';
 import { MockService } from '.';
 
 @Component({
@@ -18,7 +18,6 @@ import { MockService } from '.';
  * @see https://muhimasri.com/blogs/create-an-editable-dynamic-table-using-angular-material/
  */
 export class MatEditTableComponent<T> implements OnInit {
-
   @Input()
   labels: MatEditTableLabels = {
     add: 'Nuovo',
@@ -160,7 +159,6 @@ export class MatEditTableComponent<T> implements OnInit {
   }
 
   onSearchChange(row: T, col: ColumnDefinition<T>, data: string): any {
-
     (row as any)[col.data] = data;
 
     if (data.length <= 3) {
