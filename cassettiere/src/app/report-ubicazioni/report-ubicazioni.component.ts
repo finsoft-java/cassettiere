@@ -9,7 +9,6 @@ import { ReportUbicazioniService } from '../_services/report.ubicazioni.service'
   styleUrls: ['./report-ubicazioni.component.css']
 })
 export class ReportUbicazioniComponent implements OnInit {
-
   columns: ColumnDefinition<Ubicazione>[] = [
     {
       title: 'Ubicazione',

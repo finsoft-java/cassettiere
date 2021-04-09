@@ -5,7 +5,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { MatEditTableLabels } from './MatEditTableLabels';
 import { HttpCrudService } from '../_services/HttpCrudService';
-import { ColumnDefinition, LabelValue } from './ColumnDefinition';
+import { ColumnDefinition } from './ColumnDefinition';
 import { MockService } from '.';
 
 @Component({
@@ -18,7 +18,6 @@ import { MockService } from '.';
  * @see https://muhimasri.com/blogs/create-an-editable-dynamic-table-using-angular-material/
  */
 export class MatEditTableComponent<T> implements OnInit {
-
   @Input()
   labels: MatEditTableLabels = {
     add: 'Nuovo',
@@ -158,13 +157,13 @@ export class MatEditTableComponent<T> implements OnInit {
     }
   }
 
-  onSearchChange(row: T, col: ColumnDefinition<T>, data: string): any {
-
+  onSearchChange(row: T, col: ColumnDefinition<T>, data: string): void {
+    // eslint-disable-next-line no-param-reassign
     (row as any)[col.data] = data;
 
     if (data.length <= 3) {
       // non faccio la chiamata < 3 caratteri
-      return false;
+      return;
     }
 
     if (col.asyncOptions) {
@@ -192,15 +191,15 @@ export class MatEditTableComponent<T> implements OnInit {
     Object.assign(this.oldRow, row);
     this.columns.forEach(
       col => {
-        if (col.asyncOptions){
+        if (col.asyncOptions) {
           col.asyncOptions(row).subscribe(
             options => {
               console.log('Received options', options);
               col.options = options;
             }
           );
+        }
       }
-    }
     );
     this.columns.filter(col => col.type === 'combo').forEach(
       col => {
@@ -286,9 +285,8 @@ export class MatEditTableComponent<T> implements OnInit {
   getFormattazioneCondizionale(row: T): any {
     if (this.formattazioneCondizionale) {
       return this.formattazioneCondizionale(row);
-    } else {
-      return null;
     }
+    return null;
   }
 
   undoChange(rowNum: number): void {
@@ -305,7 +303,7 @@ export class MatEditTableComponent<T> implements OnInit {
   }
 
   getSheetHeader(): any[] {
-    const row = Array();
+    const row:any[] = [];
     this.columns.forEach(col => {
       if (col.data !== this.ACTIONS_INDEX) {
         row.push(col.title);
@@ -315,7 +313,7 @@ export class MatEditTableComponent<T> implements OnInit {
   }
 
   getSheetDataColumns(): any[] {
-    const row = Array();
+    const row:any[] = [];
     this.columns.forEach(col => {
       if (col.data !== this.ACTIONS_INDEX) {
         row.push(col.data);
@@ -325,10 +323,10 @@ export class MatEditTableComponent<T> implements OnInit {
   }
 
   getSheetMatrix(): any[][] {
-    const matrix = Array();
+    const matrix:any[] = [];
     let rowNum = 0;
     this.data.forEach(row => {
-      const matrixRow = Array();
+      const matrixRow:any[] = [];
       let colNum = 0;
       this.columns.forEach(col => {
         if (col.data !== this.ACTIONS_INDEX) {
@@ -345,7 +343,7 @@ export class MatEditTableComponent<T> implements OnInit {
     const header = [this.getSheetHeader()];
     // TODO how to style header?!?
     const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(header);
-    XLSX.utils.sheet_add_aoa(ws, this.getSheetMatrix(), { origin: -1});
+    XLSX.utils.sheet_add_aoa(ws, this.getSheetMatrix(), { origin: -1 });
     return ws;
   }
 
@@ -356,10 +354,10 @@ export class MatEditTableComponent<T> implements OnInit {
     XLSX.writeFile(wb, this.XLSX_FILE_NAME);
   }
 
-  exportCsv(): void{
+  exportCsv(): void {
     const ws = this.createWorksheet();
-    const csv = XLSX.utils.sheet_to_csv(ws, {FS: ';'});
-    const blob = new Blob([csv], {type: 'text/csv;charset=UTF-8'});
+    const csv = XLSX.utils.sheet_to_csv(ws, { FS: ';' });
+    const blob = new Blob([csv], { type: 'text/csv;charset=UTF-8' });
     saveAs(blob, this.CSV_FILE_NAME);
   }
 }
