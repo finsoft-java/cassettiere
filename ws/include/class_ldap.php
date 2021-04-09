@@ -46,7 +46,8 @@ class LdapManager {
                 'username' => $entry['samaccountname'][0],
                 'nome' => $entry['givenname'][0],
                 'cognome' => $entry['sn'][0],
-                'email' => $entry['mail'][0]
+                'email' => $entry['mail'][0],
+                'ruolo' => 'magazziniere' // FIXME
             ];
         }
         ldap_unbind($ldap_connection); // Clean up after ourselves.

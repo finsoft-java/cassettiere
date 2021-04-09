@@ -45,7 +45,7 @@ function check_and_load_user($username, $pwd) {
         $user->nome_utente = 'Finsoft User';
         $user->nome = 'User';
         $user->cognome = 'Finsoft';
-        $user->email = 'a.barsanti@finsoft.it';
+        $user->email = 'alessandro.barsanti@it-present.com';
         return $user;
     }
 
