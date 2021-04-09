@@ -44,7 +44,7 @@ class PantheraManager {
     function select_list($sql) {
         
         // SE TI SERVE FARE DEBUG: print_r($sql); print("\n");
-        
+
         if ($result = sqlsrv_query($this->conn, $sql)) {
             $arr = array();
             while ($row = sqlsrv_fetch_array($result))
