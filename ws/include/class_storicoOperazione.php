@@ -41,5 +41,27 @@ class storicoOperazioniManager {
         $ubicazioni = select_list($sql1 . $sql);        
         return [$ubicazioni, $count];
     }
+
+    function segnala_esaurimento($codUbicazione, $codUtente) {
+        $query = "UPDATE ubicazioni SET segnalazione_esaurimento='Y' WHERE cod_ubicazione='$codUbicazione'";
+        execute_update($query);
+
+        $query = "INSERT INTO `storico_operazioni` (`COD_UTENTE`, `COD_OPERAZIONE`, `COD_ARTICOLO`, `COD_UBICAZIONE`, `COD_AREA`)
+            SELECT '$codUtente', 'ESAURIMENTO', COD_ARTICOLO_CONTENUTO, '$codUbicazione', COD_AREA
+            FROM ubicazioni
+            WHERE COD_UBICAZIONE='$codUbicazione'";
+        execute_update($query);
+    }
+
+    function segnala_rabbocco($codUbicazione, $codUtente) {
+        $query = "UPDATE ubicazioni SET segnalazione_esaurimento='N' WHERE cod_ubicazione='$codUbicazione'";
+        execute_update($query);
+
+        $query = "INSERT INTO `storico_operazioni` (`COD_UTENTE`, `COD_OPERAZIONE`, `COD_ARTICOLO`, `COD_UBICAZIONE`, `COD_AREA`)
+            SELECT '$codUtente', 'RABBOCCO', COD_ARTICOLO_CONTENUTO, '$codUbicazione', COD_AREA
+            FROM ubicazioni
+            WHERE COD_UBICAZIONE='$codUbicazione'";
+        execute_update($query);
+    }
 }
 ?>
