@@ -1,5 +1,10 @@
 import { Observable } from 'rxjs';
 
+export interface LabelValue {
+  label: string;
+  value: any;
+}
+
 /**
  * DataTable-like column definition structure
  */
@@ -22,9 +27,4 @@ export interface ColumnDefinition<T> {
   disabled?: boolean;
   /** Funzione callback per l'evento onChange */
   onChangeCallback?: (event: Event) => void;
-}
-
-export interface LabelValue {
-  label: string;
-  value: any;
 }

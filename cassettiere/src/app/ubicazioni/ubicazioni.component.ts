@@ -62,13 +62,13 @@ export class UbicazioniComponent implements OnInit {
   ];
 
   constructor(private ubicSvc: UbicazioniService,
-              private areeSvc:AreeService,
+              private areeSvc: AreeService,
               private alertService: AlertService,
               private articoliService: ArticoliService) {
     this.service = ubicSvc;
   }
 
-  ngOnInit():void {
+  ngOnInit(): void {
     this.areeSvc.getAll().subscribe(
       response => {
         for (let i = 0; i < response.data.length; i++) {
@@ -82,7 +82,7 @@ export class UbicazioniComponent implements OnInit {
     this.arrayEsaurimento.push({ label: 'No', value: 'N' }, { label: 'Si', value: 'Y' });
   }
 
-  filterRow(editTableComponent:any): void {
+  filterRow(editTableComponent: any): void {
     if (this.filter.search) {
       this.filter.search = this.filter.search.trim();
     }

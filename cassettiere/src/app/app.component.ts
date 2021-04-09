@@ -1,9 +1,9 @@
-import { User } from './_models';
-import { AuthenticationService } from './_services/authentication.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, Event, RouterEvent, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { AuthenticationService } from './_services/authentication.service';
+import { User } from './_models';
 
 @Component({
   selector: 'app-root',
@@ -29,9 +29,9 @@ export class AppComponent implements OnInit {
     const url = window.location.href.endsWith('login');
     let token = localStorage.getItem('currentUser');
 
-    this.subscription = this.authenticationService.nameChange.subscribe((value) => {
+    this.subscription = this.authenticationService.nameChange.subscribe((value) => {
       this.currentUserSubject.username = value;
-    });
+    });
     if (token == null) {
       token = '';
     }
@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
     }
 
     this.router.events.pipe(filter((evt: Event) => evt instanceof NavigationEnd)).subscribe((evt: Event) => {
-        this.menuDisabled = ((evt as NavigationEnd).url === '/login');
+      this.menuDisabled = ((evt as NavigationEnd).url === '/login');
     });
   }
 
@@ -53,5 +53,4 @@ export class AppComponent implements OnInit {
 
   changeIcon(): void {
   }
-
 }

@@ -302,7 +302,7 @@ export class MatEditTableComponent<T> implements OnInit {
   }
 
   getSheetHeader(): any[] {
-    const row:any[] = [];
+    const row: any[] = [];
     this.columns.forEach(col => {
       if (col.data !== this.ACTIONS_INDEX) {
         row.push(col.title);
@@ -312,7 +312,7 @@ export class MatEditTableComponent<T> implements OnInit {
   }
 
   getSheetDataColumns(): any[] {
-    const row:any[] = [];
+    const row: any[] = [];
     this.columns.forEach(col => {
       if (col.data !== this.ACTIONS_INDEX) {
         row.push(col.data);
@@ -322,10 +322,10 @@ export class MatEditTableComponent<T> implements OnInit {
   }
 
   getSheetMatrix(): any[][] {
-    const matrix:any[] = [];
+    const matrix: any[] = [];
     let rowNum = 0;
     this.data.forEach(row => {
-      const matrixRow:any[] = [];
+      const matrixRow: any[] = [];
       let colNum = 0;
       this.columns.forEach(col => {
         if (col.data !== this.ACTIONS_INDEX) {
