@@ -157,8 +157,7 @@ export class MatEditTableComponent<T> implements OnInit {
     }
   }
 
-  onSearchChange(row: T, col: ColumnDefinition<T>, data: string): void {
-    // eslint-disable-next-line no-param-reassign
+  onSearchChange(row: T, col: ColumnDefinition<T>, data: string): any {
     (row as any)[col.data] = data;
 
     if (data.length <= 3) {
