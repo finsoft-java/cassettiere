@@ -12,6 +12,17 @@ function connect() {
   return $connect;
 }
 
+function connect_badge() {
+  $connect = mysqli_connect(DB_HOST_BADGE, DB_USER_BADGE, DB_PASS_BADGE, DB_NAME_BADGE);
+  if (mysqli_connect_errno()) {
+    die("Failed to connect:" . mysqli_connect_error());
+  }
+  mysqli_set_charset($connect, "utf8");
+  mysqli_query($connect, "SET lc_messages = 'it_IT';");
+  
+  return $connect;
+}
+
 function connect_panthera() {
   if (MOCK_PANTHERA) {
     return null;

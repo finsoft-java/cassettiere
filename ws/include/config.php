@@ -12,6 +12,10 @@ define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_NAME', 'cassettiere');
 
+define('DB_HOST_BADGE', 'localhost');
+define('DB_USER_BADGE', 'root');
+define('DB_PASS_BADGE', '');
+define('DB_NAME_BADGE', 'cassettiere');
 
 /* produzione 
 define('DB_HOST', 'localhost');
