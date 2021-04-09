@@ -49,7 +49,6 @@ export class ReportSegnalazioniComponent implements OnInit {
   }
 
   filterRow(editTableComponent: any): void {
-
     if (this.filter.search) {
       this.filter.search = this.filter.search.trim();
     } else {
@@ -63,5 +62,4 @@ export class ReportSegnalazioniComponent implements OnInit {
     delete this.filter.search;
     editTableComponent.filter(this.filter);
   }
-
 }

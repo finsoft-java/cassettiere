@@ -26,7 +26,7 @@ export class ReportUbicazioniComponent implements OnInit {
     {
       title: 'In esaurimento',
       data: 'SEGNALAZIONE_ESAURIMENTO',
-      render: (data) => (data === 'N' ? 'No' : 'Sì')
+      render: (data: any) => (data === 'N' ? 'No' : 'Sì')
     }
   ];
   service: ReportUbicazioniService;
@@ -35,7 +35,7 @@ export class ReportUbicazioniComponent implements OnInit {
 
   constructor(private ubicazioniService: ReportUbicazioniService) {
     this.service = ubicazioniService;
-   }
+  }
 
   ngOnInit(): void {
     this.ubicazioniService.getUbicazioniPerArea().subscribe(
