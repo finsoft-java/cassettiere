@@ -11,7 +11,7 @@ import { StoricoOperazioniService } from '../_services/storico-operazioni.servic
   templateUrl: './storico-operazioni.component.html',
   styleUrls: ['./storico-operazioni.component.css'],
   providers: [
-    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
   ]
 })
 export class StoricoOperazioniComponent implements OnInit {

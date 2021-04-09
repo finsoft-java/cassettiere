@@ -29,11 +29,12 @@
       "no-param-reassign": ["error", { "props": false }],
       "no-empty-function": "warn",
       "no-console": "off",
-      "no-unused-vars": "warn",
+      "no-unused-vars": "off",
       "no-useless-constructor": "off",
       "prefer-template": "off",
       "@typescript-eslint/explicit-module-boundary-type": "off",
       "@typescript-eslint/explicit-function-return-type": "off",
-      "@typescript-eslint/no-explicit-any": "off"
+      "@typescript-eslint/no-explicit-any": "off",
+      "no-restricted-globals": "off"
   }
 }

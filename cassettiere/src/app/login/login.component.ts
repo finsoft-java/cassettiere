@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
   submit() {
     if (!this.form.invalid) {
       this.loading = true;
-      return this.authenticationService.login(this.f.username.value,this.f.password.value)
+      return this.authenticationService.login(this.f.username.value, this.f.password.value)
         .pipe(first())
         .subscribe(
           data => {
