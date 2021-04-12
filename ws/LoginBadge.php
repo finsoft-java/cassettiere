@@ -13,14 +13,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 
 $user = '';
-$postdata = file_get_contents("php://input");
-$request = json_decode($postdata);
-
-if($request != ''){
-    $rfid = $request->rfid;
+$postdata = $_POST;
+if($postdata != ''){
+    $rfid = $postdata["rfid"];
     if (!$rfid) {
         print_error(400, 'Missing RFID');
     }
+    
     $username = $badgeManager->get_username($rfid);
     $user = check_and_load_user($username);
 }
