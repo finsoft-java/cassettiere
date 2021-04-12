@@ -4,8 +4,9 @@ $(document).on("click","#login", function(){
 });
 
 $(document).on("click","#ablLettore", function(){
-    $("#rfid").val("1234");
-    $("#login").css("display","");
+    $("#rfid").removeAttr("disabled");
+    $("#login").removeAttr("disabled");
+    $("#rfid").focus();
 });
 
 function login (){
