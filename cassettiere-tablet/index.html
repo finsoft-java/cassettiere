@@ -9,26 +9,26 @@
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
 
-    <title>Hello, world!</title>
+    <title>Login</title>
   </head>
   <body>
     <div class="wrapper fadeInDown">
         <div id="formContent">
-
-          <div class="fadeIn first">
-            <img src="assets/img/logo.png" id="icon" alt="User Icon" />
-          </div>
-
-          <form>
-            <input class="btn btn-info" id ="ablLettore" value="Abilita Lettore">
-            <div class="input-group input-group-sm mb-3">
-                <input type="text" disabled class="form-control" id="rfid" placeholder="RFID" aria-label="RFID" aria-describedby="basic-addon2">
+            <div class="alert alert-danger" id="error_message" role="alert" style="display:none;">
+                <p style="margin:0px"></p>
             </div>
-            <input id="login" class="btn btn-success" disabled value="Log in">
-          </form>
-      
+            <div class="fadeIn first">
+                <img src="assets/img/logo.png" id="icon" alt="User Icon" />
+            </div>
+            <form>
+                <input class="btn btn-info" id ="ablLettore" style="margin-bottom:15px;" value="Abilita Lettore">
+                <div class="input-group input-group-sm mb-3">
+                    <input type="text" disabled class="form-control" id="rfid" placeholder="RFID" aria-label="RFID" aria-describedby="basic-addon2">
+                </div>
+                <input id="login" class="btn btn-success" style="margin-bottom:15px;" disabled value="Log in">
+            </form>
         </div>
-      </div>
+    </div>
     <script src="assets/js/jquery-3.6.0.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>

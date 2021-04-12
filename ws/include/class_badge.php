@@ -8,7 +8,6 @@ class BadgeManager {
         global $con_b;
         
         $query = "SELECT user FROM elenco_badge WHERE rfid_code='$rfid' ";
-        echo $query;
         $username = select_single_value($query, $con_b);
         if ($username == null) {
             print_error(404, 'Unrecognized RFID');

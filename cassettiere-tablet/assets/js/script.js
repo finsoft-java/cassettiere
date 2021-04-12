@@ -21,6 +21,11 @@ function login (){
       $("#rfid").val("");
       $("#login").css("display","none");
       console.log(data);
+      sessionStorage.setItem( "token", data["value"]["username"] );
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+        $("#error_message p").html(xhr.responseJSON.error.value);
+        $("#error_message").css("display","");
     }
   });
 }
