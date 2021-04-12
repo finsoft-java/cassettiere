@@ -44,7 +44,10 @@ class storicoOperazioniManager {
 
     function segnala_esaurimento($codUbicazione, $codUtente) {
         $query = "UPDATE ubicazioni SET segnalazione_esaurimento='Y' WHERE cod_ubicazione='$codUbicazione'";
-        execute_update($query);
+        $num_updated = execute_update($query);
+        if ($num_updated == 0) {
+            print_error(404, "Ubicazione inesistente: $codUbicazione");
+        }
 
         $query = "INSERT INTO `storico_operazioni` (`COD_UTENTE`, `COD_OPERAZIONE`, `COD_ARTICOLO`, `COD_UBICAZIONE`, `COD_AREA`)
             SELECT '$codUtente', 'ESAURIMENTO', COD_ARTICOLO_CONTENUTO, '$codUbicazione', COD_AREA
@@ -55,7 +58,10 @@ class storicoOperazioniManager {
 
     function segnala_rabbocco($codUbicazione, $codUtente) {
         $query = "UPDATE ubicazioni SET segnalazione_esaurimento='N' WHERE cod_ubicazione='$codUbicazione'";
-        execute_update($query);
+        $num_updated = execute_update($query);
+        if ($num_updated == 0) {
+            print_error(404, "Ubicazione inesistente: $codUbicazione");
+        }
 
         $query = "INSERT INTO `storico_operazioni` (`COD_UTENTE`, `COD_OPERAZIONE`, `COD_ARTICOLO`, `COD_UBICAZIONE`, `COD_AREA`)
             SELECT '$codUtente', 'RABBOCCO', COD_ARTICOLO_CONTENUTO, '$codUbicazione', COD_AREA

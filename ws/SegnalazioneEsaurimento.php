@@ -10,15 +10,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-require_logged_user_JWT();
+$logged_user = require_logged_user_JWT();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $postdata = file_get_contents("php://input");
     $request = json_decode($postdata);
-    if (!$request->COD_UBICAZIONE) {
+    if (!isset($request->COD_UBICAZIONE)) {
        print_error(400, 'Missing COD_UBICAZIONE');
     }
-    $storicoOperazioniManager->segnala_esaurimento($request->COD_UBICAZIONE, $loggedUser->username);
+    $storicoOperazioneManager->segnala_esaurimento($request->COD_UBICAZIONE, $logged_user->nome_utente);
 } else {
     //==========================================================
     print_error(400, "Unsupported method in request: " . $_SERVER['REQUEST_METHOD']);

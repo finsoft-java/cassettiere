@@ -61,6 +61,7 @@ function require_logged_user_JWT() {
     } catch (Error $e) {
         print_error(500, $e->getMessage());
     }
+    return $logged_user;
 }
 
 /** 
@@ -105,11 +106,6 @@ function print_error($http_err_code, $msg) {
     header('Content-Type: application/json');
     echo json_encode(["code" => $http_err_code, "error" => ["value" => $msg]]);
     die();
-}
-
-function utente_admin() {
-    global $logged_user;
-    return $logged_user->ruolo == '2';
 }
 
 /*
@@ -208,6 +204,7 @@ function execute_update($sql, $connessione=null) {
     if ($connessione ->error) {
         print_error(500, $connessione ->error);
     }
+    return mysqli_affected_rows($connessione);
 }
 
 // funzioni per creare comandi SQL
