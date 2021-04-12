@@ -19,13 +19,14 @@ function login (){
     },
     success: function(data, status) {
         $("#rfid").val("");
-        $("#login").css("display","none");
+        $("#login").attr("disabled","");
         console.log(data);
         sessionStorage.setItem( "user", (data["value"]["nome"] || '') + ' ' + (data["value"]["cognome"] || ''));
         sessionStorage.setItem( "token", data["value"]["username"] );
     },
     error: function (xhr, ajaxOptions, thrownError) {
-        if (xhr.responseJSON && xhr.responseJSON.error && xhr.responseJSON.value) {
+        console.log(xhr);
+        if (xhr.responseJSON && xhr.responseJSON.error && xhr.responseJSON.error.value) {
             $("#error_message p").html(xhr.responseJSON.error.value);
         } else if (xhr.responseText) {
             $("#error_message p").html(xhr.responseText);
