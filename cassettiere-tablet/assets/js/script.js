@@ -23,6 +23,7 @@ function login (){
         console.log(data);
         sessionStorage.setItem( "user", (data["value"]["nome"] || '') + ' ' + (data["value"]["cognome"] || ''));
         sessionStorage.setItem( "token", data["value"]["username"] );
+        location.href ="segnalazione-esaurimento.html";
     },
     error: function (xhr, ajaxOptions, thrownError) {
         console.log(xhr);

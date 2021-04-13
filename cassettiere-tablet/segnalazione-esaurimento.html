@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script>
+      var data = sessionStorage.getItem('token');
+      if(data == null){
+        location.href="./";
+      }
+    </script>
+
+    <title>Esaurimento</title>
+  </head>
+  <body>
+    
+    <div style="position: relative;height: 100%;">
+      <h4 style="padding-top:15px; padding-left: 15px;">Segnalazione Esaurimento</h4>
+      <div style="position: absolute; top: 55px; left: 15px; width: 55%;">
+        <input type="text" disabled class="form-control" id="QRCOD" placeholder="QRCOD UBICAZIONE" aria-label="QRCOD" aria-describedby="basic-addon2">
+      </div>        
+      <div style="position: absolute; top: 30px; right: 30px;">
+        <button class="btn btn-info">Rabbocco</button>
+      </div>
+      <div style="position: absolute;top: 140px;left: 15px;border: 1px solid #000;height: 40%;width: calc(100% - 30px); overflow-y: scroll;">
+        <div style="padding:15px;">
+          <p>Dettagli:</p>
+          <p>Articolo 1</p>
+        </div>
+      </div>
+      <div style="position: absolute;bottom: 10px;left: 15px;">
+        <p>Messaggio segnalazione</p>
+        <button class="btn btn-success" style="margin-right:15px;">SI</button>
+        <button class="btn btn-success">NO</button>
+      </div>
+    </div>
+    <script src="assets/js/jquery-3.6.0.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/script.js"></script>
+  </body>
+</html>
