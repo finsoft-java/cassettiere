@@ -12,7 +12,7 @@
     <div style="position: relative;height: 100%;">
       <h4 style="padding-top:15px; padding-left: 15px;">Segnalazione Esaurimento</h4>
       <div style="position: absolute; top: 55px; left: 15px; width: 55%;">
-        <input type="text" disabled class="form-control focus" placeholder="QRCOD UBICAZIONE" aria-describedby="basic-addon2">
+        <input type="text" disabled class="form-control focus" id="qrcod" placeholder="QRCODE UBICAZIONE" aria-describedby="basic-addon2">
       </div>        
       <div style="position: absolute; top: 30px; right: 30px;">
         <a href="segnalazione-rabbocco.html" class="btn btn-info">Rabbocco</a>
@@ -51,6 +51,15 @@
       }
       $(".focus").removeAttr("disabled");
       $(".focus").focus();
+
+      var input = document.getElementById("qrcod");
+      input.addEventListener("keyup", function(event) {
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          console.log('invio ->'+$("#qrcod").val());
+        }
+      });
     </script>
   </body>
 </html>
