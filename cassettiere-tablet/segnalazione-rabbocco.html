@@ -8,12 +8,6 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <script>
-      var data = sessionStorage.getItem('token');
-      if(data == null){
-        location.href="./";
-      }
-    </script>
     <title>Rabbocco</title>
   </head>
   <body>
@@ -49,10 +43,26 @@
         <button class="btn btn-success" style="margin-right:15px;">OK</button>
         <button class="btn btn-success">ANNULLA</button>
       </div>
+      <div style="position: absolute;bottom:10px;right:15px" id="user_box">
+        <p></p>
+        <button id="logout" class="btn btn-success">LOGOUT</button>
+      </div>
     </div>
     <script src="assets/js/jquery-3.6.0.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/script.js"></script>
+    <script>
+      var data = sessionStorage.getItem('token');
+      if(data == null){
+        location.href="./";
+      }
+      var user = sessionStorage.getItem('user');
+      if(user == null){
+        location.href="./";
+      } else {
+        $("#user_box p").append(user);
+      }
+    </script>
   </body>
 </html>

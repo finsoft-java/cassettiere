@@ -39,3 +39,8 @@ function login (){
     }
   });
 }
+
+$(document).on("click","#logout", function(){
+    sessionStorage.clear();
+    location.reload();
+});
