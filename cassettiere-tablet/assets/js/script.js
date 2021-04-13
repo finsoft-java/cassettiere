@@ -3,10 +3,22 @@ $(document).on("click","#login", function(){
 });
 
 $(document).on("click","#ablLettore", function(){
+    abilitaLettore();
+});
+
+function abilitaLettore() {
+    // TODO call ajax webservice
     $("#rfid").removeAttr("disabled");
     $("#login").removeAttr("disabled");
     $("#rfid").focus();
-});
+    setTimeout("disabilitaLettore()", 30000); // timeout 30 secondi
+}
+
+function disabilitaLettore() {
+    // TODO call ajax webservice
+    $("#rfid").attr("disabled", true);
+    $("#login").attr("disabled", true);
+}
 
 function login (){
     rfid = $("#rfid").val();
