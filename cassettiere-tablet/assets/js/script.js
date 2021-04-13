@@ -1,8 +1,8 @@
-$(document).on("click","#login", function(){
+$(document).on("click", "#login", function(){
     login();
 });
 
-$(document).on("click","#ablLettore", function(){
+$(document).on("click", "#ablLettore", function(){
     abilitaLettore();
 });
 
@@ -20,6 +20,19 @@ function disabilitaLettore() {
     $("#login").attr("disabled", true);
 }
 
+function show_error(xhr, ajaxOptions, thrownError) {
+    console.log(xhr);
+    if (xhr.responseJSON && xhr.responseJSON.error && xhr.responseJSON.error.value) {
+        $("#error_message p").html(xhr.responseJSON.error.value);
+    } else if (xhr.responseText) {
+        $("#error_message p").html(xhr.responseText);
+    } else {
+        console.log(xhr);
+        $("#error_message p").html("Network error");
+    }
+    $("#error_message").css("display","");
+}
+
 function login (){
     rfid = $("#rfid").val();
     $("#error_message p").html();
@@ -35,24 +48,13 @@ function login (){
         console.log(data);
         sessionStorage.setItem( "user", (data["value"]["nome"] || '') + ' ' + (data["value"]["cognome"] || ''));
         sessionStorage.setItem( "token", data["value"]["username"] );
-        location.href ="segnalazione-esaurimento.html";
+        location.href = "segnalazione-esaurimento.html";
     },
-    error: function (xhr, ajaxOptions, thrownError) {
-        console.log(xhr);
-        if (xhr.responseJSON && xhr.responseJSON.error && xhr.responseJSON.error.value) {
-            $("#error_message p").html(xhr.responseJSON.error.value);
-        } else if (xhr.responseText) {
-            $("#error_message p").html(xhr.responseText);
-        } else {
-            console.log(xhr);
-            $("#error_message p").html("Network error");
-        }
-        $("#error_message").css("display","");
-    }
+    error: show_error
   });
 }
 
-$(document).on("click","#logout", function(){
+$(document).on("click", "#logout", function(){
     sessionStorage.clear();
     location.reload();
 });
