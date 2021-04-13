@@ -1,11 +1,8 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <title>Rabbocco</title>
@@ -14,7 +11,7 @@
     <div style="position: relative;height: 100%;">
       <h4 style="padding-top:15px; padding-left: 15px;">Segnalazione Rabbocco</h4>
       <div style="position: absolute; top: 55px; left: 15px; width: 55%;">
-        <input type="text" disabled class="form-control" id="QRCOD" placeholder="QRCOD UBICAZIONE" aria-label="QRCOD" aria-describedby="basic-addon2">
+        <input type="text" disabled class="form-control focus" placeholder="QRCOD UBICAZIONE" aria-label="QRCOD" aria-describedby="basic-addon2">
       </div>        
       <div style="position: absolute; top: 30px; right: 30px;">
         <a href="segnalazione-esaurimento.html" class="btn btn-info">Esaurimento</a>
@@ -63,6 +60,8 @@
       } else {
         $("#user_box p").append(user);
       }
+      $(".focus").removeAttr("disabled");
+      $(".focus").focus();
     </script>
   </body>
 </html>
