@@ -148,5 +148,14 @@ class PantheraManager {
         
         return [$articoli, $count];
     }
+
+    function get_articolo($codArticolo) {
+        if ($this->mock) {
+            return [ 'ID_ARTICOLO' => 'AAAAA', 'DESCRIZIONE' => 'Carote' ];
+        } else {
+            $query = "SELECT COD_ARTICOLO,DESCRIZIONE FROM THIP.ARTICOLI WHERE ID_AZIENDA='001' AND ID_ARTICOLO='$codArticolo'";
+            return $this->select_single($sql0 . $sql);
+        }
+    }
 }
 ?>

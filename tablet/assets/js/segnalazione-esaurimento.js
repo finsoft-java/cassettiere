@@ -23,7 +23,7 @@ function chiama_ws_ubicazione() {
         success: function(data, status) {
             console.log(data);
             $("#qrcode").val("");
-            $("#dettagli").html(`Articolo ${data.value.COD_ARTICOLO_CONTENUTO} Quantità prevista ${data.value.QUANTITA_PREVISTA}`);
+            $("#dettagli").html(`Articolo <b>${data.value.COD_ARTICOLO_CONTENUTO}</b> ${data.value.DESCR_ARTICOLO}<br/>Quantità prevista <b>${data.value.QUANTITA_PREVISTA}</b>`);
             if (data.value.SEGNALAZIONE_ESAURIMENTO == 'N') {
                 $("#messaggio").html("Stai per dichiarare l'esaurimento di questa ubicazione. Confermi?");
                 // TODO ABILITA BOTTONI OK ANNULLA

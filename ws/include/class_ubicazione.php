@@ -30,8 +30,14 @@ class UbicazioniManager {
     }
     
     function get_ubicazione($cod_ubicazione) {
+        global $panthera;
         $sql = "SELECT * FROM ubicazioni p WHERE p.cod_ubicazione = '$cod_ubicazione'";
-        return select_single($sql);
+        $ubi = select_single($sql);
+        $articolo = $panthera->get_articolo($ubi['COD_ARTICOLO_CONTENUTO']);
+        if ($articolo) {
+            $ubi['DESCR_ARTICOLO'] = $articolo['DESCRIZIONE'];
+        }
+        return $ubi;
     }
 
     function crea($json_data) {
