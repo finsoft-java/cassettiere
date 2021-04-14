@@ -1,12 +1,12 @@
 $(document).on("click", "#logout", function(){
     sessionStorage.clear();
-    location.reload();
+    location.href = "./";
 });
 
 function reload_se_manca_token() {
     var data = sessionStorage.getItem('token');
-    if(data == null){
-      location.href="./";
+    if (data == null) {
+      location.href = "./";
     }
 }
 

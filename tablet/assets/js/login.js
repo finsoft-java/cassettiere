@@ -2,22 +2,17 @@ $(document).on("click", "#ablLettore", function(){
     abilitaLettore();
 });
 
-$(document).on("click", "#login", function(){
-    login();
-});
-
 document.getElementById("rfid").addEventListener("keyup", function(event) {
 // Number 13 is the "Enter" key on the keyboard
     if (event.keyCode === 13) {
         event.preventDefault();
-        $("#login").click();
+        login();
     }
 });
 
 function abilitaLettore() {
     // TODO call ajax webservice
     $("#rfid").removeAttr("disabled");
-    $("#login").removeAttr("disabled");
     $("#rfid").focus();
     setTimeout("disabilitaLettore()", 30000); // timeout 30 secondi
 }
