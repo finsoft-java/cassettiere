@@ -30,7 +30,8 @@ function disabilitaLettore() {
 
 function login () {
     rfid = $("#rfid").val();
-    $("#error_message p").html();
+    hide_errors();
+    $("#rfid").attr("disabled", true);
     $.post({
         url: "../../cassettiere/ws/LoginBadge.php",
         dataType: 'json',
@@ -43,6 +44,18 @@ function login () {
             sessionStorage.setItem( "token", data["value"]["username"] );
             location.href = "segnalazione-esaurimento.html";
         },
-        error: show_error
+        error:  function (xhr, ajaxOptions, thrownError) {
+            console.log(xhr);
+            if (xhr.responseJSON && xhr.responseJSON.error && xhr.responseJSON.error.value) {
+                show_error(xhr.responseJSON.error.value);
+            } else if (xhr.responseText) {
+                show_error(xhr.responseText);
+            } else {
+                console.log(xhr);
+                show_error("Network error");
+            }
+            $("#rfid").val("");
+            $("#rfid").removeAttr("disabled");
+        }
     });
 }

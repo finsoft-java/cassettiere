@@ -4,14 +4,16 @@ document.getElementById("qrcode").addEventListener("keyup", function(event) {
 // Number 13 is the "Enter" key on the keyboard
     if (event.keyCode === 13) {
         event.preventDefault();
-        // TODO
-        console.log('invio ->'+$("#qrcode").val());
         chiama_ws_ubicazione();
     }
 });
 
+var codUbicazione = null;
+
 function chiama_ws_ubicazione() {
-    var codUbicazione = $("#qrcode").val();
+    codUbicazione = $("#qrcode").val();
+    hide_errors();
+    $("#qrcode").attr("disabled", true);
     $.get({
         url: "../../cassettiere/ws/Ubicazioni.php?COD_UBICAZIONE=" + codUbicazione,
         dataType: 'json',
@@ -20,9 +22,33 @@ function chiama_ws_ubicazione() {
         },
         success: function(data, status) {
             console.log(data);
-            $("dettagli").html(data);
+            $("#qrcode").val("");
+            $("#dettagli").html(`Articolo ${data.value.COD_ARTICOLO_CONTENUTO} Quantità prevista ${data.value.QUANTITA_PREVISTA}`);
+            if (data.value.SEGNALAZIONE_ESAURIMENTO == 'N') {
+                $("#messaggio").html("Stai per dichiarare l'esaurimento di questa ubicazione. Confermi?");
+                // TODO ABILITA BOTTONI OK ANNULLA
+            } else {
+                $("#messaggio").html("Esiste già una segnalazione di esaurimento per questa ubicazione.");
+                // TODO DISABILITA OK, ABILITA ANNULLA
+            }
+            $("#qrcode").removeAttr("disabled");
+            $("#qrcode").focus();
         },
-        error: show_error
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(xhr);
+            if (xhr.responseJSON && xhr.responseJSON.error && xhr.responseJSON.error.value) {
+                show_error(xhr.responseJSON.error.value);
+            } else if (xhr.responseText) {
+                show_error(xhr.responseText);
+            } else {
+                console.log(xhr);
+                show_error("Network error");
+            }
+            $("#qrcode").val("");
+            $("#qrcode").removeAttr("disabled");
+            $("#qrcode").focus();
+        }
+        
     });
 }
 
