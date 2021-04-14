@@ -8,6 +8,51 @@ document.getElementById("qrcode").addEventListener("keyup", function(event) {
     }
 });
 
+$(document).on("click","#annullaEsaurimento", function(){
+    $("#qrcode").val("");
+    $("#qrcode").removeAttr("disabled");
+    $("#qrcode").focus();
+    $("#dettagli").html("");
+    $("#messaggio").html("");
+    $("#articoloEsaurito").attr("disabled", true); 
+});
+$(document).on("click","#articoloEsaurito", function(){
+    $.post({
+        url: "../../cassettiere/ws/Ubicazioni.php?COD_UBICAZIONE=" + codUbicazione,
+        dataType: 'json',
+        headers: {
+            'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+        },
+        success: function(data, status) {
+            console.log(data);
+            $("#dettagli").html(`Articolo <b>${data.value.COD_ARTICOLO_CONTENUTO}</b> ${data.value.DESCR_ARTICOLO}<br/>Quantità prevista <b>${data.value.QUANTITA_PREVISTA}</b>`);
+            if (data.value.SEGNALAZIONE_ESAURIMENTO == 'N') {
+                $("#messaggio").html("Stai per dichiarare l'esaurimento di questa ubicazione. Confermi?");  
+                // TODO ABILITA BOTTONI OK ANNULLA
+            } else {
+                $("#messaggio").html("Esiste già una segnalazione di esaurimento per questa ubicazione.");
+                // TODO DISABILITA OK, ABILITA ANNULLA
+            }
+            $("#qrcode").val("");
+            $("#qrcode").removeAttr("disabled");
+            $("#qrcode").focus();
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(xhr);
+            if (xhr.responseJSON && xhr.responseJSON.error && xhr.responseJSON.error.value) {
+                show_error(xhr.responseJSON.error.value);
+            } else if (xhr.responseText) {
+                show_error(xhr.responseText);
+            } else {
+                show_error("Network error");
+            }
+            $("#qrcode").val("");
+            $("#qrcode").removeAttr("disabled");
+            $("#qrcode").focus();
+        }
+    });
+});
+
 var codUbicazione = null;
 
 function chiama_ws_ubicazione() {
@@ -25,9 +70,11 @@ function chiama_ws_ubicazione() {
             $("#dettagli").html(`Articolo <b>${data.value.COD_ARTICOLO_CONTENUTO}</b> ${data.value.DESCR_ARTICOLO}<br/>Quantità prevista <b>${data.value.QUANTITA_PREVISTA}</b>`);
             if (data.value.SEGNALAZIONE_ESAURIMENTO == 'N') {
                 $("#messaggio").html("Stai per dichiarare l'esaurimento di questa ubicazione. Confermi?");
+                $("#articoloEsaurito").removeAttr("disabled");              
                 // TODO ABILITA BOTTONI OK ANNULLA
             } else {
                 $("#messaggio").html("Esiste già una segnalazione di esaurimento per questa ubicazione.");
+                $("#articoloEsaurito").attr("disabled", true);              
                 // TODO DISABILITA OK, ABILITA ANNULLA
             }
             $("#qrcode").val("");
