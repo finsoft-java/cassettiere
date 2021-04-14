@@ -8,6 +8,10 @@ document.getElementById("qrcode").addEventListener("keyup", function(event) {
     }
 });
 
+setInterval(function() {
+    $("#qrcode").focus();
+}, 1000);
+
 $(document).on("click","#annullaEsaurimento", function(){
     $("#qrcode").val("");
     $("#qrcode").removeAttr("disabled");
@@ -19,6 +23,7 @@ $(document).on("click","#annullaEsaurimento", function(){
     $("#articoloEsaurito").css("display","none" ); 
     $("#annullaEsaurimento").css("display","none");
 });
+
 $(document).on("click","#articoloEsaurito", function(){
     $.post({
         url: "../../cassettiere/ws/Ubicazioni.php?COD_UBICAZIONE=" + codUbicazione,

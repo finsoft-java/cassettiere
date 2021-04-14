@@ -8,7 +8,34 @@ document.getElementById("qrcode").addEventListener("keyup", function(event) {
     }
 });
 
+setInterval(function() {
+    $("#qrcode").focus();
+}, 1000);
+
 var ubicazioni = [];
+
+$(document).on("click", "#annullaRabbocco", function() {
+    ubicazioni = [];
+    $("#lista").html("");
+    abilita_qrcode();
+    abilita_o_disabilita_bottoni();
+});
+
+function abilita_qrcode() {
+    $("#qrcode").val("");
+    $("#qrcode").removeAttr("disabled");
+    $("#qrcode").focus();
+}
+
+function abilita_o_disabilita_bottoni() {
+    if (ubicazioni.length > 0) {
+        $("#confermaRabbocco").attr("disabled", false); 
+        $("#annullaRabbocco").attr("disabled", false);
+    } else {
+        $("#confermaRabbocco").attr("disabled", true); 
+        $("#annullaRabbocco").attr("disabled", true);
+    }
+}
 
 function chiama_ws_ubicazione() {
     var codUbicazione = $("#qrcode").val();
@@ -31,9 +58,8 @@ function chiama_ws_ubicazione() {
                 ubicazioni.push(ubicazione);
                 $("#lista").append(`<li style="width:100%;line-height: 38px;padding:10px 15px;border-bottom:1px solid #000;">Articolo <b>${ubicazione.COD_ARTICOLO_CONTENUTO}</b> ${ubicazione.DESCR_ARTICOLO}<br/>Quantità prevista <b>${ubicazione.QUANTITA_PREVISTA}</b> <button class="btn btn-danger" style="float:right"> Elimina </button></li>`);
             }
-            $("#qrcode").val("");
-            $("#qrcode").removeAttr("disabled");
-            $("#qrcode").focus();
+            abilita_qrcode();
+            abilita_o_disabilita_bottoni();
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.log(xhr);
@@ -45,9 +71,8 @@ function chiama_ws_ubicazione() {
                 console.log(xhr);
                 show_error("Network error");
             }
-            $("#qrcode").val("");
-            $("#qrcode").removeAttr("disabled");
-            $("#qrcode").focus();
+            abilita_qrcode();
+            abilita_o_disabilita_bottoni();
         }
     });
 }
