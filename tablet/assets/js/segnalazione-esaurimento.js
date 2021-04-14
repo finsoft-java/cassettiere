@@ -22,7 +22,6 @@ function chiama_ws_ubicazione() {
         },
         success: function(data, status) {
             console.log(data);
-            $("#qrcode").val("");
             $("#dettagli").html(`Articolo <b>${data.value.COD_ARTICOLO_CONTENUTO}</b> ${data.value.DESCR_ARTICOLO}<br/>Quantità prevista <b>${data.value.QUANTITA_PREVISTA}</b>`);
             if (data.value.SEGNALAZIONE_ESAURIMENTO == 'N') {
                 $("#messaggio").html("Stai per dichiarare l'esaurimento di questa ubicazione. Confermi?");
@@ -31,6 +30,7 @@ function chiama_ws_ubicazione() {
                 $("#messaggio").html("Esiste già una segnalazione di esaurimento per questa ubicazione.");
                 // TODO DISABILITA OK, ABILITA ANNULLA
             }
+            $("#qrcode").val("");
             $("#qrcode").removeAttr("disabled");
             $("#qrcode").focus();
         },
@@ -41,14 +41,12 @@ function chiama_ws_ubicazione() {
             } else if (xhr.responseText) {
                 show_error(xhr.responseText);
             } else {
-                console.log(xhr);
                 show_error("Network error");
             }
             $("#qrcode").val("");
             $("#qrcode").removeAttr("disabled");
             $("#qrcode").focus();
         }
-        
     });
 }
 

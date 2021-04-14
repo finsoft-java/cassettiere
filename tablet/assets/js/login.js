@@ -51,7 +51,6 @@ function login () {
             } else if (xhr.responseText) {
                 show_error(xhr.responseText);
             } else {
-                console.log(xhr);
                 show_error("Network error");
             }
             $("#rfid").val("");
