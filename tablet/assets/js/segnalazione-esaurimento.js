@@ -15,6 +15,9 @@ $(document).on("click","#annullaEsaurimento", function(){
     $("#dettagli").html("");
     $("#messaggio").html("");
     $("#articoloEsaurito").attr("disabled", true); 
+    
+    $("#articoloEsaurito").css("display","none" ); 
+    $("#annullaEsaurimento").css("display","none");
 });
 $(document).on("click","#articoloEsaurito", function(){
     $.post({
@@ -57,6 +60,7 @@ var codUbicazione = null;
 
 function chiama_ws_ubicazione() {
     codUbicazione = $("#qrcode").val();
+    $("#annullaEsaurimento").css("display","");
     hide_errors();
     $("#qrcode").attr("disabled", true);
     $.get({
@@ -70,11 +74,12 @@ function chiama_ws_ubicazione() {
             $("#dettagli").html(`Articolo <b>${data.value.COD_ARTICOLO_CONTENUTO}</b> ${data.value.DESCR_ARTICOLO}<br/>Quantità prevista <b>${data.value.QUANTITA_PREVISTA}</b>`);
             if (data.value.SEGNALAZIONE_ESAURIMENTO == 'N') {
                 $("#messaggio").html("Stai per dichiarare l'esaurimento di questa ubicazione. Confermi?");
-                $("#articoloEsaurito").removeAttr("disabled");              
+                $("#articoloEsaurito").removeAttr("disabled");            
+                $("#articoloEsaurito").css("display", "");    
                 // TODO ABILITA BOTTONI OK ANNULLA
             } else {
                 $("#messaggio").html("Esiste già una segnalazione di esaurimento per questa ubicazione.");
-                $("#articoloEsaurito").attr("disabled", true);              
+                $("#articoloEsaurito").css("display", "none");              
                 // TODO DISABILITA OK, ABILITA ANNULLA
             }
             $("#qrcode").val("");
