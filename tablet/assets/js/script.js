@@ -1,24 +1,7 @@
-$(document).on("click", "#login", function(){
-    login();
+$(document).on("click", "#logout", function(){
+    sessionStorage.clear();
+    location.reload();
 });
-
-$(document).on("click", "#ablLettore", function(){
-    abilitaLettore();
-});
-
-function abilitaLettore() {
-    // TODO call ajax webservice
-    $("#rfid").removeAttr("disabled");
-    $("#login").removeAttr("disabled");
-    $("#rfid").focus();
-    setTimeout("disabilitaLettore()", 30000); // timeout 30 secondi
-}
-
-function disabilitaLettore() {
-    // TODO call ajax webservice
-    $("#rfid").attr("disabled", true);
-    $("#login").attr("disabled", true);
-}
 
 function show_error(xhr, ajaxOptions, thrownError) {
     console.log(xhr);
@@ -33,28 +16,9 @@ function show_error(xhr, ajaxOptions, thrownError) {
     $("#error_message").css("display","");
 }
 
-function login (){
-    rfid = $("#rfid").val();
-    $("#error_message p").html();
-    $.post({
-    url: "../../cassettiere/ws/LoginBadge.php",
-    dataType: 'json',
-    data: {
-        rfid: rfid
-    },
-    success: function(data, status) {
-        $("#rfid").val("");
-        $("#login").attr("disabled","");
-        console.log(data);
-        sessionStorage.setItem( "user", (data["value"]["nome"] || '') + ' ' + (data["value"]["cognome"] || ''));
-        sessionStorage.setItem( "token", data["value"]["username"] );
-        location.href = "segnalazione-esaurimento.html";
-    },
-    error: show_error
-  });
+function reload_se_manca_token() {
+    var data = sessionStorage.getItem('token');
+    if(data == null){
+      location.href="./";
+    }
 }
-
-$(document).on("click", "#logout", function(){
-    sessionStorage.clear();
-    location.reload();
-});

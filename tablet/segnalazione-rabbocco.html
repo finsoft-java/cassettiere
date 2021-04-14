@@ -11,7 +11,7 @@
     <div style="position: relative;height: 100%;">
       <h4 style="padding-top:15px; padding-left: 15px;">Segnalazione Rabbocco</h4>
       <div style="position: absolute; top: 55px; left: 15px; width: 55%;">
-        <input type="text" disabled class="form-control focus" id="qrcod" placeholder="QRCODE UBICAZIONE" aria-label="QRCOD" aria-describedby="basic-addon2">
+        <input type="text" disabled class="form-control focus" id="qrcode" placeholder="QRCODE UBICAZIONE" aria-label="QRCOD" aria-describedby="basic-addon2">
       </div>        
       <div style="position: absolute; top: 30px; right: 30px;">
         <a href="segnalazione-esaurimento.html" class="btn btn-info">Esaurimento</a>
@@ -49,28 +49,6 @@
     <script src="assets/js/popper.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/script.js"></script>
-    <script>
-      var data = sessionStorage.getItem('token');
-      if(data == null){
-        location.href="./";
-      }
-      var user = sessionStorage.getItem('user');
-      if(user == null){
-        location.href="./";
-      } else {
-        $("#user_box p").append(user);
-      }
-      $(".focus").removeAttr("disabled");
-      $(".focus").focus();
-      
-      var input = document.getElementById("qrcod");
-      input.addEventListener("keyup", function(event) {
-        // Number 13 is the "Enter" key on the keyboard
-        if (event.keyCode === 13) {
-          event.preventDefault();
-          console.log('invio ->'+$("#qrcod").val());
-        }
-      });
-    </script>
+    <script src="assets/js/segnalazione-rabbocco.js"></script>
   </body>
 </html>
