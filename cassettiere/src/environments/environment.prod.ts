@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  wsUrl: 'http://svr-cassettiere.osai.loc/ws/'
 };
