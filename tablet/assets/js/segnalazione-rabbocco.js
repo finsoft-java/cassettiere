@@ -15,11 +15,17 @@ setInterval(function() {
 var ubicazioni = [];
 
 $(document).on("click", "#annullaRabbocco", function() {
+    init();
+});
+
+$(document).on("click", "#confermaRabbocco", chiama_ws_rabbocco);
+
+function init() {
     ubicazioni = [];
     $("#lista").html("");
     abilita_qrcode();
     abilita_o_disabilita_bottoni();
-});
+}
 
 function abilita_qrcode() {
     $("#qrcode").val("");
@@ -80,6 +86,41 @@ function chiama_ws_ubicazione() {
 function non_duplicata(ubicazione) {
     var codUbicazione = ubicazione.COD_UBICAZIONE;
     return ubicazioni.filter(x => x.COD_UBICAZIONE == codUbicazione).length === 0;
+}
+
+function chiama_ws_rabbocco() {
+    hide_errors();
+    $("#qrcode").attr("disabled", true);
+    $("#confermaRabbocco").attr("disabled", true); 
+    $("#annullaRabbocco").attr("disabled", true);
+    $("#messaggio").html("Dichiarazione in corso...");
+
+    var listaUbicazioni = ubicazioni.map(x => x.COD_UBICAZIONE);
+
+    $.post({
+        url: "../../cassettiere/ws/SegnalazioneRabbocco.php",
+        headers: {
+            'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+        },
+        data: JSON.stringify(listaUbicazioni),
+        success: function(data, status) {
+            console.log(data);
+            init();
+            // TODO DOVREI DARE UN MESSAGGIO: Dichiarazione effettuata
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(xhr);
+            if (xhr.responseJSON && xhr.responseJSON.error && xhr.responseJSON.error.value) {
+                show_error(xhr.responseJSON.error.value);
+            } else if (xhr.responseText) {
+                show_error(xhr.responseText);
+            } else {
+                show_error("Network error");
+            }
+            abilita_qrcode();
+            abilita_o_disabilita_bottoni();
+        }
+    });
 }
 
 var user = sessionStorage.getItem('user');

@@ -15,12 +15,11 @@ $logged_user = require_logged_user_JWT();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $postdata = file_get_contents("php://input");
     $request = json_decode($postdata);
-    //trasformare in []
-    if (!isset($request->COD_UBICAZIONE)) {
-       print_error(400, 'Missing COD_UBICAZIONE');
+    // $resuest dovrebbe essere un array di stringhe
+    if ($request == null || count($request) == 0) {
+       print_error(400, 'Argomenti mancanti');
     }
-    //for
-    $storicoOperazioneManager->segnala_rabbocco($request->COD_UBICAZIONE, $logged_user->nome_utente);
+    $storicoOperazioneManager->segnala_rabbocco($request, $logged_user->nome_utente);
 } else {
     //==========================================================
     print_error(400, "Unsupported method in request: " . $_SERVER['REQUEST_METHOD']);

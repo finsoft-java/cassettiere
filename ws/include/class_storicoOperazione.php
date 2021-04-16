@@ -43,6 +43,12 @@ class storicoOperazioniManager {
     }
 
     function segnala_esaurimento($codUbicazione, $codUtente) {
+        $query = "SELECT count(*) FROM ubicazioni WHERE cod_ubicazione='$codUbicazione'";
+        $num = select_single_value($query);
+        if ($num == 0) {
+            print_error(404, "Ubicazione inesistente: $codUbicazione");
+        }
+
         $query = "UPDATE ubicazioni SET segnalazione_esaurimento='Y' WHERE cod_ubicazione='$codUbicazione'";
         $num_updated = execute_update($query);
         if ($num_updated == 0) {
@@ -56,18 +62,27 @@ class storicoOperazioniManager {
         execute_update($query);
     }
 
-    function segnala_rabbocco($codUbicazione, $codUtente) {
-        $query = "UPDATE ubicazioni SET segnalazione_esaurimento='N' WHERE cod_ubicazione='$codUbicazione'";
-        $num_updated = execute_update($query);
-        if ($num_updated == 0) {
+    function segnala_rabbocco_singolo($codUbicazione, $codUtente) {
+        $query = "SELECT count(*) FROM ubicazioni WHERE cod_ubicazione='$codUbicazione'";
+        $num = select_single_value($query);
+        if ($num == 0) {
             print_error(404, "Ubicazione inesistente: $codUbicazione");
         }
+
+        $query = "UPDATE ubicazioni SET segnalazione_esaurimento='N' WHERE cod_ubicazione='$codUbicazione'";
+        execute_update($query);
 
         $query = "INSERT INTO `storico_operazioni` (`COD_UTENTE`, `COD_OPERAZIONE`, `COD_ARTICOLO`, `COD_UBICAZIONE`, `COD_AREA`)
             SELECT '$codUtente', 'RABBOCCO', COD_ARTICOLO_CONTENUTO, '$codUbicazione', COD_AREA
             FROM ubicazioni
             WHERE COD_UBICAZIONE='$codUbicazione'";
         execute_update($query);
+    }
+
+    function segnala_rabbocco($lista_codici, $codUtente) {
+        foreach ($lista_codici as $codUbicazione) {
+            $this->segnala_rabbocco_singolo($codUbicazione, $codUtente);
+        }
     }
 }
 ?>
