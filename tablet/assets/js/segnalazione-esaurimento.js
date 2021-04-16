@@ -20,46 +20,11 @@ $(document).on("click","#annullaEsaurimento", function(){
     $("#messaggio").html("");
     $("#articoloEsaurito").attr("disabled", true); 
     
-    $("#articoloEsaurito").css("display","none" ); 
-    $("#annullaEsaurimento").css("display","none");
+    $("#articoloEsaurito").css("display", "none"); 
+    $("#annullaEsaurimento").css("display", "none");
 });
 
-$(document).on("click","#articoloEsaurito", function(){
-    $.post({
-        url: "../../cassettiere/ws/Ubicazioni.php?COD_UBICAZIONE=" + codUbicazione,
-        dataType: 'json',
-        headers: {
-            'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-        },
-        success: function(data, status) {
-            console.log(data);
-            $("#dettagli").html(`Articolo <b>${data.value.COD_ARTICOLO_CONTENUTO}</b> ${data.value.DESCR_ARTICOLO}<br/>Quantità prevista <b>${data.value.QUANTITA_PREVISTA}</b>`);
-            if (data.value.SEGNALAZIONE_ESAURIMENTO == 'N') {
-                $("#messaggio").html("Stai per dichiarare l'esaurimento di questa ubicazione. Confermi?");  
-                // TODO ABILITA BOTTONI OK ANNULLA
-            } else {
-                $("#messaggio").html("Esiste già una segnalazione di esaurimento per questa ubicazione.");
-                // TODO DISABILITA OK, ABILITA ANNULLA
-            }
-            $("#qrcode").val("");
-            $("#qrcode").removeAttr("disabled");
-            $("#qrcode").focus();
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            console.log(xhr);
-            if (xhr.responseJSON && xhr.responseJSON.error && xhr.responseJSON.error.value) {
-                show_error(xhr.responseJSON.error.value);
-            } else if (xhr.responseText) {
-                show_error(xhr.responseText);
-            } else {
-                show_error("Network error");
-            }
-            $("#qrcode").val("");
-            $("#qrcode").removeAttr("disabled");
-            $("#qrcode").focus();
-        }
-    });
-});
+$(document).on("click", "#articoloEsaurito", chiama_ws_esaurimento);
 
 var codUbicazione = null;
 
@@ -87,6 +52,43 @@ function chiama_ws_ubicazione() {
                 $("#articoloEsaurito").css("display", "none");              
                 // TODO DISABILITA OK, ABILITA ANNULLA
             }
+            $("#qrcode").val("");
+            $("#qrcode").removeAttr("disabled");
+            $("#qrcode").focus();
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(xhr);
+            if (xhr.responseJSON && xhr.responseJSON.error && xhr.responseJSON.error.value) {
+                show_error(xhr.responseJSON.error.value);
+            } else if (xhr.responseText) {
+                show_error(xhr.responseText);
+            } else {
+                show_error("Network error");
+            }
+            $("#qrcode").val("");
+            $("#qrcode").removeAttr("disabled");
+            $("#qrcode").focus();
+        }
+    });
+}
+
+function chiama_ws_esaurimento() {
+    hide_errors();
+    $("#qrcode").attr("disabled", true);
+    $("#articoloEsaurito").css("display", "none"); 
+    $("#annullaEsaurimento").css("display", "none");
+    $("#messaggio").html("Segnalazione in corso...");
+    $.post({
+        url: "../../cassettiere/ws/SegnalazioneEsaurimento.php",
+        headers: {
+            'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+        },
+        data: JSON.stringify({
+            COD_UBICAZIONE: codUbicazione
+        }),
+        success: function(data, status) {
+            console.log(data);
+            $("#messaggio").html("Segnalazione effettuata.");
             $("#qrcode").val("");
             $("#qrcode").removeAttr("disabled");
             $("#qrcode").focus();
