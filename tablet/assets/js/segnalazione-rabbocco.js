@@ -62,7 +62,7 @@ function chiama_ws_ubicazione() {
             }
             if (non_duplicata(ubicazione)) {
                 ubicazioni.push(ubicazione);
-                $("#lista").append(`<li style="width:100%;line-height: 38px;padding:10px 15px;border-bottom:1px solid #000;">Articolo <b>${ubicazione.COD_ARTICOLO_CONTENUTO}</b> ${ubicazione.DESCR_ARTICOLO}<br/>Quantità prevista <b>${ubicazione.QUANTITA_PREVISTA}</b> <button class="btn btn-danger" style="float:right"> Elimina </button></li>`);
+                $("#lista").append(`<li style="width:100%;line-height: 38px;padding:10px 15px;border-bottom:1px solid #000;">Articolo <b>${ubicazione.COD_ARTICOLO_CONTENUTO}</b> ${ubicazione.DESCR_ARTICOLO}<br/>Quantità prevista <b>${ubicazione.QUANTITA_PREVISTA}</b> <button class="btn btn-danger" style="float:right" onclick="elimina('${ubicazione.COD_UBICAZIONE}')"> Elimina </button></li>`);
             }
             abilita_qrcode();
             abilita_o_disabilita_bottoni();
@@ -121,6 +121,12 @@ function chiama_ws_rabbocco() {
             abilita_o_disabilita_bottoni();
         }
     });
+}
+
+function elimina(codUbicazione) {
+    var index = ubicazioni.findIndex(x => x.COD_UBICAZIONE == codUbicazione);
+    ubicazioni.splice(index, 1);
+    $("#lista").find("li")[index].remove();
 }
 
 var user = sessionStorage.getItem('user');
