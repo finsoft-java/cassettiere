@@ -93,7 +93,11 @@ function chiama_ws_esaurimento() {
             $("#qrcode").val("");
             $("#qrcode").removeAttr("disabled");
             $("#qrcode").focus();
-            beep();
+            $("#dettagli").html("");
+            $("#messaggio").html("");
+            $("#articoloEsaurito").attr("disabled", true);
+            $("#articoloEsaurito").css("display", "none");
+            $("#annullaEsaurimento").css("display", "none");
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.log(xhr);
