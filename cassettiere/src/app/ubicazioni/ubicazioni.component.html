@@ -5,6 +5,7 @@
 <app-mat-edit-table
     [columns]="columns"
     [service]="service"
+    (errorMessage)="setError($event)"
     #myTable
     >
   <mat-expansion-panel hideToggle>

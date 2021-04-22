@@ -44,11 +44,37 @@ class UbicazioniManager {
 
     function crea($json_data) {
         global $con, $logged_user;
-        $sql = insert("ubicazioni", ["COD_UBICAZIONE" => $json_data->COD_UBICAZIONE,
-                                     "COD_ARTICOLO_CONTENUTO" => $json_data->COD_ARTICOLO_CONTENUTO,
-                                     "QUANTITA_PREVISTA" => $json_data->QUANTITA_PREVISTA,
-                                     "COD_AREA " => $json_data->COD_AREA,
-                                     "SEGNALAZIONE_ESAURIMENTO" => $json_data->SEGNALAZIONE_ESAURIMENTO
+        
+        if(isset($json_data->COD_UBICAZIONE)) {
+            $codUbi = $json_data->COD_UBICAZIONE;
+        }else{
+            $codUbi = '';
+        }
+        if(isset($json_data->COD_ARTICOLO_CONTENUTO)) {
+            $codArt = $json_data->COD_ARTICOLO_CONTENUTO;
+        }else{
+            $codArt = '';
+        }
+        if(isset($json_data->QUANTITA_PREVISTA)) {
+            $qntPrevista = $json_data->QUANTITA_PREVISTA;
+        }else{
+            $qntPrevista = '';
+        }
+        if(isset($json_data->COD_AREA)) {
+            $codArea = $json_data->COD_AREA;
+        }else{
+            $codArea = '';
+        }
+        if(isset($json_data->SEGNALAZIONE_ESAURIMENTO)) {
+            $segnEsaurimento = $json_data->SEGNALAZIONE_ESAURIMENTO;
+        }else{
+            $segnEsaurimento = '';
+        }
+        $sql = insert("ubicazioni", ["COD_UBICAZIONE" => $codUbi,
+                                     "COD_ARTICOLO_CONTENUTO" => $codArt,
+                                     "QUANTITA_PREVISTA" => $qntPrevista,
+                                     "COD_AREA " => $codArea,
+                                     "SEGNALAZIONE_ESAURIMENTO" => $segnEsaurimento
                                   ]);
         mysqli_query($con, $sql);
         if ($con ->error) {

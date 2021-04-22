@@ -7,6 +7,7 @@
 
 <ng-content></ng-content>
 
+<alert></alert>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width:100%" id="edittable">
     <ng-container matColumnDef="{{col.data}}" *ngFor="let col of columns">
       <th mat-header-cell *matHeaderCellDef>
@@ -29,9 +30,7 @@
                 <button mat-raised-button color="secondary" [disabled]="!buttonsEnabled" (click)="undoChange(rowNum);">{{labels.undo}}</button>
             </div>
             <ng-template #dataField>
-              <mat-form-field style="    width: 90%;
-              display: block;
-              margin: 0px auto;margin-top:10px;">
+              <mat-form-field style="width: 90%; display: block; margin: 0px auto; margin-top:10px;">
                 <mat-label>{{col.title}}</mat-label>
 
                 <input *ngIf="col.type !== 'select' && col.type !== 'combo'" matInput type="{{col.type}}" [(ngModel)]="row[col.data]" [disabled]="col.disabled != null && (col.disabled && !creating)" (change)="onChangeCell($event, col)"/>

@@ -24,9 +24,19 @@ class AreeManager {
 
     function crea($json_data) {
         global $con, $logged_user;
-        $sql = insert("aree", ["COD_AREA" => $json_data->COD_AREA,
-                                   "DESCRIZIONE" => $con->escape_string($json_data->DESCRIZIONE)
-                                  ]);
+        if(isset($json_data->COD_AREA)) {
+            $codArea = $json_data->COD_AREA;
+        }else{
+            $codArea = '';
+        }
+        if(isset($json_data->DESCRIZIONE)) {
+            $descrizione = $json_data->DESCRIZIONE;
+        }else{
+            $descrizione = '';
+        }
+        $sql = insert("aree", ["COD_AREA" => $codArea,
+                                "DESCRIZIONE" => $con->escape_string($descrizione)
+                                ]);
         mysqli_query($con, $sql);
         if ($con ->error) {
             print_error(500, $con ->error);
@@ -35,10 +45,24 @@ class AreeManager {
     }
     
     function aggiorna($progetto, $json_data) {
-        global $con, $STATO_PROGETTO;        
-        $sql = update("aree", ["COD_AREA" => $json_data->COD_AREA,
-                               "DESCRIZIONE" => $con->escape_string($json_data->DESCRIZIONE)], 
-                               ["COD_AREA" => $json_data->COD_AREA]);
+        global $con, $STATO_PROGETTO;   
+        
+
+        if(isset($json_data->COD_AREA)) {
+            $codArea = $json_data->COD_AREA;
+        }else{
+            $codArea = '';
+        }
+        if(isset($json_data->DESCRIZIONE)) {
+            $descrizione = $json_data->DESCRIZIONE;
+        }else{
+            $descrizione = '';
+        }
+        
+        
+        $sql = update("aree", ["COD_AREA" => $codArea,
+                               "DESCRIZIONE" => $con->escape_string($descrizione)], 
+                               ["COD_AREA" => $codArea]);
         mysqli_query($con, $sql);
         if ($con ->error) {
             print_error(500, $con ->error);

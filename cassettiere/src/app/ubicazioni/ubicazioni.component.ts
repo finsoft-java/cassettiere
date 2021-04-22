@@ -1,11 +1,11 @@
 import { map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
-import { AlertService } from '../_services/alert.service';
 import { ColumnDefinition, LabelValue } from '../mat-edit-table/ColumnDefinition';
 import { UbicazioniService } from '../_services/ubicazioni.service';
 import { Ubicazione } from '../_models';
 import { ArticoliService } from '../_services/articoli.service';
 import { AreeService } from '../_services/aree.service';
+import { AlertService } from '../_services/alert.service';
 
 @Component({
   selector: 'app-ubicazioni',
@@ -17,6 +17,7 @@ export class UbicazioniComponent implements OnInit {
   arrayEsaurimento: LabelValue[] = [];
   service: UbicazioniService;
   filter: any = {};
+  alert: AlertService;
 
   columns: ColumnDefinition<Ubicazione>[] = [
     {
@@ -66,6 +67,7 @@ export class UbicazioniComponent implements OnInit {
               private alertService: AlertService,
               private articoliService: ArticoliService) {
     this.service = ubicSvc;
+    this.alert = alertService;
   }
 
   ngOnInit(): void {
@@ -92,5 +94,10 @@ export class UbicazioniComponent implements OnInit {
   resetFilter(editTableComponent: any): void {
     delete this.filter.search;
     editTableComponent.filter(this.filter);
+  }
+
+  setError(errore: any) {
+    console.log(errore);
+    this.alert.error(errore);
   }
 }
