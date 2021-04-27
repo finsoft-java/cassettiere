@@ -34,6 +34,7 @@ class AreeManager {
         }else{
             $descrizione = '';
         }
+
         $sql = insert("aree", ["COD_AREA" => $codArea,
                                 "DESCRIZIONE" => $con->escape_string($descrizione)
                                 ]);
@@ -47,7 +48,6 @@ class AreeManager {
     function aggiorna($progetto, $json_data) {
         global $con, $STATO_PROGETTO;   
         
-
         if(isset($json_data->COD_AREA)) {
             $codArea = $json_data->COD_AREA;
         }else{
@@ -57,8 +57,7 @@ class AreeManager {
             $descrizione = $json_data->DESCRIZIONE;
         }else{
             $descrizione = '';
-        }
-        
+        }       
         
         $sql = update("aree", ["COD_AREA" => $codArea,
                                "DESCRIZIONE" => $con->escape_string($descrizione)], 

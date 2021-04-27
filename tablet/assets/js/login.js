@@ -34,9 +34,9 @@ function login () {
             rfid: rfid
         },
         success: function(data, status) {
-            console.log(data);
             sessionStorage.setItem( "user", (data["value"]["nome"] || '') + ' ' + (data["value"]["cognome"] || ''));
             sessionStorage.setItem( "token", data["value"]["username"] );
+            sessionStorage.setItem( "role", data["value"]["ruolo"] );
             location.href = "segnalazione-esaurimento.html";
         },
         error:  function (xhr, ajaxOptions, thrownError) {
