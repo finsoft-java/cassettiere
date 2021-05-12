@@ -59,12 +59,15 @@ function check_and_load_user($username, $pwd) {
     ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0); // We need this for doing an LDAP search.
     $ldaprdn = $username . "@" . AD_DOMAIN;
     
-    $bind = ldap_bind($ldap, $ldaprdn, $pwd);
+    $bind = @ldap_bind($ldap, $ldaprdn, $pwd);
     if ($bind) {
-        $filter="(SamAccountName=$username)";
-        $result = ldap_search($ldap, AD_BASE_DN, $filter);
+        $filter="(&(SamAccountName=$username)" . AD_FILTER . ")";
+        $result = ldap_search($ldap, AD_BASE_DN);
         ldap_sort($ldap,$result,"sn");
         $info = ldap_get_entries($ldap, $result);
+        if (!isset($info[0])) {
+            print_error(500, "User not authorized");
+        }
         $user =  new stdClass();
         $user->nome_utente = $info[0]["samaccountname"][0];
         $user->nome = $info[0]["sn"][0];
