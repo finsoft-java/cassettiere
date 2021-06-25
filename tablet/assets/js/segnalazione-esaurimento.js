@@ -1,3 +1,6 @@
+var BASE_HREF = "../../";
+// in locale è ../../cassettiere/
+
 reload_se_manca_token();
 
 document.getElementById("qrcode").addEventListener("keyup", function(event) {
@@ -34,7 +37,7 @@ function chiama_ws_ubicazione() {
     hide_errors();
     $("#qrcode").attr("disabled", true);
     $.get({
-        url: "../../cassettiere/ws/Ubicazioni.php?COD_UBICAZIONE=" + codUbicazione,
+        url: BASE_HREF + "/ws/Ubicazioni.php?COD_UBICAZIONE=" + codUbicazione,
         dataType: 'json',
         headers: {
             'Authorization': 'Bearer ' + sessionStorage.getItem('token')
@@ -81,7 +84,7 @@ function chiama_ws_esaurimento() {
     $("#annullaEsaurimento").css("display", "none");
     $("#messaggio").html("Segnalazione in corso...");
     $.post({
-        url: "../../cassettiere/ws/SegnalazioneEsaurimento.php",
+        url: BASE_HREF + "/ws/SegnalazioneEsaurimento.php",
         headers: {
             'Authorization': 'Bearer ' + sessionStorage.getItem('token')
         },

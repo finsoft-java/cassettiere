@@ -19,9 +19,7 @@ if($postdata != ''){
     if (!$rfid) {
         print_error(400, 'Missing RFID');
     }
-    
-    $username = $badgeManager->get_username($rfid);
-    $user = check_and_load_user($username);
+    $user = load_user($rfid);
 }
 
 if ($user) {
@@ -40,11 +38,11 @@ if ($user) {
     print_error(403, "Invalid credentials");
 }
 
+function load_user($rfid) {
+    global $badgeManager, $ldapManager;
 
-function check_and_load_user($username) {
-
-    // PRIMA, proviamo la backdoor
-    if ($username == 'finsoft') {
+    // Prima, controllo la backdoor
+    if ($rfid == 'finsoft') {
         $user = (object) [];
         $user->nome_utente = 'finsoft';
         $user->nome = 'Mario';
@@ -53,9 +51,8 @@ function check_and_load_user($username) {
         $user->ruolo = 'magazziniere'; // FIXME
         return $user;
     }
-
-    // POI, proviamo su LDAP
-    $user = $ldapManager->get_user();
+    $username = $badgeManager->get_username($rfid);
+    $user = $ldapManager->get_user($username);
     return $user;
 }
 

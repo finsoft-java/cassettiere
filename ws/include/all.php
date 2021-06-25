@@ -15,3 +15,4 @@ include("class_ubicazione.php");
 include("class_storicoOperazione.php");
 include("class_panthera.php");
 include("class_badge.php");
+include("class_ldap.php");

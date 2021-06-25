@@ -1,3 +1,6 @@
+var BASE_HREF = "../../";
+// in locale è ../../cassettiere/
+
 reload_se_manca_token();
 
 if(sessionStorage.getItem('role') != 'magazziniere'){
@@ -52,7 +55,7 @@ function chiama_ws_ubicazione() {
     hide_errors();
     $("#qrcode").attr("disabled", true);
     $.get({
-        url: "../../cassettiere/ws/Ubicazioni.php?COD_UBICAZIONE=" + codUbicazione,
+        url: BASE_HREF + "ws/Ubicazioni.php?COD_UBICAZIONE=" + codUbicazione,
         dataType: 'json',
         headers: {
             'Authorization': 'Bearer ' + sessionStorage.getItem('token')
@@ -114,7 +117,7 @@ function chiama_ws_rabbocco() {
     var listaUbicazioni = ubicazioni.map(x => x.COD_UBICAZIONE);
 
     $.post({
-        url: "../../cassettiere/ws/SegnalazioneRabbocco.php",
+        url: BASE_HREF + "ws/SegnalazioneRabbocco.php",
         headers: {
             'Authorization': 'Bearer ' + sessionStorage.getItem('token')
         },

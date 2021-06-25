@@ -1,3 +1,6 @@
+var BASE_HREF = "../../";
+// in locale è ../../cassettiere/
+
 $(document).on("click", "#ablLettore", function(){
     abilitaLettore();
 });
@@ -28,7 +31,7 @@ function login () {
     hide_errors();
     $("#rfid").attr("disabled", true);
     $.post({
-        url: "../../cassettiere/ws/LoginBadge.php",
+        url: BASE_HREF + "/ws/LoginBadge.php",
         dataType: 'json',
         data: {
             rfid: rfid
