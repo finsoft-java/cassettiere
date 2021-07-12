@@ -1,3 +1,8 @@
+var BASE_HREF = "../../";
+if (location.href.includes('localhost') || location.href.includes('127.0.0.1')) {
+    BASE_HREF = "../../cassettiere/";
+}
+
 $(document).on("click", "#logout", function(){
     sessionStorage.clear();
     location.href = "./";

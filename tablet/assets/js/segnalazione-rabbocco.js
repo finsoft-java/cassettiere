@@ -1,6 +1,3 @@
-var BASE_HREF = "../../";
-// in locale è ../../cassettiere/
-
 reload_se_manca_token();
 
 if(sessionStorage.getItem('role') != 'magazziniere'){
