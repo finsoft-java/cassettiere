@@ -80,13 +80,12 @@ class LdapManager {
             }
 
             $entry = $entries[0];
-            $user = [
-                'username' => $entry['samaccountname'][0],
-                'nome' => $entry['givenname'][0],
-                'cognome' => $entry['sn'][0],
-                'email' => $entry['mail'][0],
-                'ruolo' => $role
-            ];
+            $user = (object) [];
+            $user->nome_utente = $entry['samaccountname'][0];
+            $user->nome = $entry['givenname'][0];
+            $user->cognome = $entry['sn'][0];
+            $user->email = $entry['mail'][0];
+            $user->ruolo = $role;
 
             @ldap_unbind($ldap_connection); // Clean up after ourselves.
             return $user;
