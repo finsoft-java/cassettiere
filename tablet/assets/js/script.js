@@ -5,19 +5,27 @@ if (location.href.includes('localhost') || location.href.includes('127.0.0.1')) 
 
 $(document).on("click", "#logout", function(){
     sessionStorage.clear();
-    location.href = "./";
+    location.href = "./segnalazione-esaurimento.html";
 });
 
-function reload_se_manca_token() {
+function abilitaLettoreBadge() {
+    // TODO call ajax webservice
+}
+
+function disabilitaLettoreBadge() {
+    // TODO call ajax webservice
+}
+
+function require_login(callingPage, role) {
     var data = sessionStorage.getItem('token');
-    if (data == null) {
-      location.href = "./";
-    } else {
-        if(sessionStorage.getItem('role') != 'magazziniere'){
-            $("#rabbocco_btn").css("display","none");
-        }else{
-            $("#rabbocco_btn").css("display","");
+    if (data == null || (role && sessionStorage.getItem('role') != role)) {
+        sessionStorage.setItem('redirectPage', callingPage);
+        if (role) {
+            sessionStorage.setItem('requiredRole', role);
+        } else {
+            sessionStorage.removeItem('requiredRole');
         }
+        location.href = "./login.html";
     }
 }
 

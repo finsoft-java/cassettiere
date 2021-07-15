@@ -15,7 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-require_logged_user_JWT();
+// Disabilito la protezione per permettere l'utilizzo da tablet
+// require_logged_user_JWT();
 
 $cod_ubicazione = isset($_GET['COD_UBICAZIONE']) ? $con->escape_string($_GET['COD_UBICAZIONE']) : null;
 

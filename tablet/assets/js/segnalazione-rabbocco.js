@@ -1,8 +1,8 @@
-reload_se_manca_token();
+require_login("segnalazione-rabbocco.html", "magazziniere");
 
-if(sessionStorage.getItem('role') != 'magazziniere'){
-    location.href = "./";
-}
+$(document).ready(function(){
+    disabilitaLettoreBadge();
+});
 
 document.getElementById("qrcode").addEventListener("keyup", function(event) {
 // Number 13 is the "Enter" key on the keyboard
