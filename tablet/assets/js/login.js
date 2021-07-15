@@ -1,5 +1,11 @@
+var trials = 0;
 $(document).ready(function(){
     abilitaLettoreBadge();
+    trials = localStorage.getItem('trials') || 0;
+    if (trials >= 5) {
+        wait();
+    }
+    scheduleLogout();
 });
 
 setInterval(function() {
@@ -18,6 +24,7 @@ document.getElementById("rfid").addEventListener("keyup", function(event) {
 function login () {
     const rfid = $("#rfid").val();
     hide_errors();
+    scheduleLogout();
     $("#rfid").attr("disabled", true);
     $.post({
         url: BASE_HREF + "/ws/LoginBadge.php",
@@ -26,7 +33,6 @@ function login () {
             rfid: rfid
         },
         success: function(data, status) {
-            console.log("SONO QUI");
             if (sessionStorage.getItem('requiredRole') && data["value"]["ruolo"] != sessionStorage.getItem('requiredRole')) {
                 show_error("Utente non autorizzato");
                 $("#rfid").val("");
@@ -40,15 +46,37 @@ function login () {
         },
         error:  function (xhr, ajaxOptions, thrownError) {
             console.log(xhr);
-            if (xhr.responseJSON && xhr.responseJSON.error && xhr.responseJSON.error.value) {
-                show_error(xhr.responseJSON.error.value);
-            } else if (xhr.responseText) {
-                show_error(xhr.responseText);
-            } else {
-                show_error("Network error");
-            }
+            var msg = (xhr.responseJSON && xhr.responseJSON.error && xhr.responseJSON.error.value) ? xhr.responseJSON.error.value
+                : (xhr.responseText) ? xhr.responseText
+                : "Network error";
+            show_error(msg);
+            
             $("#rfid").val("");
-            $("#rfid").removeAttr("disabled");
+            localStorage.setItem('trials', ++trials);
+            if (trials >= 5) {
+                wait();
+            } else {
+                $("#rfid").removeAttr("disabled");
+            }
         }
     });
+}
+
+function wait() {
+    $("#rfid").attr("disabled", true);
+    show_error("Attendere 60 secondi...");
+    setTimeout(function(){
+        $("#rfid").removeAttr("disabled");
+        localStorage.setItem('trials', trials = 0);
+        hide_errors();
+    }, 60000);
+}
+
+var timeout = null;
+function scheduleLogout() {
+    if (timeout != null) clearTimeout(timeout);
+    timeout = setTimeout(function() {
+        console.log("Logout 120sec timeout");
+        location.href = './';
+    }, 120000);
 }

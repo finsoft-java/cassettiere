@@ -11,7 +11,6 @@ $(document).ready(function(){
     $(".focus").focus();
     if (sessionStorage.getItem('codUbicazione')) {
         codUbicazione = sessionStorage.getItem('codUbicazione');
-        $('#qrcode').val(codUbicazione);
         chiama_ws_ubicazione();
     }
 });
@@ -31,7 +30,9 @@ setInterval(function() {
     $("#qrcode").focus();
 }, 1000);
 
-$(document).on("click","#annullaEsaurimento", function(){
+$(document).on("click", "#annullaEsaurimento", annulla);
+
+function annulla() {
     $("#qrcode").val("");
     $("#qrcode").removeAttr("disabled");
     $("#qrcode").focus();
@@ -43,7 +44,7 @@ $(document).on("click","#annullaEsaurimento", function(){
     $("#annullaEsaurimento").css("display", "none");
     codUbicazione = null;
     sessionStorage.removeItem('codUbicazione');
-});
+}
 
 $(document).on("click", "#articoloEsaurito", chiama_ws_esaurimento);
 
@@ -67,6 +68,7 @@ function chiama_ws_ubicazione() {
             console.log(data);
             $("#dettagli").html(`Articolo <b>${data.value.COD_ARTICOLO_CONTENUTO}</b> ${data.value.DESCR_ARTICOLO}<br/>Quantità prevista <b>${data.value.QUANTITA_PREVISTA}</b>`);
             if (data.value.SEGNALAZIONE_ESAURIMENTO == 'N') {
+                scheduleAnnulla(30);
                 if (sessionStorage.getItem('user') != null) {
                     $("#messaggio").html("Stai per dichiarare l'esaurimento di questa ubicazione. Confermi?");
                     $("#articoloEsaurito").removeAttr("disabled");            
@@ -79,7 +81,8 @@ function chiama_ws_ubicazione() {
             } else {
                 $("#messaggio").html("Esiste già una segnalazione di esaurimento per questa ubicazione.");
                 $("#annullaEsaurimento").css("display","");
-                $("#articoloEsaurito").css("display", "none");              
+                $("#articoloEsaurito").css("display", "none");
+                scheduleAnnulla(15);
             }
             $("#qrcode").val("");
             $("#qrcode").removeAttr("disabled");
@@ -160,5 +163,22 @@ var timeout = null;
 
 function scheduleLogout() {
     if (timeout != null) clearTimeout(timeout);
-    timeout = setTimeout("logout()", 60000);
+    timeout = setTimeout(function() {
+        console.log("Logout 60sec timeout");
+        logout();
+    }, 60000);
+}
+
+var oldCodUbicazione = null;
+var tmrAnnulla = null;
+
+function scheduleAnnulla(sec) {
+    oldCodUbicazione = codUbicazione;
+    if (tmrAnnulla != null) clearTimeout(tmrAnnulla);
+    tmrAnnulla = setTimeout(function(){
+        if (!$('#qrcode').val() || $('#qrcode').val() == oldCodUbicazione) {
+            console.log("timeout, operazione annullata");
+            annulla();
+        }
+    }, sec*1000);
 }

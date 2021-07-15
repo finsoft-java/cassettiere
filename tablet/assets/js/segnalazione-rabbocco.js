@@ -2,12 +2,14 @@ require_login("segnalazione-rabbocco.html", "magazziniere");
 
 $(document).ready(function(){
     disabilitaLettoreBadge();
+    scheduleLogout();
 });
 
 document.getElementById("qrcode").addEventListener("keyup", function(event) {
 // Number 13 is the "Enter" key on the keyboard
     if (event.keyCode === 13) {
         event.preventDefault();
+        scheduleLogout();
         chiama_ws_ubicazione();
     }
 });
@@ -106,6 +108,7 @@ function non_duplicata(ubicazione) {
 
 function chiama_ws_rabbocco() {
     hide_errors();
+    scheduleLogout();
     $("#qrcode").attr("disabled", true);
     $("#confermaRabbocco").attr("disabled", true); 
     $("#annullaRabbocco").attr("disabled", true);
@@ -123,7 +126,7 @@ function chiama_ws_rabbocco() {
             console.log(data);
             init();
             beep();
-            // TODO DOVREI DARE UN MESSAGGIO: Dichiarazione effettuata
+            setTimeout("logout()", 500); // dopo la conferma, il tempo di sentire il bip e facciamo logout
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.log(xhr);
@@ -142,6 +145,7 @@ function chiama_ws_rabbocco() {
 }
 
 function elimina(codUbicazione) {
+    scheduleLogout();
     var index = ubicazioni.findIndex(x => x.COD_UBICAZIONE == codUbicazione);
     ubicazioni.splice(index, 1);
     $("#lista").find("li")[index].remove();
@@ -152,3 +156,13 @@ var user = sessionStorage.getItem('user');
 $("#user_box p").append(user);
 $(".focus").removeAttr("disabled");
 $(".focus").focus();
+
+var timeout = null;
+
+function scheduleLogout() {
+    if (timeout != null) clearTimeout(timeout);
+    timeout = setTimeout(function() {
+        console.log("Logout 60sec timeout");
+        logout();
+    }, 60000);
+}

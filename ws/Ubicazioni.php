@@ -9,6 +9,7 @@
 // DELETE Progetti?id_area=xxx -> elimina progetto esistente
 include("include/all.php");
 $con = connect();
+$panthera->connect();
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     //do nothing, HTTP 200
