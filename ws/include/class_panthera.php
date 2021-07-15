@@ -10,7 +10,24 @@ class PantheraManager {
     }
     
     function escape_string($s) {
-        return ($this->conn) ? $this->conn->escape_string($s) : $s;
+        // there is no conn->escape_string() in sql server
+        // see https://stackoverflow.com/questions/574805
+        if (!isset($s) or $s === null) return null;
+        if (empty($s)) return $s;
+        if (is_numeric($s)) return $s;
+        $non_displayables = array(
+            '/%0[0-8bcef]/',            // url encoded 00-08, 11, 12, 14, 15
+            '/%1[0-9a-f]/',             // url encoded 16-31
+            '/[\x00-\x08]/',            // 00-08
+            '/\x0b/',                   // 11
+            '/\x0c/',                   // 12
+            '/[\x0e-\x1f]/'             // 14-31
+        );
+        foreach ($non_displayables as $regex) {
+            $s = preg_replace($regex, '', $s);
+        }
+        $s = str_replace("'", "''", $s);
+        return $s;
     }
 
     function fmt_errors() {
@@ -93,7 +110,7 @@ class PantheraManager {
     Esegue un comado SQL SELECT e si aspetta una singola cella come risultato, oppure lancia un print_error
     */
     function select_single_value($sql) {
-        if ($result = sqlsrv_query($connessione, $sql)) {
+        if ($result = sqlsrv_query($this->conn, $sql)) {
             if ($row = sqlsrv_fetch_array($result))
             {
                 return $row[0];
@@ -125,15 +142,14 @@ class PantheraManager {
             $count = 1000;
         } else {
             $sql0 = "SELECT COUNT(*) AS cnt ";
-            $sql1 = "SELECT COD_ARTICOLO,DESCRIZIONE ";
-            $sql = "FROM THIP.ARTICOLI WHERE ID_AZIENDA='001'";
+            $sql1 = "SELECT ID_ARTICOLO,DESCRIZIONE ";
+            $sql = "FROM THIP.ARTICOLI WHERE ID_AZIENDA='001' ";
             if ($search) {
                 $search = strtoupper($search);
-                $sql .= "WHERE upper(COD_ARTICOLO) LIKE '%$search%' OR DESCRIZIONE LIKE upper('%$search%') ";
+                $sql .= "AND UPPER(ID_ARTICOLO) LIKE '%$search%' OR DESCRIZIONE LIKE UPPER('%$search%') ";
             }
             $sql .= "ORDER BY 1 ";
-
-            $count = select_single_value($sql0 . $sql);
+            $count = $this->select_single_value($sql0 . $sql);
 
             if ($top != null) {
                 if ($skip != null) {
