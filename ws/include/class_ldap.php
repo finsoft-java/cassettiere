@@ -15,11 +15,6 @@ class LdapManager {
      * Ricerca dell'utente con ruolo magazziniere oppure utente semplice (serve per il frontend)
      */
     function get_user($username) {
-        if ($useFilter) {
-            $additionalFilter = AD_FILTER;
-        } else {
-            $additionalFilter = null;
-        }
         return $this->_common_get_user(AD_SERVER, AD_USERNAME, AD_PASSWORD, $username, AD_BASE_DN, [AD_FILTER => 'magazziniere', '' => 'utente']);
     }
 
