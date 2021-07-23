@@ -153,9 +153,9 @@ class PantheraManager {
 
             if ($top != null) {
                 if ($skip != null) {
-                    $sql .= " LIMIT $skip,$top";
+					$sql .= " OFFSET $skip ROWS FETCH NEXT $top ROWS ONLY ";
                 } else {
-                    $sql .= " LIMIT $top";
+					$sql .= " OFFSET 0 ROWS FETCH NEXT $top ROWS ONLY ";
                 }
             }
 
