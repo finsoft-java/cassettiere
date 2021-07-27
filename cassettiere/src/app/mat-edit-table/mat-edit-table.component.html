@@ -1,14 +1,14 @@
 <div class="button_style_cassettiere">
   <button mat-raised-button color="secondary" style="float: right;margin: 0px 0px 0px 0px;" [disabled]="!buttonsEnabled" (click)="exportCsv()">{{labels.exportCsv}}</button>
   <button mat-raised-button color="secondary" style="float: right;margin: 0px 10px 0px 0px;" [disabled]="!buttonsEnabled" (click)="exportXlsx()">{{labels.exportXlsx}}</button>
-  <button *ngIf="editable" mat-raised-button color="primary" style="float: right;margin: 0px 10px 0px 0px;" [disabled]="!buttonsEnabled" (click)="beginCreate()">{{labels.add}}</button>
-  <button mat-raised-button color="primary" style="float: right;margin: 0px 10px 0px 0px;" [disabled]="!buttonsEnabled" (click)="refresh()">{{labels.refresh}}</button>
+  <button *ngIf="editable" mat-raised-button color="primary" style="float: right;margin: 0px 10px 0px 0px;" [disabled]="!buttonsEnabled || creating" (click)="beginCreate()">{{labels.add}}</button>
+  <button mat-raised-button color="primary" style="float: right;margin: 0px 10px 0px 0px;" [disabled]="!buttonsEnabled || creating" (click)="refresh()">{{labels.refresh}}</button>
 </div>
 
 <ng-content></ng-content>
 
 <alert></alert>
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width:100%" id="edittable">
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width:100%" id="edittable" #maintable>
     <ng-container matColumnDef="{{col.data}}" *ngFor="let col of columns">
       <th mat-header-cell *matHeaderCellDef>
         {{col.title}}
@@ -24,7 +24,7 @@
               {{ renderCell(col, row, rowNum, -1) }}
             </span>
           </div>
-          <div *ngIf="rowNum === editRowNumber">
+          <div *ngIf="rowNum === editRowNumber" #tableFormRow>
             <div *ngIf="col.data === ACTIONS_INDEX; else dataField">
                 <button mat-raised-button color="primary" style="margin-right:15px;" [disabled]="!buttonsEnabled" (click)="saveRow(rowNum)">{{labels.save}}</button>
                 <button mat-raised-button color="secondary" [disabled]="!buttonsEnabled" (click)="undoChange(rowNum);">{{labels.undo}}</button>
@@ -33,13 +33,13 @@
               <mat-form-field style="width: 90%; display: block; margin: 0px auto; margin-top:10px;">
                 <mat-label>{{col.title}}</mat-label>
 
-                <input *ngIf="col.type !== 'select' && col.type !== 'combo'" matInput type="{{col.type}}" [(ngModel)]="row[col.data]" [disabled]="col.disabled != null && (col.disabled && !creating)" (change)="onChangeCell($event, col)"/>
+                <input *ngIf="col.type !== 'select' && col.type !== 'combo'" matInput type="{{col.type}}" [(ngModel)]="row[col.data]" [disabled]="col.disabled != null && (col.disabled && !creating)" (change)="onChangeCell($event, col)" class="tablefield"/>
                 
-                <mat-select *ngIf="col.type === 'select'" matInput [(ngModel)]="row[col.data]" [disabled]="col.disabled != null && (col.disabled && !creating)" (change)="onChangeCell($event, col)">
+                <mat-select *ngIf="col.type === 'select'" matInput [(ngModel)]="row[col.data]" [disabled]="col.disabled != null && (col.disabled && !creating)" (change)="onChangeCell($event, col)" #select1 (focus)="select1.open()" class="tablefield">
                   <mat-option *ngFor="let opt of col.options" [value]="opt.value">{{ opt.label }}</mat-option>
                 </mat-select>
                 
-                <mat-select *ngIf="col.type === 'combo'" [(ngModel)]="row[col.data]">
+                <mat-select *ngIf="col.type === 'combo'" [(ngModel)]="row[col.data]" #select2 (focus)="select2.open()" class="tablefield">
                   <mat-option>
                     <ngx-mat-select-search (input)="onSearchChange(row, col, searchValue[col.data])" [(ngModel)]="searchValue[col.data]" placeholderLabel="" noEntriesFoundLabel="No data found"></ngx-mat-select-search>
                   </mat-option>

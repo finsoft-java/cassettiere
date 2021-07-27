@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
@@ -84,6 +84,8 @@ export class MatEditTableComponent<T> implements OnInit {
   XLSX_FILE_NAME = 'Export.xlsx';
   XLSX_SHEET_NAME = 'Data';
   CSV_FILE_NAME = 'Export.csv';
+
+  @ViewChild('tableFormRow') tableFormRow: any;
 
   ngOnInit(): void {
     if (this.editable) {
@@ -216,6 +218,15 @@ export class MatEditTableComponent<T> implements OnInit {
         this.searchValue[col.data] = (row as any)[col.data];
       }
     );
+    
+    // KNOWN BUG: il focus funziona solo in inserimento, non in update, perchè querySelectorAll() non prende le mat-select
+    setTimeout(() => {
+      const elm = this.tableFormRow.nativeElement.querySelectorAll('.tablefield:not(:disabled)');
+      console.log("Selected elements:", elm);
+      if (elm.length) {
+        elm[0].focus();
+      }
+    }, 500);
   }
 
   saveRow(rowNum: number): void {
