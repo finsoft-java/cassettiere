@@ -4,7 +4,7 @@ $storicoOperazioneManager = new storicoOperazioniManager();
 
 class storicoOperazioniManager {
     
-    function get_storicoOperazioni($search, $dataInizio, $dataFine) {
+    function get_storicoOperazioni($search, $dataInizio, $dataFine, $skip=null, $top=null) {
         global $con;
         
         $sql0 = "SELECT COUNT(*) AS cnt ";
@@ -19,6 +19,14 @@ class storicoOperazioniManager {
         }
         $sql .= "ORDER BY ID_OPERAZIONE DESC";
         $count = select_single_value($sql0 . $sql);
+
+        if ($top != null){
+            if ($skip != null) {
+                $sql .= " LIMIT $skip,$top";
+            } else {
+                $sql .= " LIMIT $top";
+            }
+        }
         $ubicazioni = select_list($sql1 . $sql);        
         return [$ubicazioni, $count];
     }

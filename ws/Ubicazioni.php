@@ -33,7 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $cod_area = isset($_GET['COD_AREA']) ? $con->escape_string($_GET['COD_AREA']) : null;
         $orderby = isset($_GET['orderby']) ? $con->escape_string($_GET['orderby']) : null;
         $search = isset($_GET['search']) ? $con->escape_string($_GET['search']) : null;
-        [$ubicazioni, $count] = $ubicazioneManager->get_ubicazioni($cod_area, $search, $orderby);
+        $skip = isset($_GET['skip']) ? $con->escape_string($_GET['skip']) : null;
+        $top = isset($_GET['top']) ? $con->escape_string($_GET['top']) : null;
+        [$ubicazioni, $count] = $ubicazioneManager->get_ubicazioni($cod_area, $search, $orderby, $skip, $top);
               
         header('Content-Type: application/json');
         echo json_encode(['data' => $ubicazioni, 'count' => $count]);

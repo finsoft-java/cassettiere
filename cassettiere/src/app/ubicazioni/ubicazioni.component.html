@@ -5,6 +5,7 @@
 <app-mat-edit-table
     [columns]="columns"
     [service]="service"
+    pagination="server"
     (errorMessage)="setError($event)"
     #myTable
     >

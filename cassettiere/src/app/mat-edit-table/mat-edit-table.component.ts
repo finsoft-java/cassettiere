@@ -127,8 +127,8 @@ export class MatEditTableComponent<T> implements OnInit {
     console.log('Get all...');
     this.buttonsEnabled = false;
     if (this.pagination === 'server') {
-      this.filtro.page = this.pageIndex;
-      this.filtro.size = this.pageSize;
+      this.filtro.skip = this.pageIndex && this.pageSize && this.pageIndex * this.pageSize;
+      this.filtro.top = this.pageSize;
     }
     this.service.getAll(this.filtro).subscribe(
       listBean => {
