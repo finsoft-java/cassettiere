@@ -158,12 +158,13 @@ export class MatEditTableComponent<T> implements OnInit {
   }
 
   onSearchChange(row: T, col: ColumnDefinition<T>, data: string): any {
+
     (row as any)[col.data] = data;
 
-    if (data.length <= 3) {
+    /*if (data.length <= 3) {
       // non faccio la chiamata < 3 caratteri
       return;
-    }
+    }*/
 
     if (col.asyncOptions) {
       col.asyncOptions(row).subscribe(
