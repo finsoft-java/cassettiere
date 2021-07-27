@@ -45,6 +45,10 @@ export class MatEditTableComponent<T> implements OnInit {
   pageSizeOptions: number[] = [5, 10, 20];
 
   @Input()
+  /** Timeout in secondi */
+  autorefresh?: number;
+
+  @Input()
   formattazioneCondizionale?: (row: T) => any; // map of style attributes
 
   @Output()
@@ -101,6 +105,12 @@ export class MatEditTableComponent<T> implements OnInit {
     }
 
     this.getAll();
+
+    if (this.autorefresh) {
+      setInterval(() => {
+        this.refresh();
+      }, this.autorefresh * 1000);
+    }
   }
 
   refresh(): void {
