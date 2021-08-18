@@ -9,11 +9,15 @@ $(document).on("click", "#logout", function(){
 });
 
 function abilitaLettoreBadge() {
-    // TODO call ajax webservice
+    $.get("http://localhost/cgi-bin/grabRFID.sh", function(data, status) {
+        console.log("GRAB RFID Data: " + data + "\nStatus: " + status);
+    });
 }
 
 function disabilitaLettoreBadge() {
-    // TODO call ajax webservice
+    $.get("http://localhost/cgi-bin/ungrabRFID.sh", function(data, status) {
+        console.log("UNGRAB RFID Data: " + data + "\nStatus: " + status);
+    });
 }
 
 function require_login(callingPage, role) {
