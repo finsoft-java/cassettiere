@@ -24,6 +24,10 @@
     border-color: #cccccc;
     color: #000;
   }
+  .btn.btn-success.rabbocco{
+    background-color:#73cf92;
+    border-color: #73cf92;
+  }
   
   a {
     color: #92badd;
