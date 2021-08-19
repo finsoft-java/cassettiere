@@ -9,13 +9,13 @@ $(document).on("click", "#logout", function(){
 });
 
 function abilitaLettoreBadge() {
-    $.get("http://localhost/cgi-bin/grabRFID.sh", function(data, status) {
+    $.get("http://localhost/cgi-bin/ungrabRFID.sh", function(data, status) {
         console.log("GRAB RFID Data: " + data + "\nStatus: " + status);
     });
 }
 
 function disabilitaLettoreBadge() {
-    $.get("http://localhost/cgi-bin/ungrabRFID.sh", function(data, status) {
+    $.get("http://localhost/cgi-bin/grabRFID.sh", function(data, status) {
         console.log("UNGRAB RFID Data: " + data + "\nStatus: " + status);
     });
 }
