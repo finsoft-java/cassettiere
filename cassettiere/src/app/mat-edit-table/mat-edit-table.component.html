@@ -17,8 +17,8 @@
        
         <div *ngIf="rowNum !== editRowNumber">
             <div *ngIf="col.data === ACTIONS_INDEX; spanHeader" >
-              <button mat-raised-button color="primary" style="margin-right:15px;" [disabled]="!buttonsEnabled" (click)="beginEdit(rowNum)">{{labels.edit}}</button>
-              <button mat-raised-button color="warn" [disabled]="!buttonsEnabled" (click)="deleteRow(rowNum)">{{labels.delete}}</button>
+              <button mat-raised-button color="primary" style="margin-right:15px;" [disabled]="!buttonsEnabled" [title]="labels.edit" (click)="beginEdit(rowNum)"><mat-icon>edit</mat-icon></button>
+              <button mat-raised-button color="warn" [disabled]="!buttonsEnabled" [title]="labels.delete" (click)="deleteRow(rowNum)"><mat-icon>delete</mat-icon></button>
             </div>
             <span #spanHeader>
               {{ renderCell(col, row, rowNum, -1) }}
@@ -26,8 +26,8 @@
           </div>
           <div *ngIf="rowNum === editRowNumber" #tableFormRow>
             <div *ngIf="col.data === ACTIONS_INDEX; else dataField">
-                <button mat-raised-button color="primary" style="margin-right:15px;" [disabled]="!buttonsEnabled" (click)="saveRow(rowNum)">{{labels.save}}</button>
-                <button mat-raised-button color="secondary" [disabled]="!buttonsEnabled" (click)="undoChange(rowNum);">{{labels.undo}}</button>
+                <button mat-raised-button color="primary" style="margin-right:15px;" [disabled]="!buttonsEnabled" [title]="labels.save" (click)="saveRow(rowNum)"><mat-icon>save</mat-icon></button>
+                <button mat-raised-button color="secondary" [disabled]="!buttonsEnabled" [title]="labels.undo" (click)="undoChange(rowNum);"><mat-icon>undo</mat-icon></button>
             </div>
             <ng-template #dataField>
               <mat-form-field style="width: 90%; display: block; margin: 0px auto; margin-top:10px;">

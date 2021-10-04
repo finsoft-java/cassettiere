@@ -293,3 +293,7 @@
   .pull-right{
     float:right !important;
   }
+
+  .alert-danger {
+    border-color: #000000
+  }

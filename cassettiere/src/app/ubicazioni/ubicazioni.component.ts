@@ -6,6 +6,7 @@ import { Ubicazione } from '../_models';
 import { ArticoliService } from '../_services/articoli.service';
 import { AreeService } from '../_services/aree.service';
 import { AlertService } from '../_services/alert.service';
+import { MatEditTableLabels } from '../mat-edit-table';
 
 @Component({
   selector: 'app-ubicazioni',
@@ -37,20 +38,32 @@ export class UbicazioniComponent implements OnInit {
             value: x.ID_ARTICOLO
           }
         )))),
-      width: '20%'
+      width: '15%'
+    },
+    {
+      title: 'Descrizione',
+      data: 'DESCR_ARTICOLO',
+      disabled: true,
+      width: '15%'
+    },
+    {
+      title: 'Cod. disegno',
+      data: 'COD_DISEGNO',
+      disabled: true,
+      width: '15%'
     },
     {
       title: 'Qnt. prevista',
       data: 'QUANTITA_PREVISTA',
       type: 'number',
-      width: '10%'
+      width: '7%'
     },
     {
       title: 'Area',
       data: 'COD_AREA',
       type: 'select',
       options: this.arrayAree,
-      width: '20%'
+      width: '7%'
     },
     {
       title: 'In esaurimento',
@@ -58,7 +71,7 @@ export class UbicazioniComponent implements OnInit {
       type: 'select',
       options: [{ label: 'Sì', value: 'Y' }, { label: 'No', value: 'N' }],
       render: (data) => (data === 'N' ? 'No' : 'Sì'),
-      width: '10%'
+      width: '7%'
     }
   ];
 

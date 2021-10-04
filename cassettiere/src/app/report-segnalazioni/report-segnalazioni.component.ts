@@ -16,7 +16,8 @@ export class ReportSegnalazioniComponent implements OnInit {
     {
       title: 'Area',
       data: 'COD_AREA',
-      render: (data, row) => data + ' - ' + row?.DESCRIZIONE_AREA
+      render: (data, row) => data + ' - ' + row?.DESCRIZIONE_AREA,
+      width: '3cm'
     },
     {
       title: 'Ubicazione',
@@ -27,8 +28,18 @@ export class ReportSegnalazioniComponent implements OnInit {
       data: 'COD_ARTICOLO_CONTENUTO'
     },
     {
+      title: 'Descrizione',
+      data: 'DESCR_ARTICOLO',
+      width: '20%'
+    },
+    {
+      title: 'Cod. disegno',
+      data: 'COD_DISEGNO'
+    },
+    {
       title: 'Quantità prevista',
-      data: 'QUANTITA_PREVISTA'
+      data: 'QUANTITA_PREVISTA',
+      width: '2cm'
     },
     {
       title: 'Utente segnalante',
@@ -36,7 +47,9 @@ export class ReportSegnalazioniComponent implements OnInit {
     },
     {
       title: 'Timestamp segnalazione',
-      data: 'TIMESTAMP'
+      data: 'TIMESTAMP',
+      width: '3cm'
+      //render: (data => data ? data.substring(0,10)+'\n'+data.substring(11,20) : null)
     }
   ];
   service!: ReportSegnalazioniService;

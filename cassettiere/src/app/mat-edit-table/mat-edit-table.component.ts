@@ -42,7 +42,7 @@ export class MatEditTableComponent<T> implements OnInit {
   @Input()
   pagination: 'client' | 'server' | null = null;
   @Input()
-  pageSizeOptions: number[] = [5, 10, 20];
+  pageSizeOptions: number[] = [5, 10, 20, 50];
 
   @Input()
   /** Timeout in secondi */
@@ -131,11 +131,12 @@ export class MatEditTableComponent<T> implements OnInit {
   }
 
   filter(filter: any): void {
+    this.pageIndex = 0;
     this.filtro = filter;
     this.getAll();
   }
 
-  getAll(): void {
+  getAll() {
     console.log('Get all...');
     this.buttonsEnabled = false;
     if (this.pagination === 'server') {
@@ -158,6 +159,26 @@ export class MatEditTableComponent<T> implements OnInit {
     );
   }
 
+  /**
+   * Get really all records, ignoring pagination. Intended for export.
+   * @param callback function accepts a T[] argument
+   */
+  getReallyAll(callback: any) {
+    let filtroSenzaPaginazione = Object.assign({}, this.filtro);
+    delete filtroSenzaPaginazione.skip;
+    delete filtroSenzaPaginazione.top;
+    return this.service.getAll(filtroSenzaPaginazione).subscribe(
+      listBean => {
+        callback(listBean.data);
+      },
+      error => {
+        this.buttonsEnabled = true;
+        console.log('Emitting error:', error);
+        this.errorMessage.emit(error);
+      }
+    );
+    }
+  
   renderCell(col: ColumnDefinition<T>, row: T, rowNum: number, colNum: number): string | null {
     const x = (row as any)[col.data];
     return col.render ? col.render(x, row, rowNum, colNum) : x;
@@ -343,10 +364,16 @@ export class MatEditTableComponent<T> implements OnInit {
     return row;
   }
 
-  getSheetMatrix(): any[][] {
+  /**
+   *  Transform an array T[] into a formatted array any[][]
+   * 
+   * @param data
+   * @returns 
+   */
+  getSheetMatrix(data: T[]): any[][] {
     const matrix: any[] = [];
     let rowNum = 0;
-    this.data.forEach(row => {
+    data.forEach(row => {
       const matrixRow: any[] = [];
       let colNum = 0;
       this.columns.forEach(col => {
@@ -360,25 +387,29 @@ export class MatEditTableComponent<T> implements OnInit {
     return matrix;
   }
 
-  createWorksheet(): XLSX.WorkSheet {
+  createWorksheet(data: T[]): XLSX.WorkSheet {
     const header = [this.getSheetHeader()];
     // TODO how to style header?!?
     const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(header);
-    XLSX.utils.sheet_add_aoa(ws, this.getSheetMatrix(), { origin: -1 });
+    XLSX.utils.sheet_add_aoa(ws, this.getSheetMatrix(data), { origin: -1 });
     return ws;
   }
 
   exportXlsx(): void {
-    const ws = this.createWorksheet();
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, this.XLSX_SHEET_NAME);
-    XLSX.writeFile(wb, this.XLSX_FILE_NAME);
+    this.getReallyAll((data: T[]) => {
+      const ws = this.createWorksheet(data);
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, this.XLSX_SHEET_NAME);
+      XLSX.writeFile(wb, this.XLSX_FILE_NAME);
+    });
   }
 
   exportCsv(): void {
-    const ws = this.createWorksheet();
-    const csv = XLSX.utils.sheet_to_csv(ws, { FS: ';' });
-    const blob = new Blob([csv], { type: 'text/csv;charset=UTF-8' });
-    saveAs(blob, this.CSV_FILE_NAME);
+    this.getReallyAll((data: T[]) => {
+      const ws = this.createWorksheet(data);
+      const csv = XLSX.utils.sheet_to_csv(ws, { FS: ';' });
+      const blob = new Blob([csv], { type: 'text/csv;charset=UTF-8' });
+      saveAs(blob, this.CSV_FILE_NAME);
+    });
   }
 }

@@ -39,6 +39,10 @@ export class StoricoOperazioniComponent implements OnInit {
       data: 'COD_ARTICOLO'
     },
     {
+      title: 'Disegno',
+      data: 'COD_DISEGNO'
+    },
+    {
       title: 'Ubicazione',
       data: 'COD_UBICAZIONE'
     },
@@ -48,7 +52,8 @@ export class StoricoOperazioniComponent implements OnInit {
     },
     {
       title: 'Timestamp',
-      data: 'TIMESTAMP'
+      data: 'TIMESTAMP',
+      width: '3cm'
     }
   ];
   service!: StoricoOperazioniService;

@@ -19,12 +19,22 @@ export class ReportUbicazioniComponent implements OnInit {
       data: 'COD_ARTICOLO_CONTENUTO'
     },
     {
+      title: 'Descrizione',
+      data: 'DESCR_ARTICOLO'
+    },
+    {
+      title: 'Cod. disegno',
+      data: 'COD_DISEGNO'
+    },
+    {
       title: 'Quantità prevista',
-      data: 'QUANTITA_PREVISTA'
+      data: 'QUANTITA_PREVISTA',
+      width: '2cm'
     },
     {
       title: 'In esaurimento',
       data: 'SEGNALAZIONE_ESAURIMENTO',
+      width: '2cm',
       render: (data: any) => (data === 'N' ? 'No' : 'Sì')
     }
   ];

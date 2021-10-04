@@ -5,7 +5,7 @@ $storicoOperazioneManager = new storicoOperazioniManager();
 class storicoOperazioniManager {
     
     function get_storicoOperazioni($search, $dataInizio, $dataFine, $skip=null, $top=null) {
-        global $con;
+        global $panthera;
         
         $sql0 = "SELECT COUNT(*) AS cnt ";
         $sql1 = "SELECT * ";
@@ -27,12 +27,24 @@ class storicoOperazioniManager {
                 $sql .= " LIMIT $top";
             }
         }
-        $ubicazioni = select_list($sql1 . $sql);        
+        $ubicazioni = select_list($sql1 . $sql);    
+        
+        foreach ($ubicazioni as $id => $u) {
+            if ($u['COD_ARTICOLO']) {
+                $articolo = $panthera->get_articolo($u['COD_ARTICOLO']);
+                $u['DESCR_ARTICOLO'] = $articolo['DESCRIZIONE'];
+                $u['COD_DISEGNO'] = $articolo['DISEGNO'];
+            } else {
+                $u['DESCR_ARTICOLO'] = '';
+                $u['COD_DISEGNO'] = '';
+            }
+            $ubicazioni[$id] = $u;
+        }    
         return [$ubicazioni, $count];
     }
     
     function get_segnalazioni_attive($search) {
-        global $con;
+        global $panthera;
         
         $sql0 = "SELECT COUNT(*) AS cnt ";
         $sql1 = "SELECT * ";
@@ -46,7 +58,19 @@ class storicoOperazioniManager {
 
         $sql .= "ORDER BY COD_AREA, COD_UBICAZIONE ";
         $count = select_single_value($sql0 . $sql);
-        $ubicazioni = select_list($sql1 . $sql);        
+        $ubicazioni = select_list($sql1 . $sql);
+        
+        foreach ($ubicazioni as $id => $u) {
+            if ($u['COD_ARTICOLO_CONTENUTO']) {
+                $articolo = $panthera->get_articolo($u['COD_ARTICOLO_CONTENUTO']);
+                $u['DESCR_ARTICOLO'] = $articolo['DESCRIZIONE'];
+                $u['COD_DISEGNO'] = $articolo['DISEGNO'];
+            } else {
+                $u['DESCR_ARTICOLO'] = '';
+                $u['COD_DISEGNO'] = '';
+            }
+            $ubicazioni[$id] = $u;
+        }
         return [$ubicazioni, $count];
     }
 

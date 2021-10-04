@@ -5,7 +5,7 @@ $ubicazioneManager = new UbicazioniManager();
 class UbicazioniManager {
     
     function get_ubicazioni($codArea=null, $search=null, $orderby=null, $skip=null, $top=null) {
-        global $con;
+        global $panthera;
         
         $sql0 = "SELECT COUNT(*) AS cnt ";
         $sql1 = "SELECT ub.COD_UBICAZIONE,ub.COD_ARTICOLO_CONTENUTO,ub.SEGNALAZIONE_ESAURIMENTO, ub.QUANTITA_PREVISTA ,ub.COD_AREA, ar.DESCRIZIONE as DESCRIZIONE_AREA ";
@@ -33,7 +33,14 @@ class UbicazioniManager {
                 $sql .= " LIMIT $top";
             }
         }
-        $ubicazioni = select_list($sql1 . $sql);        
+        $ubicazioni = select_list($sql1 . $sql);
+        
+        foreach ($ubicazioni as $id => $u) {
+            $articolo = $panthera->get_articolo($u['COD_ARTICOLO_CONTENUTO']);
+            $u['DESCR_ARTICOLO'] = $articolo['DESCRIZIONE'];
+            $u['COD_DISEGNO'] = $articolo['DISEGNO'];
+            $ubicazioni[$id] = $u;
+        }
         return [$ubicazioni, $count];
     }
     
@@ -45,6 +52,7 @@ class UbicazioniManager {
             $articolo = $panthera->get_articolo($ubi['COD_ARTICOLO_CONTENUTO']);
             if ($articolo) {
                 $ubi['DESCR_ARTICOLO'] = $articolo['DESCRIZIONE'];
+                $u['COD_DISEGNO'] = $articolo['DISEGNO'];
             }
         }
         return $ubi;

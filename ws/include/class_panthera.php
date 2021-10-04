@@ -122,7 +122,6 @@ class PantheraManager {
         }
     }
 
-
     /*
     Esegue un comado SQL UPDATE/INSERT/DELETE e se serve lancia un print_error
     */
@@ -135,18 +134,19 @@ class PantheraManager {
 
     function get_articoli($top=null, $skip=null, $search=null) {
         if ($this->mock) {
-            $articoli = [ [ 'ID_ARTICOLO' => 'AAAAA', 'DESCRIZIONE' => 'Carote' ],
-                      [ 'ID_ARTICOLO' => 'BBBB', 'DESCRIZIONE' => 'Patate' ],
-                      [ 'ID_ARTICOLO' => 'ZZZZZZ', 'DESCRIZIONE' => 'Zucchine' ]
+            $articoli = [ [ 'ID_ARTICOLO' => 'AAAAA', 'DESCRIZIONE' => 'Raccordo a 90-innesto is', 'DISEGNO' => 'XXX' ],
+                      [ 'ID_ARTICOLO' => 'BBBB', 'DESCRIZIONE' => 'Patate', 'DISEGNO' => 'YYY' ],
+                      [ 'ID_ARTICOLO' => 'ZZZZZZ', 'DESCRIZIONE' => 'Zucchine', 'DISEGNO' => 'ZZZ' ]
                      ];
             $count = 1000;
         } else {
             $sql0 = "SELECT COUNT(*) AS cnt ";
-            $sql1 = "SELECT ID_ARTICOLO,DESCRIZIONE ";
+            # Qui prendo la DESCRIZIONE anzichè DESCR_ESTESA, per ragioni di spazio
+            $sql1 = "SELECT ID_ARTICOLO,DESCRIZIONE,DISEGNO ";
             $sql = "FROM THIP.ARTICOLI WHERE ID_AZIENDA='001' ";
             if ($search) {
                 $search = strtoupper($search);
-                $sql .= "AND UPPER(ID_ARTICOLO) LIKE '%$search%' OR DESCRIZIONE LIKE UPPER('%$search%') ";
+                $sql .= "AND UPPER(ID_ARTICOLO) LIKE '%$search%' OR DESCR_ESTESA LIKE UPPER('%$search%')  OR DISEGNO LIKE UPPER('%$search%') ";
             }
             $sql .= "ORDER BY 1 ";
             $count = $this->select_single_value($sql0 . $sql);
@@ -167,10 +167,10 @@ class PantheraManager {
 
     function get_articolo($codArticolo) {
         if ($this->mock) {
-            return [ 'ID_ARTICOLO' => 'AAAAA', 'DESCRIZIONE' => 'Carote' ];
+            return [ 'ID_ARTICOLO' => 'AAAAA', 'DESCRIZIONE' => 'Raccordo a 90-innesto istantaneo bianco-tubo Øe2-filetto maschio M3-acciaio inox', 'DISEGNO' => 'Disegno' ];
         } else {
-            $query = "SELECT COD_ARTICOLO,DESCRIZIONE FROM THIP.ARTICOLI WHERE ID_AZIENDA='001' AND ID_ARTICOLO='$codArticolo'";
-            return $this->select_single($sql0 . $sql);
+            $query = "SELECT ID_ARTICOLO,DESCRIZIONE,DESCR_ESTESA AS DESCRIZIONE,DISEGNO FROM THIP.ARTICOLI WHERE ID_AZIENDA='001' AND ID_ARTICOLO='$codArticolo'";
+            return $this->select_single($query);
         }
     }
 }

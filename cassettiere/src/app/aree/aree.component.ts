@@ -26,7 +26,7 @@ export class AreeComponent implements OnInit {
       title: 'Descrizione',
       data: 'DESCRIZIONE',
       type: 'text',
-      width: '50%'
+      width: '30%'
     }
   ];
 
