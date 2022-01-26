@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mar 26, 2021 alle 16:08
+-- Creato il: Gen 26, 2022 alle 16:25
 -- Versione del server: 10.4.17-MariaDB
--- Versione PHP: 7.3.27
+-- Versione PHP: 8.0.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -47,6 +47,49 @@ INSERT INTO `aree` (`COD_AREA`, `DESCRIZIONE`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struttura della tabella `contenitori_padri`
+--
+
+CREATE TABLE `contenitori_padri` (
+  `COD_CONTENITORE` varchar(255) NOT NULL,
+  `COD_AREA` varchar(255) NOT NULL,
+  `DESCRIZIONE` varchar(255) NOT NULL,
+  `ORDINE` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dump dei dati per la tabella `contenitori_padri`
+--
+
+INSERT INTO `contenitori_padri` (`COD_CONTENITORE`, `COD_AREA`, `DESCRIZIONE`, `ORDINE`) VALUES
+('A7', 'A7', 'Descrizione a7', 1),
+('E3', 'E3', 'Descrizione e3', 2),
+('E4', 'E4', 'Descrizione E4', 3),
+('M1', 'M1', 'Descrizione M1', 4),
+('M2', 'M2', 'Descrizione M2', 5),
+('M4', 'M4', 'Descrizione M4', 6);
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `elenco_badge`
+--
+
+CREATE TABLE `elenco_badge` (
+  `RFID_CODE` varchar(25) NOT NULL,
+  `USER` varchar(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dump dei dati per la tabella `elenco_badge`
+--
+
+INSERT INTO `elenco_badge` (`RFID_CODE`, `USER`) VALUES
+('finsoft', 'finsoft');
+
+-- --------------------------------------------------------
+
+--
 -- Struttura della tabella `operazioni`
 --
 
@@ -62,6 +105,24 @@ CREATE TABLE `operazioni` (
 INSERT INTO `operazioni` (`COD_OPERAZIONE`, `DESCRIZIONE`) VALUES
 ('ESAURIMENTO', 'Segnalazione materiale in esaurimento'),
 ('RABBOCCO', 'Segnalazione rabbocco materiale');
+
+-- --------------------------------------------------------
+
+--
+-- Struttura stand-in per le viste `report_segnalazioni_attive`
+-- (Vedi sotto per la vista effettiva)
+--
+CREATE TABLE `report_segnalazioni_attive` (
+);
+
+-- --------------------------------------------------------
+
+--
+-- Struttura stand-in per le viste `report_ubicazioni_per_area`
+-- (Vedi sotto per la vista effettiva)
+--
+CREATE TABLE `report_ubicazioni_per_area` (
+);
 
 -- --------------------------------------------------------
 
@@ -94,35 +155,73 @@ INSERT INTO `storico_operazioni` (`ID_OPERAZIONE`, `COD_UTENTE`, `COD_OPERAZIONE
 
 CREATE TABLE `ubicazioni` (
   `COD_UBICAZIONE` varchar(255) NOT NULL,
-  `COD_ARTICOLO_CONTENUTO` varchar(25) NOT NULL,
-  `QUANTITA_PREVISTA` int(11) DEFAULT NULL,
-  `COD_AREA` varchar(10) NOT NULL,
-  `SEGNALAZIONE_ESAURIMENTO` varchar(1) NOT NULL
+  `COD_CONTENITORE` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dump dei dati per la tabella `ubicazioni`
 --
 
-INSERT INTO `ubicazioni` (`COD_UBICAZIONE`, `COD_ARTICOLO_CONTENUTO`, `QUANTITA_PREVISTA`, `COD_AREA`, `SEGNALAZIONE_ESAURIMENTO`) VALUES
-('UBI-A7-001', 'AAAAA', 50, 'A7', 'N'),
-('UBI-A7-002', 'BBBBB', 50, 'A7', 'N'),
-('UBI-A7-003', 'CCCCC', 50, 'A7', 'N'),
-('UBI-E3-001', 'AAAAA', 50, 'E3', 'N'),
-('UBI-E3-002', 'BBBBB', 50, 'E3', 'N'),
-('UBI-E3-003', 'CCCCC', 50, 'E3', 'N'),
-('UBI-E4-001', 'AAAAA', 50, 'E4', 'N'),
-('UBI-E4-002', 'BBBBB', 50, 'E4', 'N'),
-('UBI-E4-003', 'CCCCC', 50, 'E4', 'N'),
-('UBI-M1-001', 'AAAAA', 50, 'M1', 'N'),
-('UBI-M1-002', 'BBBBB', 50, 'M1', 'N'),
-('UBI-M1-003', 'CCCCC', 50, 'M1', 'N'),
-('UBI-M2-001', 'AAAAA', 50, 'M2', 'N'),
-('UBI-M2-002', 'BBBBB', 50, 'M2', 'N'),
-('UBI-M2-003', 'CCCCC', 50, 'M2', 'N'),
-('UBI-M4-001', 'AAAAA', 50, 'M4', 'N'),
-('UBI-M4-002', 'BBBBB', 50, 'M4', 'N'),
-('UBI-M4-003', 'CCCCC', 50, 'M4', 'N');
+INSERT INTO `ubicazioni` (`COD_UBICAZIONE`, `COD_CONTENITORE`) VALUES
+('UBI-A7-001', 'A7'),
+('UBI-A7-002', 'A7'),
+('UBI-A7-003', 'A7'),
+('UBI-E3-001', 'E3'),
+('UBI-E3-002', 'E3'),
+('UBI-E3-003', 'E3'),
+('UBI-E4-001', 'E4'),
+('UBI-E4-002', 'E4'),
+('UBI-E4-003', 'E4'),
+('UBI-M1-001', 'M1'),
+('UBI-M1-002', 'M1'),
+('UBI-M1-003', 'M1'),
+('UBI-M2-001', 'M2'),
+('UBI-M2-002', 'M2'),
+('UBI-M2-003', 'M2'),
+('UBI-M4-001', 'M4'),
+('UBI-M4-002', 'M4'),
+('UBI-M4-003', 'M4');
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `ubicazioni_articoli`
+--
+
+CREATE TABLE `ubicazioni_articoli` (
+  `COD_UBICAZIONE` varchar(255) NOT NULL,
+  `COD_ARTICOLO` varchar(255) NOT NULL,
+  `QUANTITA_PREVISTA` int(11) NOT NULL,
+  `SEGNALAZIONE_ESAURIMENTO` char(1) NOT NULL,
+  `DISEGNO` varchar(255) NOT NULL,
+  `DESCRIZIONE` varchar(255) NOT NULL,
+  `NOTE` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dump dei dati per la tabella `ubicazioni_articoli`
+--
+
+INSERT INTO `ubicazioni_articoli` (`COD_UBICAZIONE`, `COD_ARTICOLO`, `QUANTITA_PREVISTA`, `SEGNALAZIONE_ESAURIMENTO`, `DISEGNO`, `DESCRIZIONE`, `NOTE`) VALUES
+('UBI-A7-001', 'ART 1', 100, '', 'PROVA', 'PROVA', 'PROVA');
+
+-- --------------------------------------------------------
+
+--
+-- Struttura per vista `report_segnalazioni_attive`
+--
+DROP TABLE IF EXISTS `report_segnalazioni_attive`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `report_segnalazioni_attive`  AS SELECT `u`.`COD_UBICAZIONE` AS `COD_UBICAZIONE`, `u`.`COD_ARTICOLO_CONTENUTO` AS `COD_ARTICOLO_CONTENUTO`, `u`.`QUANTITA_PREVISTA` AS `QUANTITA_PREVISTA`, `u`.`COD_AREA` AS `COD_AREA`, `a`.`DESCRIZIONE` AS `DESCRIZIONE_AREA`, `s`.`COD_UTENTE` AS `COD_UTENTE`, `s`.`TIMESTAMP` AS `TIMESTAMP` FROM ((`ubicazioni` `u` join `aree` `a` on(`u`.`COD_AREA` = `a`.`COD_AREA`)) left join `storico_operazioni` `s` on(`s`.`COD_UBICAZIONE` = `u`.`COD_UBICAZIONE`)) WHERE `u`.`SEGNALAZIONE_ESAURIMENTO` = 'Y' AND (`s`.`ID_OPERAZIONE` is null OR `s`.`ID_OPERAZIONE` = (select max(`z`.`ID_OPERAZIONE`) from `storico_operazioni` `z` where `z`.`COD_UBICAZIONE` = `u`.`COD_UBICAZIONE` AND `z`.`COD_OPERAZIONE` = 'ESAURIMENTO')) ;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura per vista `report_ubicazioni_per_area`
+--
+DROP TABLE IF EXISTS `report_ubicazioni_per_area`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `report_ubicazioni_per_area`  AS SELECT `ubicazioni`.`COD_AREA` AS `COD_AREA`, `aree`.`DESCRIZIONE` AS `DESCRIZIONE`, count(0) AS `NUM_UBICAZIONI`, sum(case when `ubicazioni`.`SEGNALAZIONE_ESAURIMENTO` = 'N' then 0 else 1 end) AS `IN_ESAURIMENTO` FROM (`ubicazioni` join `aree` on(`aree`.`COD_AREA` = `ubicazioni`.`COD_AREA`)) GROUP BY `ubicazioni`.`COD_AREA` ;
 
 --
 -- Indici per le tabelle scaricate
@@ -133,6 +232,19 @@ INSERT INTO `ubicazioni` (`COD_UBICAZIONE`, `COD_ARTICOLO_CONTENUTO`, `QUANTITA_
 --
 ALTER TABLE `aree`
   ADD PRIMARY KEY (`COD_AREA`);
+
+--
+-- Indici per le tabelle `contenitori_padri`
+--
+ALTER TABLE `contenitori_padri`
+  ADD PRIMARY KEY (`COD_CONTENITORE`),
+  ADD KEY `COD_AREA` (`COD_AREA`);
+
+--
+-- Indici per le tabelle `elenco_badge`
+--
+ALTER TABLE `elenco_badge`
+  ADD PRIMARY KEY (`RFID_CODE`);
 
 --
 -- Indici per le tabelle `operazioni`
@@ -152,7 +264,13 @@ ALTER TABLE `storico_operazioni`
 --
 ALTER TABLE `ubicazioni`
   ADD PRIMARY KEY (`COD_UBICAZIONE`),
-  ADD KEY `ubicazioni` (`COD_AREA`);
+  ADD KEY `ubicazioni` (`COD_CONTENITORE`);
+
+--
+-- Indici per le tabelle `ubicazioni_articoli`
+--
+ALTER TABLE `ubicazioni_articoli`
+  ADD PRIMARY KEY (`COD_UBICAZIONE`,`COD_ARTICOLO`);
 
 --
 -- AUTO_INCREMENT per le tabelle scaricate
@@ -162,11 +280,17 @@ ALTER TABLE `ubicazioni`
 -- AUTO_INCREMENT per la tabella `storico_operazioni`
 --
 ALTER TABLE `storico_operazioni`
-  MODIFY `ID_OPERAZIONE` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_OPERAZIONE` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Limiti per le tabelle scaricate
 --
+
+--
+-- Limiti per la tabella `contenitori_padri`
+--
+ALTER TABLE `contenitori_padri`
+  ADD CONSTRAINT `contenitori_padri_ibfk_1` FOREIGN KEY (`COD_AREA`) REFERENCES `aree` (`COD_AREA`);
 
 --
 -- Limiti per la tabella `storico_operazioni`
@@ -178,29 +302,15 @@ ALTER TABLE `storico_operazioni`
 -- Limiti per la tabella `ubicazioni`
 --
 ALTER TABLE `ubicazioni`
-  ADD CONSTRAINT `ubicazioni` FOREIGN KEY (`COD_AREA`) REFERENCES `aree` (`COD_AREA`);
+  ADD CONSTRAINT `ubicazioni` FOREIGN KEY (`COD_CONTENITORE`) REFERENCES `contenitori_padri` (`COD_CONTENITORE`);
+
+--
+-- Limiti per la tabella `ubicazioni_articoli`
+--
+ALTER TABLE `ubicazioni_articoli`
+  ADD CONSTRAINT `ubicazioni_articoli_ibfk_1` FOREIGN KEY (`COD_UBICAZIONE`) REFERENCES `ubicazioni` (`COD_UBICAZIONE`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
-CREATE VIEW `report_ubicazioni_per_area`  AS
-SELECT `ubicazioni`.`COD_AREA` AS `COD_AREA`, aree.DESCRIZIONE, count(0) AS `NUM_UBICAZIONI`, sum(case when `ubicazioni`.`SEGNALAZIONE_ESAURIMENTO` = 'N' then 0 else 1 end) AS `IN_ESAURIMENTO`
-FROM `ubicazioni` 
-JOIN aree ON aree.COD_AREA=ubicazioni.COD_AREA
-GROUP BY `ubicazioni`.`COD_AREA`;
-
-CREATE VIEW report_segnalazioni_attive AS
-SELECT u.COD_UBICAZIONE,u.`COD_ARTICOLO_CONTENUTO`,u.`QUANTITA_PREVISTA`,u.`COD_AREA`,
-	a.DESCRIZIONE as DESCRIZIONE_AREA,
-	s.COD_UTENTE,s.TIMESTAMP
-FROM `ubicazioni` u
-JOIN aree a on u.COD_AREA=a.COD_AREA
-left join storico_operazioni s on s.COD_UBICAZIONE=u.COD_UBICAZIONE
-WHERE `SEGNALAZIONE_ESAURIMENTO`='Y'
-AND (s.ID_OPERAZIONE IS NULL OR s.ID_OPERAZIONE=(
-    select max(ID_OPERAZIONE) from storico_operazioni z
-    where z.COD_UBICAZIONE=u.COD_UBICAZIONE
-    and z.COD_OPERAZIONE='ESAURIMENTO'));
