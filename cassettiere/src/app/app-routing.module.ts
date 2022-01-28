@@ -1,3 +1,4 @@
+import { ContenitorePadreComponent } from './contenitore-padre/contenitore-padre.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { ReportUbicazioniComponent } from './report-ubicazioni/report-ubicazioni.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'ubicazioni', component: UbicazioniComponent, canActivate: [AuthGuard]},
   { path: 'report-segnalazioni', component: ReportSegnalazioniComponent, canActivate: [AuthGuard]},
   { path: 'report-ubicazioni', component: ReportUbicazioniComponent, canActivate: [AuthGuard]},
+  { path: 'contenitore-padre', component: ContenitorePadreComponent, canActivate: [AuthGuard]},
   { path: '**', redirectTo: 'report-segnalazioni' }];
 
 @NgModule({

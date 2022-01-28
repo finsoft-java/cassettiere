@@ -18,6 +18,13 @@ export interface Ubicazione {
   DESCRIZIONE_AREA: string;
 }
 
+export interface ContenitorePadre {
+  COD_CONTENITORE: string;
+  COD_AREA: string;
+  DESCRIZIONE: string;
+  ORDINE: number;
+}
+
 export interface StoricoOperazione {
   ID_OPERAZIONE: number;
   COD_UTENTE: string;
