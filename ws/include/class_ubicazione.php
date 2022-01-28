@@ -4,26 +4,22 @@ $ubicazioneManager = new UbicazioniManager();
 
 class UbicazioniManager {
     
-    function get_ubicazioni($codArea=null, $search=null, $orderby=null, $skip=null, $top=null) {
+    function get_ubicazioni($search=null, $orderby=null, $skip=null, $top=null) {
         global $panthera;
-        
-        $sql0 = "SELECT COUNT(*) AS cnt ";
-        $sql1 = "SELECT ub.COD_UBICAZIONE,ub.COD_ARTICOLO_CONTENUTO,ub.SEGNALAZIONE_ESAURIMENTO, ub.QUANTITA_PREVISTA ,ub.COD_AREA, ar.DESCRIZIONE as DESCRIZIONE_AREA ";
-        
-        $sql = "FROM ubicazioni ub join aree ar on ub.cod_area = ar.COD_AREA WHERE 1=1 ";
-        if ($codArea) {
-            $sql .= "AND ub.COD_AREA='$codArea'";
-        }
+        $sql  = "";
+        $sql0 = "SELECT COUNT(*) AS cnt FROM ubicazioni ";
+        $sql1 = "SELECT COD_UBICAZIONE,COD_CONTENITORE as COD_CONTENITORE FROM ubicazioni ";
         if ($search) {
             $search = strtoupper($search);
-            $sql .= "AND (upper(ub.COD_AREA) like '%$search%' or upper(ub.COD_UBICAZIONE) like '%$search%' or upper(ub.COD_ARTICOLO_CONTENUTO) like '%$search%')";
+            $sql .= "WHERE (upper(COD_UBICAZIONE) like '%$search%')";
         }
         if ($orderby && preg_match("/^[a-zA-Z0-9,_ ]+$/", $orderby)) {
             // avoid SQL-injection
             $sql .= " ORDER BY $orderby";
         } else {
-            $sql .= " ORDER BY ub.COD_AREA, ub.COD_UBICAZIONE";
+            $sql .= " ORDER BY COD_UBICAZIONE";
         }
+        //echo $sql0 . $sql;
         $count = select_single_value($sql0 . $sql);
 
         if ($top != null){
@@ -33,14 +29,8 @@ class UbicazioniManager {
                 $sql .= " LIMIT $top";
             }
         }
+        //echo $sql1 . $sql;
         $ubicazioni = select_list($sql1 . $sql);
-        
-        foreach ($ubicazioni as $id => $u) {
-            $articolo = $panthera->get_articolo($u['COD_ARTICOLO_CONTENUTO']);
-            $u['DESCR_ARTICOLO'] = $articolo['DESCRIZIONE'];
-            $u['COD_DISEGNO'] = $articolo['DISEGNO'];
-            $ubicazioni[$id] = $u;
-        }
         return [$ubicazioni, $count];
     }
     
@@ -48,13 +38,6 @@ class UbicazioniManager {
         global $panthera;
         $sql = "SELECT * FROM ubicazioni p WHERE p.cod_ubicazione = '$cod_ubicazione'";
         $ubi = select_single($sql);
-        if ($ubi) {
-            $articolo = $panthera->get_articolo($ubi['COD_ARTICOLO_CONTENUTO']);
-            if ($articolo) {
-                $ubi['DESCR_ARTICOLO'] = $articolo['DESCRIZIONE'];
-                $u['COD_DISEGNO'] = $articolo['DISEGNO'];
-            }
-        }
         return $ubi;
     }
 
@@ -66,32 +49,13 @@ class UbicazioniManager {
         }else{
             $codUbi = '';
         }
-        if(isset($json_data->COD_ARTICOLO_CONTENUTO)) {
-            $codArt = $json_data->COD_ARTICOLO_CONTENUTO;
+        if(isset($json_data->COD_CONTENITORE)) {
+            $codContenitore = $json_data->COD_CONTENITORE;
         }else{
-            $codArt = '';
-        }
-        if(isset($json_data->QUANTITA_PREVISTA)) {
-            $qntPrevista = $json_data->QUANTITA_PREVISTA;
-        }else{
-            $qntPrevista = '';
-        }
-        if(isset($json_data->COD_AREA)) {
-            $codArea = $json_data->COD_AREA;
-        }else{
-            $codArea = '';
-        }
-        if(isset($json_data->SEGNALAZIONE_ESAURIMENTO)) {
-            $segnEsaurimento = $json_data->SEGNALAZIONE_ESAURIMENTO;
-        }else{
-            $segnEsaurimento = '';
+            $codContenitore = '';
         }
         $sql = insert("ubicazioni", ["COD_UBICAZIONE" => $codUbi,
-                                     "COD_ARTICOLO_CONTENUTO" => $codArt,
-                                     "QUANTITA_PREVISTA" => $qntPrevista,
-                                     "COD_AREA " => $codArea,
-                                     "SEGNALAZIONE_ESAURIMENTO" => $segnEsaurimento
-                                  ]);
+                                     "COD_CONTENITORE" => $codContenitore]);
         mysqli_query($con, $sql);
         if ($con ->error) {
             print_error(500, $con ->error);
@@ -101,10 +65,19 @@ class UbicazioniManager {
     
     function aggiorna($progetto, $json_data) {
         global $con, $STATO_PROGETTO;        
-        $sql = update("ubicazioni", ["COD_ARTICOLO_CONTENUTO" => $json_data->COD_ARTICOLO_CONTENUTO,
-                               "QUANTITA_PREVISTA" => $json_data->QUANTITA_PREVISTA,
-                               "COD_AREA " => $json_data->COD_AREA,
-                               "SEGNALAZIONE_ESAURIMENTO" => $json_data->SEGNALAZIONE_ESAURIMENTO], 
+
+        if(isset($json_data->COD_UBICAZIONE)) {
+            $codUbi = $json_data->COD_UBICAZIONE;
+        }else{
+            $codUbi = '';
+        }
+        if(isset($json_data->COD_CONTENITORE)) {
+            $codContenitore = $json_data->COD_CONTENITORE;
+        }else{
+            $codContenitore = '';
+        }
+
+        $sql = update("ubicazioni", ["COD_CONTENITORE" => $json_data->COD_CONTENITORE], 
                                ["COD_UBICAZIONE" => $json_data->COD_UBICAZIONE]);
         mysqli_query($con, $sql);
         if ($con ->error) {

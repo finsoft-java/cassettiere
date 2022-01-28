@@ -20,6 +20,7 @@ export class UbicazioniComponent implements OnInit {
   filter: any = {};
   alert: AlertService;
 
+  /*
   columns: ColumnDefinition<Ubicazione>[] = [
     {
       title: 'Cod. Ubicazione',
@@ -72,6 +73,23 @@ export class UbicazioniComponent implements OnInit {
       options: [{ label: 'Sì', value: 'Y' }, { label: 'No', value: 'N' }],
       render: (data) => (data === 'N' ? 'No' : 'Sì'),
       width: '7%'
+    }
+  ];
+  */
+  columns: ColumnDefinition<Ubicazione>[] = [
+    {
+      title: 'Cod. Ubicazione',
+      data: 'COD_UBICAZIONE',
+      type: 'input',
+      disabled: true,
+      width: '40%'
+    },
+    {
+      title: 'Cod. Contenitore',
+      data: 'COD_CONTENITORE',
+      type: 'select',
+      options: this.arrayAree,
+      width: '40%'
     }
   ];
 
