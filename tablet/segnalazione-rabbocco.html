@@ -9,18 +9,43 @@
     <title>Rabbocco</title>
   </head>
   <body>
-    <div style="position: relative;height: 100%;">
+    <div style="position: relative;height: 100%; background-color: #17a2b8;">
       <div class="alert alert-danger" id="error_message" role="alert" style="display: none;position: absolute;left: 50%;transform: translateX(-50%);z-index: 1;opacity: 0.8;bottom: 60px;">
           <p style="margin:0px"></p>
       </div>
+             
+      <!--
       <h4 style="padding-top:15px; padding-left: 15px;">Segnalazione Rabbocco</h4>
-      <div style="position: absolute; top: 55px; left: 15px; width: 55%;">
+      -->
+      <h4 style="
+      padding-left: 0px;
+      float: left;
+      width: 100%;
+      margin: 0px;">
+        <a style="float: left;
+        width: calc(50% - 10px);
+        text-align: center;
+        color: #fff;
+        background-color: #73cf92;
+        padding: 10px;
+        border: 1px solid #73cf92;" href="segnalazione-esaurimento.html">Segnalazione Esaurimento</a>
+          <a style="          
+          float: right;
+          width: calc(50% - 10px);
+          text-align: center;
+          color: #fff;
+          background-color: #17a2b8;
+          padding: 10px;" href="segnalazione-rabbocco.html" id="rabbocco_btn">Segnalazione Rabbocco</a>
+      </h4>
+      <div style="position: absolute; top: 60px; left: 15px; width: 55%;">
         <input type="password" style="height: 42px" disabled class="form-control focus" id="qrcode" placeholder="QRCODE UBICAZIONE" aria-label="QRCOD" aria-describedby="basic-addon2">
       </div>        
+      <!--
       <div style="position: absolute; top: 30px; right: 30px;">
         <a href="segnalazione-esaurimento.html" class="btn btn-success rabbocco">Esaurimento</a>
       </div>
-      <div style="position: absolute;top: 120px;left: 15px;border: 1px solid #000;height: 50%;width: calc(100% - 30px); overflow-y: scroll;">
+      -->
+      <div style="background-color:#fff;position: absolute;top: 120px;left: 15px;border: 1px solid #000;height: 50%;width: calc(100% - 30px); overflow-y: scroll;">
         <ul id="lista" style="list-style-type: none; padding:15px;"></ul>
       </div>
       <div style="position: absolute;bottom: 10px;left: 15px;">
