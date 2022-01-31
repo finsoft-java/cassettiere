@@ -5,68 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="google" content="notranslate">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/style.css?v=4">
+    <link rel="stylesheet" href="assets/css/style.css?v=5">
     <title>Esaurimento</title>
   </head>
   <body>
     
-    <div style="position: relative;height: 100%;background-color: #9eeab8;">
-      <div class="alert alert-danger" id="error_message" role="alert" style="display: none;position: absolute;left: 50%;transform: translateX(-50%);z-index: 1;opacity: 0.8;bottom: 200px;">
-          <p style="margin:0px"></p>
+    <div class="main-container bg-esaurimento">
+      <div class="alert alert-danger" id="error_message" role="alert">
+          <p></p>
       </div>
 
-      <!--<h4 style="padding-top:15px; padding-left: 15px;"><a>Segnalazione Esaurimento</a><a>Segnalazione Esaurimento</a></h4>-->
-      <h4 style="
-      padding-left: 0px;
-      float: left;
-      width: 100%;
-      margin: 0px;">
-        <a style="
-          float: left;
-          width: 50%;
-          text-align: center;
-          
-    text-decoration: none;
-          color: #000;
-    height: 51px;
-          background-color: #9eeab8;
-          padding: 10px;" href="segnalazione-esaurimento.html">Segnalazione Esaurimento</a>
-          <a style="
-          float: right;
-          width: 50%;
-          text-align: center;
-          color: #000;          
-    text-decoration: none;
-    height: 51px;
-          border-color: #b7edf6 !important;
-          border: 1px solid;
-          background-color: #b7edf6;
-          padding: 10px;
-          " href="segnalazione-rabbocco.html" id="rabbocco_btn">Segnalazione Rabbocco</a>
+      <h4 class="header">
+        <a class="header header-left bg-esaurimento" href="segnalazione-esaurimento.html">Segnalazione Esaurimento</a>
+        <a class="header header-right bg-rabbocco" href="segnalazione-rabbocco.html" id="rabbocco_btn">Segnalazione Rabbocco</a>
       </h4>
 
 
-      <div style="position: absolute; top: 60px; left: 15px; width: 55%;">
-        <input type="password" style="height: 42px" disabled class="form-control focus" id="qrcode" placeholder="QRCODE UBICAZIONE" aria-describedby="basic-addon2">
+      <div class="qrcode">
+        <input type="password" disabled class="form-control focus" id="qrcode" placeholder="QRCODE UBICAZIONE" aria-describedby="basic-addon2">
       </div>        
-      <!--
-      <div style="position: absolute; top: 30px; right: 30px;">
-        <a href="segnalazione-rabbocco.html" id="rabbocco_btn" class="btn btn-info">Rabbocco</a>
-      </div>
-      -->
-      <div style="position: absolute;background-color: #fff;top: 120px;left: 15px;border: 1px solid #000;height: 45%;width: calc(100% - 30px); overflow-y: scroll;">
-        <div style="padding:15px;">
+      <div class="centralpanel esaurimento">
+        <div>
           <p>Dettagli:</p>
           <p id="dettagli"></p>
         </div>
       </div>
-      <div style="position: absolute;bottom: 10px;left: 15px;width:70%">
+      <div class="area-messaggi esaurimento">
         <p id="messaggio"></p>
-        <button class="btn btn-success" style="display:none;margin-right:15px;" id="articoloEsaurito">SI</button>
-        <button class="btn btn-danger" style="display:none" id="annullaEsaurimento">ANNULLA</button>
-        <button class="btn btn-success" style="display:none;margin-right:15px;" id="login">LOGIN</button>
+        <button class="btn btn-success esaurimento" id="articoloEsaurito">SI</button>
+        <button class="btn btn-danger esaurimento" id="annullaEsaurimento">ANNULLA</button>
+        <button class="btn btn-success esaurimento" id="login">LOGIN</button>
       </div>
-      <div style="position: absolute;bottom:10px;right:15px" id="user_box">
+      <div id="user_box">
         <p></p>
         <button id="logout" style="display:none" class="btn btn-success">LOGOUT</button>
       </div>

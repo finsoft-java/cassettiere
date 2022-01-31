@@ -33,6 +33,14 @@
   .btn.btn-success.rabbocco{
     background-color:#9eeab8;
     border-color: #9eeab8;
+    margin-right: 15px;
+  }
+  .btn.btn-success.esaurimento{
+    display: none;
+    margin-right: 15px;
+  }
+  .btn.btn-danger.esaurimento{
+    display: none;
   }
   
   a {
@@ -300,6 +308,97 @@
     float:right !important;
   }
 
+  .alert {
+    display: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    opacity: 0.8;
+    bottom: 60px;
+  }
+  .alert > p{
+    margin: 0px;
+  }
   .alert-danger {
     border-color: #000000
+  }
+
+  .bg-esaurimento {
+    background-color: #9eeab8;
+  }
+  .bg-rabbocco {
+    background-color: #b7edf6;
+  }
+  h4.header {
+    padding-left: 0px;
+    float: left;
+    width: 100%;
+    margin: 0px;
+  }
+  a.header {
+    width: 50%;
+    text-align: center;
+    text-decoration: none;
+    color: #000;
+    height: 51px;
+    padding: 10px;
+  }
+  a.header-left {
+    float: left;
+  }
+  a.header-right {
+    float: right;
+  }
+  div.qrcode {
+    position: absolute;
+    top: 60px;
+    left: 15px;
+    width: 55%;
+  }
+  div.qrcode > input {
+    height: 42px
+  }
+
+  div.main-container {
+    position: relative;
+    height: 100%;
+  }
+
+  div.centralpanel {
+    position: absolute;
+    background-color: #fff;
+    top: 120px;
+    left: 15px;
+    border: 1px solid #000;
+    width: calc(100% - 30px);
+    overflow-y: scroll;
+  }
+  div.centralpanel.esaurimento {
+    height: 45%;
+  }
+  div.centralpanel.esaurimento > div {
+    padding: 15px;
+  }
+  div.centralpanel.rabbocco {
+    height: 50%;
+  }
+  div.centralpanel.rabbocco > ul {
+    list-style-type: none;
+    padding: 15px;
+  }
+
+  div.area-messaggi {
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+  }
+  div.area-messaggi.esaurimento {
+    width: 70%;
+  }
+
+  #user_box {
+    position: absolute;
+    bottom: 10px;
+    right: 15px
   }
