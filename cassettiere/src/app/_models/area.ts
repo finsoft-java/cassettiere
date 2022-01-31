@@ -16,6 +16,7 @@ export interface Ubicazione {
   COD_AREA: string;
   SEGNALAZIONE_ESAURIMENTO: string;
   DESCRIZIONE_AREA: string;
+  COD_CONTENITORE: string;
 }
 
 export interface ContenitorePadre {

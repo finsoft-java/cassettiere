@@ -1,12 +1,10 @@
-import { ContenitorePadre } from './../_models/area';
-import { ContenitorePadreService } from './../_services/contenitore.padre.service';
-import { ArticoliService } from './../_services/articoli.service';
-import { AreeService } from './../_services/aree.service';
-import { map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
+import { ContenitorePadre } from '../_models/area';
+import { ContenitorePadreService } from '../_services/contenitore.padre.service';
+import { AreeService } from '../_services/aree.service';
 import { ColumnDefinition, LabelValue } from '../mat-edit-table/ColumnDefinition';
-import { UbicazioniService } from '../_services/ubicazioni.service';
 import { AlertService } from '../_services/alert.service';
+
 @Component({
   selector: 'app-contenitore-padre',
   templateUrl: './contenitore-padre.component.html',
@@ -18,41 +16,43 @@ export class ContenitorePadreComponent implements OnInit {
   service: ContenitorePadreService;
   filter: any = {};
   alert: AlertService;
-  constructor(private contenitoreSvc: ContenitorePadreService,
-    private areeService: AreeService,
-    private alertService: AlertService) {
-    this.service = contenitoreSvc;
-    this.areeService = areeService;
-    this.alert = alertService;
-}
 
   columns: ColumnDefinition<ContenitorePadre>[] = [
     {
       title: 'Cod. Contenitore',
       data: 'COD_CONTENITORE',
       disabled: true,
-      width: '15%'
+      width: '20%'
     },
     {
       title: 'Cod. Area',
       data: 'COD_AREA',
       type: 'select',
       options: this.arrayAree,
-      width: '15%'
+      width: '10%'
     },
     {
       title: 'Descrizione',
       data: 'DESCRIZIONE',
       type: 'input',
-      width: '15%'
+      width: '40%'
     },
     {
       title: 'Ordine',
       data: 'ORDINE',
       type: 'number',
-      width: '7%'
+      width: '10%'
     }
   ];
+
+  constructor(private contenitoreSvc: ContenitorePadreService,
+    private areeService: AreeService,
+    private alertService: AlertService) {
+    this.service = contenitoreSvc;
+    this.areeService = areeService;
+    this.alert = alertService;
+  }
+
   ngOnInit(): void {
     this.service.getAll().subscribe(
       response => {

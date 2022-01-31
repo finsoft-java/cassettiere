@@ -1,12 +1,9 @@
-import { map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { ColumnDefinition, LabelValue } from '../mat-edit-table/ColumnDefinition';
 import { UbicazioniService } from '../_services/ubicazioni.service';
 import { Ubicazione } from '../_models';
-import { ArticoliService } from '../_services/articoli.service';
-import { AreeService } from '../_services/aree.service';
 import { AlertService } from '../_services/alert.service';
-import { MatEditTableLabels } from '../mat-edit-table';
 import { ContenitorePadreService } from '../_services/contenitore.padre.service';
 
 @Component({
@@ -30,18 +27,23 @@ export class UbicazioniComponent implements OnInit {
       width: '40%'
     },
     {
-      title: 'Cod. Contenitore',
+      title: 'Contenitore Padre',
       data: 'COD_CONTENITORE',
-      type: 'select',
-      options: this.arrayAree,
+      type: 'combo',
+      asyncOptions: (row) => this.contPadreSvc.getAll({ top: 15, search: row?.COD_CONTENITORE })
+        .pipe(map(listBean => listBean.data.map(x => (
+          {
+            label: x.COD_CONTENITORE + ' - ' + x.COD_AREA,
+            value: x.COD_CONTENITORE
+          }
+        )))),
       width: '40%'
     }
   ];
 
   constructor(private ubicSvc: UbicazioniService,
               private contPadreSvc: ContenitorePadreService,
-              private alertService: AlertService,
-              private articoliService: ArticoliService) {
+              private alertService: AlertService) {
     this.service = ubicSvc;
     this.alert = alertService;
   }

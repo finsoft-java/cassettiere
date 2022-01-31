@@ -1,21 +1,17 @@
-import { ContenitorePadre } from './../_models/area';
-import { Articolo } from '../_models/area';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpCrudService } from './HttpCrudService';
-import { Ubicazione, ListBean, ValueBean } from '../_models';
 import { environment } from 'src/environments/environment';
+import { HttpCrudService } from './HttpCrudService';
+import { ListBean, ValueBean } from '../_models';
+import { ContenitorePadre } from '../_models/area';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class ContenitorePadreService implements HttpCrudService<ContenitorePadre> {
-
   constructor(private http: HttpClient) { }
 
   getAll(filter?: any): Observable<ListBean<ContenitorePadre>> {
-    return this.http.get<ListBean<ContenitorePadre>>(environment.wsUrl + 'ContenitorePadre.php', { params: filter || {}});
+    return this.http.get<ListBean<ContenitorePadre>>(environment.wsUrl + 'ContenitorePadre.php', { params: filter || {} });
   }
 
   create(obj: any): Observable<ValueBean<ContenitorePadre>> {
