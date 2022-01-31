@@ -61,21 +61,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
     $contenitorePadreManager->aggiorna("", $json_data);
     
-    $contenitorePadre = $contenitorePadreManager->get_ubicazione($json_data->COD_CONTENITORE);
+    $contenitorePadre = $contenitorePadreManager->get_contenitorePadrebyId($json_data->COD_CONTENITORE);
     header('Content-Type: application/json');
     echo json_encode(['value' => $contenitorePadre]);
     
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     //==========================================================
-    if (!$cod_ubicazione) {
-        print_error(400, 'Missing cod_ubicazione');
+    if (!$cod_contenitore) {
+        print_error(400, 'Missing cod_contenitore');
     }
-    $area_su_db = $ubicazioneManager->get_ubicazione($cod_ubicazione);
+    $area_su_db = $contenitorePadreManager->get_contenitorePadrebyId($cod_contenitore);
     if (!$area_su_db) {
         print_error(404, 'Not found');
     }
     
-    $ubicazioneManager->elimina($cod_ubicazione);
+    $contenitorePadreManager->elimina($cod_contenitore);
     
 } else {
     //==========================================================

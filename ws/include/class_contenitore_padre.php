@@ -63,10 +63,10 @@ class ContenitorePadreManager {
         }else{
             $ordine = '';
         }
-        $sql = insert("contenitori_padri", ["COD_CONTENITORE" => $codUbi,
-                                            "COD_AREA" => $codContenitore,
-                                            "DESCRIZIONE" => $codUbi,
-                                            "ORDINE" => $codContenitore]);
+        $sql = insert("contenitori_padri", ["COD_CONTENITORE" => $codContenitore,
+                                            "COD_AREA" => $codArea,
+                                            "DESCRIZIONE" => $descrizione,
+                                            "ORDINE" => $ordine]);
         mysqli_query($con, $sql);
         if ($con ->error) {
             print_error(500, $con ->error);
@@ -76,7 +76,6 @@ class ContenitorePadreManager {
     
     function aggiorna($progetto, $json_data) {
         global $con;        
-
         if(isset($json_data->COD_CONTENITORE)) {
             $codContenitore = $json_data->COD_CONTENITORE;
         }else{
@@ -98,7 +97,7 @@ class ContenitorePadreManager {
             $ordine = '';
         }
 
-        $sql = update("ubicazioni",["COD_AREA" => $codArea,
+        $sql = update("contenitori_padri",["COD_AREA" => $codArea,
                                     "DESCRIZIONE" => $descrizione,
                                     "ORDINE" => $ordine], 
                                ["COD_CONTENITORE" => $json_data->COD_CONTENITORE]);

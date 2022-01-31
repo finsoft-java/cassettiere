@@ -19,8 +19,10 @@ export class ContenitorePadreComponent implements OnInit {
   filter: any = {};
   alert: AlertService;
   constructor(private contenitoreSvc: ContenitorePadreService,
+    private areeService: AreeService,
     private alertService: AlertService) {
     this.service = contenitoreSvc;
+    this.areeService = areeService;
     this.alert = alertService;
 }
 
@@ -34,7 +36,8 @@ export class ContenitorePadreComponent implements OnInit {
     {
       title: 'Cod. Area',
       data: 'COD_AREA',
-      type: 'input',
+      type: 'select',
+      options: this.arrayAree,
       width: '15%'
     },
     {
@@ -54,6 +57,17 @@ export class ContenitorePadreComponent implements OnInit {
     this.service.getAll().subscribe(
       response => {
         console.log(response);
+      }
+    );
+    this.areeService.getAll().subscribe(
+      response => {
+        console.log(response);
+        for (let i = 0; i < response.data.length; i++) {
+          this.arrayAree.push({
+            label: response.data[i].COD_AREA + ' - ' + response.data[i].DESCRIZIONE,
+            value: response.data[i].COD_AREA
+          });
+        }
       }
     );
     this.arrayEsaurimento.push({ label: 'No', value: 'N' }, { label: 'Si', value: 'Y' });
