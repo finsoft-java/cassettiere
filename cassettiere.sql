@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Gen 26, 2022 alle 16:25
+-- Creato il: Gen 31, 2022 alle 16:39
 -- Versione del server: 10.4.17-MariaDB
 -- Versione PHP: 8.0.2
 
@@ -109,24 +109,6 @@ INSERT INTO `operazioni` (`COD_OPERAZIONE`, `DESCRIZIONE`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struttura stand-in per le viste `report_segnalazioni_attive`
--- (Vedi sotto per la vista effettiva)
---
-CREATE TABLE `report_segnalazioni_attive` (
-);
-
--- --------------------------------------------------------
-
---
--- Struttura stand-in per le viste `report_ubicazioni_per_area`
--- (Vedi sotto per la vista effettiva)
---
-CREATE TABLE `report_ubicazioni_per_area` (
-);
-
--- --------------------------------------------------------
-
---
 -- Struttura della tabella `storico_operazioni`
 --
 
@@ -204,24 +186,6 @@ CREATE TABLE `ubicazioni_articoli` (
 
 INSERT INTO `ubicazioni_articoli` (`COD_UBICAZIONE`, `COD_ARTICOLO`, `QUANTITA_PREVISTA`, `SEGNALAZIONE_ESAURIMENTO`, `DISEGNO`, `DESCRIZIONE`, `NOTE`) VALUES
 ('UBI-A7-001', 'ART 1', 100, '', 'PROVA', 'PROVA', 'PROVA');
-
--- --------------------------------------------------------
-
---
--- Struttura per vista `report_segnalazioni_attive`
---
-DROP TABLE IF EXISTS `report_segnalazioni_attive`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `report_segnalazioni_attive`  AS SELECT `u`.`COD_UBICAZIONE` AS `COD_UBICAZIONE`, `u`.`COD_ARTICOLO_CONTENUTO` AS `COD_ARTICOLO_CONTENUTO`, `u`.`QUANTITA_PREVISTA` AS `QUANTITA_PREVISTA`, `u`.`COD_AREA` AS `COD_AREA`, `a`.`DESCRIZIONE` AS `DESCRIZIONE_AREA`, `s`.`COD_UTENTE` AS `COD_UTENTE`, `s`.`TIMESTAMP` AS `TIMESTAMP` FROM ((`ubicazioni` `u` join `aree` `a` on(`u`.`COD_AREA` = `a`.`COD_AREA`)) left join `storico_operazioni` `s` on(`s`.`COD_UBICAZIONE` = `u`.`COD_UBICAZIONE`)) WHERE `u`.`SEGNALAZIONE_ESAURIMENTO` = 'Y' AND (`s`.`ID_OPERAZIONE` is null OR `s`.`ID_OPERAZIONE` = (select max(`z`.`ID_OPERAZIONE`) from `storico_operazioni` `z` where `z`.`COD_UBICAZIONE` = `u`.`COD_UBICAZIONE` AND `z`.`COD_OPERAZIONE` = 'ESAURIMENTO')) ;
-
--- --------------------------------------------------------
-
---
--- Struttura per vista `report_ubicazioni_per_area`
---
-DROP TABLE IF EXISTS `report_ubicazioni_per_area`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `report_ubicazioni_per_area`  AS SELECT `ubicazioni`.`COD_AREA` AS `COD_AREA`, `aree`.`DESCRIZIONE` AS `DESCRIZIONE`, count(0) AS `NUM_UBICAZIONI`, sum(case when `ubicazioni`.`SEGNALAZIONE_ESAURIMENTO` = 'N' then 0 else 1 end) AS `IN_ESAURIMENTO` FROM (`ubicazioni` join `aree` on(`aree`.`COD_AREA` = `ubicazioni`.`COD_AREA`)) GROUP BY `ubicazioni`.`COD_AREA` ;
 
 --
 -- Indici per le tabelle scaricate
