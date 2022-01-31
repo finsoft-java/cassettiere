@@ -35,7 +35,7 @@
 
                 <input *ngIf="col.type !== 'select' && col.type !== 'combo'" matInput type="{{col.type}}" [(ngModel)]="row[col.data]" [disabled]="col.disabled != null && (col.disabled && !creating)" (change)="onChangeCell($event, col)" class="tablefield"/>
                 
-                <mat-select *ngIf="col.type === 'select'" matInput [(ngModel)]="row[col.data]" [disabled]="col.disabled != null && (col.disabled && !creating)" (change)="onChangeCell($event, col)" #select1 (focus)="select1.open()" class="tablefield">
+                <mat-select *ngIf="col.type === 'select'"  matInput [(ngModel)]="row[col.data]" [disabled]="col.disabled != null && (col.disabled && !creating)" (change)="onChangeCell($event, col)" class="tablefield">
                   <mat-option *ngFor="let opt of col.options" [value]="opt.value">{{ opt.label }}</mat-option>
                 </mat-select>
                 

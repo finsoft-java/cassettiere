@@ -164,7 +164,7 @@ export class MatEditTableComponent<T> implements OnInit {
    * @param callback function accepts a T[] argument
    */
   getReallyAll(callback: any) {
-    let filtroSenzaPaginazione = Object.assign({}, this.filtro);
+    const filtroSenzaPaginazione = { ...this.filtro };
     delete filtroSenzaPaginazione.skip;
     delete filtroSenzaPaginazione.top;
     return this.service.getAll(filtroSenzaPaginazione).subscribe(
@@ -177,8 +177,8 @@ export class MatEditTableComponent<T> implements OnInit {
         this.errorMessage.emit(error);
       }
     );
-    }
-  
+  }
+
   renderCell(col: ColumnDefinition<T>, row: T, rowNum: number, colNum: number): string | null {
     const x = (row as any)[col.data];
     return col.render ? col.render(x, row, rowNum, colNum) : x;
@@ -191,13 +191,12 @@ export class MatEditTableComponent<T> implements OnInit {
   }
 
   onSearchChange(row: T, col: ColumnDefinition<T>, data: string): any {
-
     (row as any)[col.data] = data;
 
-    /*if (data.length <= 3) {
+    /* if (data.length <= 3) {
       // non faccio la chiamata < 3 caratteri
       return;
-    }*/
+    } */
 
     if (col.asyncOptions) {
       col.asyncOptions(row).subscribe(
@@ -239,11 +238,11 @@ export class MatEditTableComponent<T> implements OnInit {
         this.searchValue[col.data] = (row as any)[col.data];
       }
     );
-    
+
     // KNOWN BUG: il focus funziona solo in inserimento, non in update, perchè querySelectorAll() non prende le mat-select
     setTimeout(() => {
       const elm = this.tableFormRow.nativeElement.querySelectorAll('.tablefield:not(:disabled)');
-      console.log("Selected elements:", elm);
+      console.log('Selected elements:', elm);
       if (elm.length) {
         elm[0].focus();
       }
@@ -366,9 +365,6 @@ export class MatEditTableComponent<T> implements OnInit {
 
   /**
    *  Transform an array T[] into a formatted array any[][]
-   * 
-   * @param data
-   * @returns 
    */
   getSheetMatrix(data: T[]): any[][] {
     const matrix: any[] = [];
