@@ -15,9 +15,15 @@
     font-size: 19px;
     letter-spacing: 1px;
   }
+  .btn-success {
+    color: #000;
+  }
   .btn.btn-success{
-    background-color:#17a2b8;
-    border-color: #17a2b8;
+    background-color:#b7edf6;
+    border-color: #b7edf6;
+  }
+  .btn-success.disabled, .btn-success:disabled {
+    color: #000;
   }
   .btn.btn-danger{
     background-color:#cccccc;
@@ -25,8 +31,8 @@
     color: #000;
   }
   .btn.btn-success.rabbocco{
-    background-color:#73cf92;
-    border-color: #73cf92;
+    background-color:#9eeab8;
+    border-color: #9eeab8;
   }
   
   a {
