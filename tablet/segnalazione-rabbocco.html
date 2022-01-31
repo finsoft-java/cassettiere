@@ -9,56 +9,26 @@
     <title>Rabbocco</title>
   </head>
   <body>
-    <div style="position: relative;height: 100%; background-color: #b7edf6;">
-      <div class="alert alert-danger" id="error_message" role="alert" style="display: none;position: absolute;left: 50%;transform: translateX(-50%);z-index: 1;opacity: 0.8;bottom: 60px;">
+    <div class="main-container bg-rabbocco">
+      <div class="alert alert-danger" id="error_message" role="alert">
           <p style="margin:0px"></p>
       </div>
              
-      <!--
-      <h4 style="padding-top:15px; padding-left: 15px;">Segnalazione Rabbocco</h4>
-      -->
-      <h4 style="
-      padding-left: 0px;
-      float: left;
-      width: 100%;
-      margin: 0px;">
-        <a style="float: left;
-        width: 50%;
-        text-align: center;
-        color: #000;
-        
-    text-decoration: none;
-    height: 51px;
-        background-color: #9eeab8;
-        padding: 10px;
-        border: 1px solid #9eeab8;" href="segnalazione-esaurimento.html">Segnalazione Esaurimento</a>
-          <a style="          
-          float: right;
-          width: 50%;
-          
-    text-decoration: none;
-          text-align: center;
-          color: #000;
-    height: 51px;
-          background-color: #b7edf6;
-          padding: 10px;" href="segnalazione-rabbocco.html" id="rabbocco_btn">Segnalazione Rabbocco</a>
+      <h4 class="header">
+        <a class="header header-left bg-esaurimento" href="segnalazione-esaurimento.html">Segnalazione Esaurimento</a>
+        <a class="header header-right bg-rabbocco" href="segnalazione-rabbocco.html" id="rabbocco_btn">Segnalazione Rabbocco</a>
       </h4>
-      <div style="position: absolute; top: 60px; left: 15px; width: 55%;">
-        <input type="password" style="height: 42px" disabled class="form-control focus" id="qrcode" placeholder="QRCODE UBICAZIONE" aria-label="QRCOD" aria-describedby="basic-addon2">
-      </div>        
-      <!--
-      <div style="position: absolute; top: 30px; right: 30px;">
-        <a href="segnalazione-esaurimento.html" class="btn btn-success rabbocco">Esaurimento</a>
+      <div class="qrcode">
+        <input type="password" disabled class="form-control focus" id="qrcode" placeholder="QRCODE UBICAZIONE" aria-label="QRCOD" aria-describedby="basic-addon2">
+      </div>  
+      <div class="centralpanel rabbocco">
+        <ul id="lista"></ul>
       </div>
-      -->
-      <div style="background-color:#fff;position: absolute;top: 120px;left: 15px;border: 1px solid #000;height: 50%;width: calc(100% - 30px); overflow-y: scroll;">
-        <ul id="lista" style="list-style-type: none; padding:15px;"></ul>
-      </div>
-      <div style="position: absolute;bottom: 10px;left: 15px;">
-        <button class="btn btn-success rabbocco" style="margin-right:15px" disabled id="confermaRabbocco">OK</button>
+      <div class="area-messaggi rabbocco">
+        <button class="btn btn-success rabbocco" disabled id="confermaRabbocco">OK</button>
         <button class="btn btn-danger rabbocco" disabled id="annullaRabbocco">ANNULLA</button>
       </div>
-      <div style="position: absolute;bottom:10px;right:15px" id="user_box">
+      <div id="user_box">
         <p></p>
         <button id="logout" class="btn btn-success rabbocco">LOGOUT</button>
       </div>
