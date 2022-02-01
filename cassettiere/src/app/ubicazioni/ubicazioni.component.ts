@@ -23,7 +23,7 @@ export class UbicazioniComponent implements OnInit {
       title: 'Cod. Ubicazione',
       data: 'COD_UBICAZIONE',
       type: 'input',
-      disabled: true,
+      disabled: 'UPDATE',
       width: '40%'
     },
     {
@@ -33,7 +33,7 @@ export class UbicazioniComponent implements OnInit {
       asyncOptions: (row) => this.contPadreSvc.getAll({ top: 15, search: row?.COD_CONTENITORE })
         .pipe(map(listBean => listBean.data.map(x => (
           {
-            label: x.COD_CONTENITORE + ' - ' + x.COD_AREA,
+            label: x.COD_CONTENITORE + ' - ' + x.DESCRIZIONE,
             value: x.COD_CONTENITORE
           }
         )))),
@@ -49,16 +49,7 @@ export class UbicazioniComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.contPadreSvc.getAll().subscribe(
-      response => {
-        for (let i = 0; i < response.data.length; i++) {
-          this.arrayAree.push({
-            label: response.data[i].COD_CONTENITORE + ' - ' + response.data[i].DESCRIZIONE,
-            value: response.data[i].COD_CONTENITORE
-          });
-        }
-      }
-    );
+    
     this.arrayEsaurimento.push({ label: 'No', value: 'N' }, { label: 'Si', value: 'Y' });
   }
 

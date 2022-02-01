@@ -7,15 +7,11 @@ export interface Area {
 export interface Articolo {
   ID_ARTICOLO: string;
   DESCRIZIONE: string;
+  DISEGNO: string;
 }
 
 export interface Ubicazione {
   COD_UBICAZIONE: string;
-  COD_ARTICOLO_CONTENUTO: string;
-  QUANTITA_PREVISTA: number;
-  COD_AREA: string;
-  SEGNALAZIONE_ESAURIMENTO: string;
-  DESCRIZIONE_AREA: string;
   COD_CONTENITORE: string;
 }
 
@@ -48,3 +44,12 @@ export interface UbicazionePerArea {
   IN_ESAURIMENTO: number;
 }
 
+export interface UbicazioniArticoli {
+  COD_UBICAZIONE?: string;
+  COD_ARTICOLO: string;
+  QUANTITA_PREVISTA: number;
+  SEGNALAZIONE_ESAURIMENTO: string;
+  DISEGNO: string;
+  DESCRIZIONE: string;
+  NOTE: string;
+}

@@ -63,8 +63,8 @@ export class ReportUbicazioniComponent implements OnInit {
     editTableComponent.filter({ COD_AREA: codArea });
     this.showTable = true;
   }
-
+//TODO
   formattazioneCondizionale(row: Ubicazione): any {
-    return { color: (row.SEGNALAZIONE_ESAURIMENTO === 'N') ? null : 'red' };
+    //return { color: (row.SEGNALAZIONE_ESAURIMENTO === 'N') ? null : 'red' };
   }
 }

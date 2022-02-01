@@ -34,6 +34,7 @@ import { MatEditTableComponent } from './mat-edit-table/mat-edit-table.component
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ContenitorePadreComponent } from './contenitore-padre/contenitore-padre.component';
+import { UbicazioniArticoliComponent } from './ubicazioni-articoli/ubicazioni-articoli.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ContenitorePadreComponent } from './contenitore-padre/contenitore-padre
     ReportSegnalazioniComponent,
     ReportUbicazioniComponent,
     LoginComponent,
-    ContenitorePadreComponent
+    ContenitorePadreComponent,
+    UbicazioniArticoliComponent
   ],
   imports: [
     HttpClientModule,

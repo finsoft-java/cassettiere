@@ -21,7 +21,7 @@ export class ContenitorePadreComponent implements OnInit {
     {
       title: 'Cod. Contenitore',
       data: 'COD_CONTENITORE',
-      disabled: true,
+      disabled: 'UPDATE',
       width: '20%'
     },
     {

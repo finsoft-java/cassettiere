@@ -7,6 +7,7 @@ import { MatEditTableLabels } from './MatEditTableLabels';
 import { HttpCrudService } from '../_services/HttpCrudService';
 import { ColumnDefinition } from './ColumnDefinition';
 import { MockService } from '.';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-mat-edit-table',
@@ -188,6 +189,15 @@ export class MatEditTableComponent<T> implements OnInit {
     if (col.onChangeCallback) {
       col.onChangeCallback(event);
     }
+  }
+
+  
+  onChangeSelect(event: MatSelectChange, col: ColumnDefinition<T>): void {
+    if (col.onChangeCallback) {
+      col.onChangeCallback(<any>event);
+    }
+    console.log(event);
+    console.log(col);
   }
 
   onSearchChange(row: T, col: ColumnDefinition<T>, data: string): any {

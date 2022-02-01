@@ -1,0 +1,26 @@
+<h2>
+    Ubicazioni Articoli
+</h2>
+
+<app-mat-edit-table
+    [columns]="columns"
+    [service]="service"
+    pagination="server"
+    (errorMessage)="setError($event)"
+    #myTable>
+  <mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-description>
+        Pannello Filtri
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-form-field appearance="fill" style="margin-right:15px;">
+        <mat-label>Cerca</mat-label>
+        <input matInput [(ngModel)]="filter.search">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" style="margin-right:15px;" (click)="filterRow(myTable)">Filtra</button>
+    <button mat-raised-button color="secondary" style="margin-right:15px;" (click)="resetFilter(myTable)">Reset</button>
+  </mat-expansion-panel>
+</app-mat-edit-table>
+

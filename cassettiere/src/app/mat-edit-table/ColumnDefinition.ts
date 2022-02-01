@@ -24,7 +24,7 @@ export interface ColumnDefinition<T> {
   /** funzione per caricare asincronamente le options */
   asyncOptions?: (row?: T) => Observable<LabelValue[]>;
   /** Se true, il campo è abilitato solo in inserimento */
-  disabled?: boolean;
+  disabled?: 'NO'|'ALWAYS'|'UPDATE';
   /** Funzione callback per l'evento onChange */
   onChangeCallback?: (event: Event) => void;
 }

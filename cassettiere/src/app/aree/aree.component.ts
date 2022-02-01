@@ -20,7 +20,7 @@ export class AreeComponent implements OnInit {
       data: 'COD_AREA',
       type: 'text',
       width: '30%',
-      disabled: true
+      disabled: 'UPDATE'
     },
     {
       title: 'Descrizione',
