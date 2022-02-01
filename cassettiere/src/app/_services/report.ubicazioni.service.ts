@@ -1,15 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Ubicazione, ListBean, UbicazionePerArea } from '../_models';
 import { environment } from 'src/environments/environment';
+import { Ubicazione, ListBean, UbicazionePerArea } from '../_models';
 import { MockService } from '../mat-edit-table';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class ReportUbicazioniService extends MockService<Ubicazione> {
-
   constructor(private http: HttpClient) { super(); }
 
   codArea?: string;

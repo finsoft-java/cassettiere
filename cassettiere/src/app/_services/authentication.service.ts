@@ -4,15 +4,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../_models/index';
-import { environment } from './../../environments/environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     public currentUserSubject: User;
     nameChange: Subject<string> = new Subject<string>();
 
-    constructor (private http: HttpClient,private router: Router) {
-      this.currentUserSubject = new User;
+    constructor(private http: HttpClient, private router: Router) {
+      this.currentUserSubject = new User();
     }
 
     changeUsername(username: string) {
@@ -21,28 +21,29 @@ export class AuthenticationService {
     }
 
     login(username: string, password: string) {
-        console.log(environment.wsUrl);
-        const url = environment.wsUrl + `login.php`;
-        const body = JSON.stringify({username: username,
-                                     password: password});
-        return this.http.post<any>(url, body).pipe(map(data => {
-          if (data) {
-            localStorage.setItem('currentUser', data["value"].username);
-            this.changeUsername(username);
-          } else {
-            data = 'bho';
-          }
-          return data;
-        }));
+      console.log(environment.wsUrl);
+      const url = environment.wsUrl + 'login.php';
+      const body = JSON.stringify({
+                                    username: username,
+                                    password: password
+                                  });
+      return this.http.post<any>(url, body).pipe(map(data => {
+        if (data) {
+          localStorage.setItem('currentUser', data.value.username);
+          this.changeUsername(username);
+        } else {
+          data = 'bho';
+        }
+        return data;
+      }));
     }
     public isAuthenticated(): boolean {
       const token = localStorage.getItem('currentUser');
-      if(token == null && token == undefined){
+      if (token === undefined || token === null) {
         return false;
-      }else{
-        this.currentUserSubject.username = token;
-        return true;
       }
+      this.currentUserSubject.username = token;
+      return true;
     }
 
     logout() {
