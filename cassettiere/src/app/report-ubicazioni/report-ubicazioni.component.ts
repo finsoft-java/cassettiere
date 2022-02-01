@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ColumnDefinition } from '../mat-edit-table';
 import { Ubicazione, UbicazionePerArea } from '../_models';
+import { AlertService } from '../_services/alert.service';
 import { ReportUbicazioniService } from '../_services/report.ubicazioni.service';
 
 @Component({
@@ -42,7 +43,8 @@ export class ReportUbicazioniComponent implements OnInit {
   ubicazioni: UbicazionePerArea[] = [];
   showTable = false;
 
-  constructor(private ubicazioniService: ReportUbicazioniService) {
+  constructor(private ubicazioniService: ReportUbicazioniService,
+    private alertService: AlertService) {
     this.service = ubicazioniService;
   }
 
@@ -52,6 +54,7 @@ export class ReportUbicazioniComponent implements OnInit {
         this.ubicazioni = response.data;
       },
       error => {
+        this.alertService.error(error);
         console.error(error); // FIXME
       }
     );

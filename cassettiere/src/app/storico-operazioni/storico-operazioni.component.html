@@ -10,6 +10,7 @@
   [service]="service"
   pagination="server"
   [autorefresh]="60"
+  (errorMessage)="showError($event)"
   #myTable
 >
   <mat-expansion-panel hideToggle>
