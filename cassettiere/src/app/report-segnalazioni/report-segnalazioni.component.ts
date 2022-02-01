@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ColumnDefinition } from '../mat-edit-table';
 import { Ubicazione } from '../_models';
+import { AlertService } from '../_services/alert.service';
 import { ReportSegnalazioniService } from '../_services/report.segnalazioni.service';
 
 @Component({
@@ -50,12 +51,13 @@ export class ReportSegnalazioniComponent implements OnInit {
       title: 'Timestamp segnalazione',
       data: 'TIMESTAMP',
       width: '3cm'
-      //render: (data => data ? data.substring(0,10)+'\n'+data.substring(11,20) : null)
+      // render: (data => data ? data.substring(0,10)+'\n'+data.substring(11,20) : null)
     }
   ];
   service!: ReportSegnalazioniService;
 
-  constructor(private svc: ReportSegnalazioniService) {
+  constructor(private svc: ReportSegnalazioniService,
+    private alertService: AlertService) {
     this.service = svc;
   }
 
@@ -75,5 +77,9 @@ export class ReportSegnalazioniComponent implements OnInit {
   resetFilter(editTableComponent: any): void {
     delete this.filter.search;
     editTableComponent.filter(this.filter);
+  }
+
+  showError(msg: string) {
+    this.alertService.error(msg);
   }
 }

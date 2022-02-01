@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { ColumnDefinition } from '../mat-edit-table/ColumnDefinition';
 import { StoricoOperazione } from '../_models/area';
 import { StoricoOperazioniService } from '../_services/storico-operazioni.service';
+import { AlertService } from '../_services/alert.service';
 
 @Component({
   selector: 'app-storico-operazioni',
@@ -58,7 +59,8 @@ export class StoricoOperazioniComponent implements OnInit {
   ];
   service!: StoricoOperazioniService;
 
-  constructor(private storOpSvc: StoricoOperazioniService) {
+  constructor(private storOpSvc: StoricoOperazioniService,
+    private alertService: AlertService) {
     this.service = storOpSvc;
   }
 
@@ -89,5 +91,9 @@ export class StoricoOperazioniComponent implements OnInit {
     delete this.filter.DATA_FINE;
     delete this.filter.search;
     editTableComponent.filter(this.filter);
+  }
+
+  showError(msg: string) {
+    this.alertService.error(msg);
   }
 }
