@@ -1,5 +1,4 @@
 import { Observable } from 'rxjs';
-import { MatSelectChange } from '@angular/material/select';
 
 export interface LabelValue {
   label: string;
@@ -19,7 +18,7 @@ export interface ColumnDefinition<T> {
   /** width style property */
   width?: string;
   /** render function. Puoi usarlo per formattare le date */
-  render?: (data: any, row?: T, rowNum?: number, colNum?: number) => string | null;
+  render?: (data: any, row?: T, rowNum?: number) => string | null;
   /** select options */
   options?: LabelValue[];
   /** funzione per caricare asincronamente le options */
@@ -28,4 +27,6 @@ export interface ColumnDefinition<T> {
   disabled?: 'NO'|'ALWAYS'|'UPDATE';
   /** Funzione callback per l'evento onChange */
   onChange?: (value: string, col: ColumnDefinition<T>, row: T) => void;
+  /** Default value during insert */
+  defaultValue?: any;
 }

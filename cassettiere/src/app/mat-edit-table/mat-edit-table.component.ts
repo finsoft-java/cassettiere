@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSelectChange } from '@angular/material/select';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { MatEditTableLabels } from './MatEditTableLabels';
 import { HttpCrudService } from '../_services/HttpCrudService';
 import { ColumnDefinition } from './ColumnDefinition';
 import { MockService } from '.';
-import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-mat-edit-table',
@@ -180,24 +180,36 @@ export class MatEditTableComponent<T> implements OnInit {
     );
   }
 
-  renderCell(col: ColumnDefinition<T>, row: T, rowNum: number, colNum: number): string | null {
+  /**
+   * String representation of a single cell
+   */
+  renderCell(col: ColumnDefinition<T>, row: T, rowNum: number): string | null {
     const x = (row as any)[col.data];
-    return col.render ? col.render(x, row, rowNum, colNum) : x;
+    if (col.render) {
+      return col.render(x, row, rowNum);
+    }
+    if (col.options) {
+      const option = col.options.find(z => z.value === x);
+      if (option) {
+        return option.label;
+      }
+    }
+    return x;
   }
 
-  onChangeCell(event: Event, col: ColumnDefinition<T>, row:T): void {
+  onChangeCell(event: Event, col: ColumnDefinition<T>, row: T): void {
     const element = event.currentTarget as HTMLInputElement;
-    const value = element.value;
+    const { value } = element; // object destructuring
     if (col.onChange) {
       col.onChange(value, col, row);
-      console.log('**onChangeCell**',value);
+      console.log('**onChangeCell**', value);
     }
   }
 
   onChangeSelect(event: MatSelectChange, col: ColumnDefinition<T>, row: T): void {
     if (col.onChange) {
-      col.onChange(event.value, col , row);
-      console.log('**onChangeSelect**',event.value);
+      col.onChange(event.value, col, row);
+      console.log('**onChangeSelect**', event.value);
     }
   }
 
@@ -220,7 +232,14 @@ export class MatEditTableComponent<T> implements OnInit {
   }
 
   beginCreate(): void {
-    const newRow = {} as T;
+    const newRow: any = {}; // newRow has ideally type T
+    this.columns.forEach(c => {
+      const attributeName = c.data;
+      if (attributeName) {
+        const value = (c.defaultValue !== undefined) ? c.defaultValue : null;
+        newRow[attributeName] = value;
+      }
+    });
     this.data.unshift(newRow);
     this.dataSource.data = this.data;
     this.creating = true;
@@ -382,10 +401,9 @@ export class MatEditTableComponent<T> implements OnInit {
     let rowNum = 0;
     data.forEach(row => {
       const matrixRow: any[] = [];
-      let colNum = 0;
       this.columns.forEach(col => {
         if (col.data !== this.ACTIONS_INDEX) {
-          matrixRow.push(this.renderCell(col, row, rowNum, colNum++));
+          matrixRow.push(this.renderCell(col, row, rowNum));
         }
       });
       matrix.push(matrixRow);

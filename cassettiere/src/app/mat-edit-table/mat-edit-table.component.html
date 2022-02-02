@@ -21,7 +21,7 @@
               <button mat-raised-button color="warn" [disabled]="!buttonsEnabled" [title]="labels.delete" (click)="deleteRow(rowNum)"><mat-icon>delete</mat-icon></button>
             </div>
             <span #spanHeader>
-              {{ renderCell(col, row, rowNum, -1) }}
+              {{ renderCell(col, row, rowNum) }}
             </span>
           </div>
           <div *ngIf="rowNum === editRowNumber" #tableFormRow>

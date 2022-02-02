@@ -1,12 +1,11 @@
-import { ArticoliService } from './../_services/articoli.service';
-import { UbicazioniArticoli } from './../_models/area';
+import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { ColumnDefinition, LabelValue } from '../mat-edit-table/ColumnDefinition';
-import { AlertService } from './../_services/alert.service';
-import { UbicazioniArticoliService } from './../_services/ubicazioni.articoli.service';
-import { Component, OnInit } from '@angular/core';
+import { AlertService } from '../_services/alert.service';
+import { UbicazioniArticoliService } from '../_services/ubicazioni.articoli.service';
 import { UbicazioniService } from '../_services/ubicazioni.service';
-import { MatSelectChange } from '@angular/material/select';
+import { ArticoliService } from '../_services/articoli.service';
+import { UbicazioniArticoli } from '../_models/area';
 
 @Component({
   selector: 'app-ubicazioni-articoli',
@@ -14,7 +13,6 @@ import { MatSelectChange } from '@angular/material/select';
   styleUrls: ['./ubicazioni-articoli.component.css']
 })
 export class UbicazioniArticoliComponent implements OnInit {
-
   arrayAree: LabelValue[] = [];
   service: UbicazioniArticoliService;
   filter: any = {};
@@ -25,30 +23,30 @@ export class UbicazioniArticoliComponent implements OnInit {
       title: 'Cod. Ubicazione',
       data: 'COD_UBICAZIONE',
       type: 'combo',
-      reloadOptions: (row) => this.ubiSvc.getAll({ top: 15, search: row?.COD_UBICAZIONE == null ? "" : row?.COD_UBICAZIONE })
+      reloadOptions: (row) => this.ubiSvc.getAll({ top: 15, search: row?.COD_UBICAZIONE == null ? '' : row?.COD_UBICAZIONE })
         .pipe(map(listBean => listBean.data.map(x => (
           {
             label: x.COD_UBICAZIONE + ' - ' + x.COD_CONTENITORE,
             value: x.COD_UBICAZIONE
           }
         )))),
-      disabled: 'UPDATE',//UPDATE -> CHIAVE
+      disabled: 'UPDATE', // UPDATE -> CHIAVE
       width: '10%'
     },
     {
       title: 'Codice Articolo',
       data: 'COD_ARTICOLO',
       type: 'combo',
-      reloadOptions: (row) => this.articoliSvc.getAll({ top: 15, search: row?.COD_ARTICOLO == null ? "" : row?.COD_ARTICOLO })
+      reloadOptions: (row) => this.articoliSvc.getAll({ top: 15, search: row?.COD_ARTICOLO == null ? '' : row?.COD_ARTICOLO })
         .pipe(map(listBean => listBean.data.map(x => (
           {
             label: x.ID_ARTICOLO,
             value: x.ID_ARTICOLO
           }
         )))),
-      disabled: 'UPDATE',//UPDATE -> CHIAVE
+      disabled: 'UPDATE', // UPDATE -> CHIAVE
       width: '10%',
-      onChange: (value:string, col:ColumnDefinition<UbicazioniArticoli>, row: UbicazioniArticoli ) => {
+      onChange: (value: string, col: ColumnDefinition<UbicazioniArticoli>, row: UbicazioniArticoli) => {
         this.articoliSvc.getArticolo(value)
           .subscribe(response => {
             row.DESCRIZIONE = response.value.DESCRIZIONE;
@@ -57,7 +55,8 @@ export class UbicazioniArticoliComponent implements OnInit {
           error => {
           });
       }
-    },{
+    },
+    {
       title: 'Disegno',
       data: 'DISEGNO',
       type: 'input',
@@ -70,7 +69,8 @@ export class UbicazioniArticoliComponent implements OnInit {
       type: 'input',
       disabled: 'ALWAYS',
       width: '15%'
-    },{
+    },
+    {
       title: 'Qnt. Prevista',
       data: 'QUANTITA_PREVISTA',
       type: 'number',
@@ -81,7 +81,8 @@ export class UbicazioniArticoliComponent implements OnInit {
       data: 'SEGNALAZIONE_ESAURIMENTO',
       type: 'select',
       options: [{ label: 'Si', value: 'Y' }, { label: 'No', value: 'N' }],
-      width: '5%'
+      width: '5%',
+      defaultValue: 'N'
     },
     {
       title: 'Note',
@@ -117,5 +118,4 @@ export class UbicazioniArticoliComponent implements OnInit {
   setError(errore: any) {
     this.alert.error(errore);
   }
-
 }
