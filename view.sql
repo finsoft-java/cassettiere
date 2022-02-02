@@ -1,23 +1,31 @@
-CREATE VIEW`report_ubicazioni_per_area`  AS
-SELECT `ubicazioni`.`COD_AREA` AS `COD_AREA`,
-    `aree`.`DESCRIZIONE` AS `DESCRIZIONE`,
-    count(0) AS `NUM_UBICAZIONI`,
-    sum(case when `ubicazioni`.`SEGNALAZIONE_ESAURIMENTO` = 'N' then 0 else 1 end) AS `IN_ESAURIMENTO`
-FROM `ubicazioni`
-join `aree` on `aree`.`COD_AREA` = `ubicazioni`.`COD_AREA`
-GROUP BY `ubicazioni`.`COD_AREA` ;
+
+CREATE VIEW report_ubicazioni_per_area  AS
+SELECT a.COD_AREA AS COD_AREA,
+    a.DESCRIZIONE AS DESCRIZIONE_AREA,
+    cp.COD_CONTENITORE AS CONTENITORE,
+    cp.DESCRIZIONE AS DESCRIZIONE,
+    count(0) AS NUM_UBICAZIONI,
+    sum(case when ua.SEGNALAZIONE_ESAURIMENTO = 'N' then 0 else 1 end) AS IN_ESAURIMENTO
+FROM ubicazioni u
+join ubicazioni_articoli ua on u.COD_UBICAZIONE = ua.COD_UBICAZIONE
+join contenitori_padre cp on u.COD_CONTENITORE = cp.COD_CONTENITORE
+join aree a on cp.COD_AREA = a.COD_AREA
+GROUP BY a.COD_AREA, cp.COD_CONTENITORE;
 
 
-CREATE VIEW `report_segnalazioni_attive` AS
-SELECT `u`.`COD_UBICAZIONE` AS `COD_UBICAZIONE`,
-    `u`.`COD_ARTICOLO_CONTENUTO` AS `COD_ARTICOLO_CONTENUTO`,
-    `u`.`QUANTITA_PREVISTA` AS `QUANTITA_PREVISTA`,
-    `u`.`COD_AREA` AS `COD_AREA`,
-    `a`.`DESCRIZIONE` AS `DESCRIZIONE_AREA`,
-    `s`.`COD_UTENTE` AS `COD_UTENTE`,
-    `s`.`TIMESTAMP` AS `TIMESTAMP`
-FROM `ubicazioni` `u`
-join `aree` `a` on `u`.`COD_AREA` = `a`.`COD_AREA`
-left join `storico_operazioni` `s` on `s`.`COD_UBICAZIONE` = `u`.`COD_UBICAZIONE`
-WHERE `u`.`SEGNALAZIONE_ESAURIMENTO` = 'Y' AND (`s`.`ID_OPERAZIONE` is null OR
-  `s`.`ID_OPERAZIONE` = (select max(`z`.`ID_OPERAZIONE`) from `storico_operazioni` `z` where `z`.`COD_UBICAZIONE` = `u`.`COD_UBICAZIONE` AND `z`.`COD_OPERAZIONE` = 'ESAURIMENTO')) ;
+CREATE VIEW report_segnalazioni_attive AS
+SELECT u.COD_UBICAZIONE AS COD_UBICAZIONE,
+    u.COD_CONTENITORE AS COD_CONTENITORE,
+    ua.COD_ARTICOLO AS COD_ARTICOLO_CONTENUTO,
+    ua.QUANTITA_PREVISTA AS QUANTITA_PREVISTA,
+    cp.COD_AREA AS COD_AREA,
+    a.DESCRIZIONE AS DESCRIZIONE_AREA,
+    s.COD_UTENTE AS COD_UTENTE,
+    s.TIMESTAMP AS TIMESTAMP
+FROM ubicazioni u
+join ubicazioni_articoli ua on u.COD_UBICAZIONE = ua.COD_UBICAZIONE
+join contenitori_padre cp on u.COD_CONTENITORE = cp.COD_CONTENITORE
+join aree a on cp.COD_AREA = a.COD_AREA
+left join storico_operazioni s on s.COD_UBICAZIONE = u.COD_UBICAZIONE
+WHERE ua.SEGNALAZIONE_ESAURIMENTO = 'Y' AND (s.ID_OPERAZIONE is null OR
+  s.ID_OPERAZIONE = (select max(z.ID_OPERAZIONE) from storico_operazioni z where z.COD_UBICAZIONE = u.COD_UBICAZIONE AND z.COD_OPERAZIONE = 'ESAURIMENTO')) ;

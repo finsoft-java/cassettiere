@@ -1,3 +1,4 @@
+import { ValueBean } from './../_models/ValueBean';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -18,5 +19,9 @@ export class ArticoliService extends MockService<Articolo> {
       filter.top = 10;
     }
     return this.http.get<ListBean<any>>(environment.wsUrl + 'Articoli.php', { params: filter || {} });
+  }
+
+  getArticolo(codArticolo: string): Observable<ValueBean<Articolo>> {
+    return this.http.get<ValueBean<Articolo>>(environment.wsUrl + 'Articoli.php',{ params: {'ID_ARTICOLO': codArticolo}});
   }
 }

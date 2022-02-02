@@ -7,8 +7,8 @@ class ContenitorePadreManager {
     function get_contenitorePadre($search=null, $orderby=null, $skip=null, $top=null) {
         global $panthera;
         $sql  = "";
-        $sql0 = "SELECT COUNT(*) AS cnt FROM contenitori_padri ";
-        $sql1 = "SELECT COD_CONTENITORE, COD_AREA, DESCRIZIONE, ORDINE FROM contenitori_padri ";
+        $sql0 = "SELECT COUNT(*) AS cnt FROM contenitori_padre ";
+        $sql1 = "SELECT COD_CONTENITORE, COD_AREA, DESCRIZIONE, ORDINE FROM contenitori_padre ";
         if ($search) {
             $search = strtoupper($search);
             $sql .= "WHERE (upper(COD_CONTENITORE) like '%$search%' || upper(COD_AREA) like '%$search%' || upper(DESCRIZIONE) like '%$search%')";
@@ -36,7 +36,7 @@ class ContenitorePadreManager {
     
     function get_contenitorePadrebyId($cod_contenitore) {
         global $panthera;
-        $sql = "SELECT * FROM contenitori_padri c WHERE c.COD_CONTENITORE = '$cod_contenitore'";
+        $sql = "SELECT * FROM contenitori_padre c WHERE c.COD_CONTENITORE = '$cod_contenitore'";
         $ubi = select_single($sql);
         return $ubi;
     }
@@ -63,7 +63,7 @@ class ContenitorePadreManager {
         }else{
             $ordine = '';
         }
-        $sql = insert("contenitori_padri", ["COD_CONTENITORE" => $codContenitore,
+        $sql = insert("contenitori_padre", ["COD_CONTENITORE" => $codContenitore,
                                             "COD_AREA" => $codArea,
                                             "DESCRIZIONE" => $descrizione,
                                             "ORDINE" => $ordine]);
@@ -97,7 +97,7 @@ class ContenitorePadreManager {
             $ordine = '';
         }
 
-        $sql = update("contenitori_padri",["COD_AREA" => $codArea,
+        $sql = update("contenitori_padre",["COD_AREA" => $codArea,
                                     "DESCRIZIONE" => $descrizione,
                                     "ORDINE" => $ordine], 
                                ["COD_CONTENITORE" => $json_data->COD_CONTENITORE]);
@@ -109,7 +109,7 @@ class ContenitorePadreManager {
     
     function elimina($codContenitore) {
         global $con;
-        $sql = "DELETE FROM contenitori_padri WHERE COD_CONTENITORE = '$codContenitore'";  //on delete cascade! (FIXME funziona anche con i questionari?!?)
+        $sql = "DELETE FROM contenitori_padre WHERE COD_CONTENITORE = '$codContenitore'";  //on delete cascade! (FIXME funziona anche con i questionari?!?)
         mysqli_query($con, $sql);
         if ($con ->error) {
             print_error(500, $con ->error);

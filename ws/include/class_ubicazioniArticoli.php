@@ -68,6 +68,16 @@ class UbicazioniArticoliManager {
             $esaurimento = '';
         }
 
+        if(isset($json_data->DISEGNO)) {
+            $disegno = $json_data->DISEGNO;
+        }else{
+            $disegno = '';
+        }
+        if(isset($json_data->DESCRIZIONE)) {
+            $descrizione = $json_data->DESCRIZIONE;
+        }else{
+            $descrizione = '';
+        }
         if(isset($json_data->NOTE)) {
             $note = $json_data->NOTE;
         }else{
@@ -78,6 +88,8 @@ class UbicazioniArticoliManager {
                                      "COD_ARTICOLO" => $codArticolo,
                                      "QUANTITA_PREVISTA" => $qnt,
                                      "SEGNALAZIONE_ESAURIMENTO" => $esaurimento,
+                                     "DISEGNO" => $disegno,
+                                     "DESCRIZIONE" => $descrizione,
                                      "NOTE" => $note]);
         mysqli_query($con, $sql);
         if ($con ->error) {

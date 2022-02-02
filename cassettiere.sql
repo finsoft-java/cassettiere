@@ -47,10 +47,10 @@ INSERT INTO `aree` (`COD_AREA`, `DESCRIZIONE`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `contenitori_padri`
+-- Struttura della tabella `contenitori_padre`
 --
 
-CREATE TABLE `contenitori_padri` (
+CREATE TABLE `contenitori_padre` (
   `COD_CONTENITORE` varchar(255) NOT NULL,
   `COD_AREA` varchar(255) NOT NULL,
   `DESCRIZIONE` varchar(255) NOT NULL,
@@ -58,10 +58,10 @@ CREATE TABLE `contenitori_padri` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dump dei dati per la tabella `contenitori_padri`
+-- Dump dei dati per la tabella `contenitori_padre`
 --
 
-INSERT INTO `contenitori_padri` (`COD_CONTENITORE`, `COD_AREA`, `DESCRIZIONE`, `ORDINE`) VALUES
+INSERT INTO `contenitori_padre` (`COD_CONTENITORE`, `COD_AREA`, `DESCRIZIONE`, `ORDINE`) VALUES
 ('A7', 'A7', 'Descrizione a7', 1),
 ('E3', 'E3', 'Descrizione e3', 2),
 ('E4', 'E4', 'Descrizione E4', 3),
@@ -198,9 +198,9 @@ ALTER TABLE `aree`
   ADD PRIMARY KEY (`COD_AREA`);
 
 --
--- Indici per le tabelle `contenitori_padri`
+-- Indici per le tabelle `contenitori_padre`
 --
-ALTER TABLE `contenitori_padri`
+ALTER TABLE `contenitori_padre`
   ADD PRIMARY KEY (`COD_CONTENITORE`),
   ADD KEY `COD_AREA` (`COD_AREA`);
 
@@ -251,10 +251,10 @@ ALTER TABLE `storico_operazioni`
 --
 
 --
--- Limiti per la tabella `contenitori_padri`
+-- Limiti per la tabella `contenitori_padre`
 --
-ALTER TABLE `contenitori_padri`
-  ADD CONSTRAINT `contenitori_padri_ibfk_1` FOREIGN KEY (`COD_AREA`) REFERENCES `aree` (`COD_AREA`);
+ALTER TABLE `contenitori_padre`
+  ADD CONSTRAINT `contenitori_padre_ibfk_1` FOREIGN KEY (`COD_AREA`) REFERENCES `aree` (`COD_AREA`);
 
 --
 -- Limiti per la tabella `storico_operazioni`
@@ -266,7 +266,7 @@ ALTER TABLE `storico_operazioni`
 -- Limiti per la tabella `ubicazioni`
 --
 ALTER TABLE `ubicazioni`
-  ADD CONSTRAINT `ubicazioni` FOREIGN KEY (`COD_CONTENITORE`) REFERENCES `contenitori_padri` (`COD_CONTENITORE`);
+  ADD CONSTRAINT `ubicazioni` FOREIGN KEY (`COD_CONTENITORE`) REFERENCES `contenitori_padre` (`COD_CONTENITORE`);
 
 --
 -- Limiti per la tabella `ubicazioni_articoli`

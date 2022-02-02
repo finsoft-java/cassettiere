@@ -30,7 +30,7 @@ export class UbicazioniComponent implements OnInit {
       title: 'Contenitore Padre',
       data: 'COD_CONTENITORE',
       type: 'combo',
-      asyncOptions: (row) => this.contPadreSvc.getAll({ top: 15, search: row?.COD_CONTENITORE })
+      reloadOptions: (row) => this.contPadreSvc.getAll({ top: 15, search: row?.COD_CONTENITORE })
         .pipe(map(listBean => listBean.data.map(x => (
           {
             label: x.COD_CONTENITORE + ' - ' + x.DESCRIZIONE,

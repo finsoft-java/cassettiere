@@ -1,4 +1,4 @@
-import { UbicazioniArticoli } from './../_models/area';
+import { UbicazioniArticoli, Articolo } from './../_models/area';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';

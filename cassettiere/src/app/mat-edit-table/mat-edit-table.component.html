@@ -33,13 +33,13 @@
               <mat-form-field style="width: 90%; display: block; margin: 0px auto; margin-top:10px;">
                 <mat-label>{{col.title}}</mat-label>
 
-                <input *ngIf="col.type !== 'select' && col.type !== 'combo'" matInput type="{{col.type}}" [(ngModel)]="row[col.data]" [disabled]="col.disabled != null && (col.disabled == 'ALWAYS' || (col.disabled == 'UPDATE' && !creating))" (change)="onChangeCell($event, col)" class="tablefield"/>
+                <input *ngIf="col.type !== 'select' && col.type !== 'combo'" matInput type="{{col.type}}" [(ngModel)]="row[col.data]" [disabled]="col.disabled != null && (col.disabled == 'ALWAYS' || (col.disabled == 'UPDATE' && !creating))" (change)="onChangeCell($event, col, row)" class="tablefield"/>
                 
-                <mat-select *ngIf="col.type === 'select'"  matInput [(ngModel)]="row[col.data]" [disabled]="col.disabled != null && (col.disabled == 'ALWAYS' || (col.disabled == 'UPDATE' && !creating))" (selectionChange)="onChangeSelect($event, col)" class="tablefield">
+                <mat-select *ngIf="col.type === 'select'"  matInput [(ngModel)]="row[col.data]" [disabled]="col.disabled != null && (col.disabled == 'ALWAYS' || (col.disabled == 'UPDATE' && !creating))" (selectionChange)="onChangeSelect($event, col, row)" class="tablefield">
                   <mat-option *ngFor="let opt of col.options" [value]="opt.value">{{ opt.label }}</mat-option>
                 </mat-select>
                 
-                <mat-select *ngIf="col.type === 'combo'" [(ngModel)]="row[col.data]" class="tablefield"  [disabled]="col.disabled != null && (col.disabled == 'ALWAYS' || (col.disabled == 'UPDATE' && !creating))" (selectionChange)="onChangeSelect($event, col)">
+                <mat-select *ngIf="col.type === 'combo'" [(ngModel)]="row[col.data]" class="tablefield"  [disabled]="col.disabled != null && (col.disabled == 'ALWAYS' || (col.disabled == 'UPDATE' && !creating))" (selectionChange)="onChangeSelect($event, col, row)">
                   <mat-option>
                     <ngx-mat-select-search (input)="onSearchChange(row, col, searchValue[col.data])" [(ngModel)]="searchValue[col.data]" placeholderLabel="" noEntriesFoundLabel="No data found"></ngx-mat-select-search>
                   </mat-option>

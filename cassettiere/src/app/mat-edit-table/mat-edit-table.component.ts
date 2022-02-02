@@ -185,19 +185,20 @@ export class MatEditTableComponent<T> implements OnInit {
     return col.render ? col.render(x, row, rowNum, colNum) : x;
   }
 
-  onChangeCell(event: Event, col: ColumnDefinition<T>): void {
-    if (col.onChangeCallback) {
-      col.onChangeCallback(event);
+  onChangeCell(event: Event, col: ColumnDefinition<T>, row:T): void {
+    const element = event.currentTarget as HTMLInputElement;
+    const value = element.value;
+    if (col.onChange) {
+      col.onChange(value, col, row);
+      console.log('**onChangeCell**',value);
     }
   }
 
-  
-  onChangeSelect(event: MatSelectChange, col: ColumnDefinition<T>): void {
-    if (col.onChangeCallback) {
-      col.onChangeCallback(<any>event);
+  onChangeSelect(event: MatSelectChange, col: ColumnDefinition<T>, row: T): void {
+    if (col.onChange) {
+      col.onChange(event.value, col , row);
+      console.log('**onChangeSelect**',event.value);
     }
-    console.log(event);
-    console.log(col);
   }
 
   onSearchChange(row: T, col: ColumnDefinition<T>, data: string): any {
@@ -208,8 +209,8 @@ export class MatEditTableComponent<T> implements OnInit {
       return;
     } */
 
-    if (col.asyncOptions) {
-      col.asyncOptions(row).subscribe(
+    if (col.reloadOptions) {
+      col.reloadOptions(row).subscribe(
         options => {
           console.log('Received options', options);
           col.options = options;
@@ -233,8 +234,8 @@ export class MatEditTableComponent<T> implements OnInit {
     Object.assign(this.oldRow, row);
     this.columns.forEach(
       col => {
-        if (col.asyncOptions) {
-          col.asyncOptions(row).subscribe(
+        if (col.reloadOptions) {
+          col.reloadOptions(row).subscribe(
             options => {
               console.log('Received options', options);
               col.options = options;

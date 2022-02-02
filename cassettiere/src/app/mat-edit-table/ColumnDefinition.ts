@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import { MatSelectChange } from '@angular/material/select';
 
 export interface LabelValue {
   label: string;
@@ -22,9 +23,9 @@ export interface ColumnDefinition<T> {
   /** select options */
   options?: LabelValue[];
   /** funzione per caricare asincronamente le options */
-  asyncOptions?: (row?: T) => Observable<LabelValue[]>;
+  reloadOptions?: (row?: T) => Observable<LabelValue[]>;
   /** Se true, il campo è abilitato solo in inserimento */
   disabled?: 'NO'|'ALWAYS'|'UPDATE';
   /** Funzione callback per l'evento onChange */
-  onChangeCallback?: (event: Event) => void;
+  onChange?: (value: string, col: ColumnDefinition<T>, row: T) => void;
 }

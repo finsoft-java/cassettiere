@@ -6,6 +6,7 @@ import { AlertService } from './../_services/alert.service';
 import { UbicazioniArticoliService } from './../_services/ubicazioni.articoli.service';
 import { Component, OnInit } from '@angular/core';
 import { UbicazioniService } from '../_services/ubicazioni.service';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-ubicazioni-articoli',
@@ -24,7 +25,7 @@ export class UbicazioniArticoliComponent implements OnInit {
       title: 'Cod. Ubicazione',
       data: 'COD_UBICAZIONE',
       type: 'combo',
-      asyncOptions: (row) => this.ubiSvc.getAll({ top: 15, search: row?.COD_UBICAZIONE == null ? "" : row?.COD_UBICAZIONE })
+      reloadOptions: (row) => this.ubiSvc.getAll({ top: 15, search: row?.COD_UBICAZIONE == null ? "" : row?.COD_UBICAZIONE })
         .pipe(map(listBean => listBean.data.map(x => (
           {
             label: x.COD_UBICAZIONE + ' - ' + x.COD_CONTENITORE,
@@ -38,7 +39,7 @@ export class UbicazioniArticoliComponent implements OnInit {
       title: 'Codice Articolo',
       data: 'COD_ARTICOLO',
       type: 'combo',
-      asyncOptions: (row) => this.articoliSvc.getAll({ top: 15, search: row?.COD_ARTICOLO == null ? "" : row?.COD_ARTICOLO })
+      reloadOptions: (row) => this.articoliSvc.getAll({ top: 15, search: row?.COD_ARTICOLO == null ? "" : row?.COD_ARTICOLO })
         .pipe(map(listBean => listBean.data.map(x => (
           {
             label: x.ID_ARTICOLO,
@@ -47,8 +48,14 @@ export class UbicazioniArticoliComponent implements OnInit {
         )))),
       disabled: 'UPDATE',//UPDATE -> CHIAVE
       width: '10%',
-      onChangeCallback: (event) => {
-        alert();
+      onChange: (value:string, col:ColumnDefinition<UbicazioniArticoli>, row: UbicazioniArticoli ) => {
+        this.articoliSvc.getArticolo(value)
+          .subscribe(response => {
+            row.DESCRIZIONE = response.value.DESCRIZIONE;
+            row.DISEGNO = response.value.DISEGNO;
+          },
+          error => {
+          });
       }
     },{
       title: 'Disegno',
@@ -73,7 +80,7 @@ export class UbicazioniArticoliComponent implements OnInit {
       title: 'Esaur.',
       data: 'SEGNALAZIONE_ESAURIMENTO',
       type: 'select',
-      options: [{ label: 'Sì', value: 'Y' }, { label: 'No', value: 'N' }],
+      options: [{ label: 'Si', value: 'Y' }, { label: 'No', value: 'N' }],
       width: '5%'
     },
     {
@@ -108,7 +115,6 @@ export class UbicazioniArticoliComponent implements OnInit {
   }
 
   setError(errore: any) {
-    console.log(errore);
     this.alert.error(errore);
   }
 
