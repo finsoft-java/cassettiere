@@ -38,6 +38,8 @@ export class User {
 
 export interface UbicazionePerArea {
   COD_AREA: string;
+  DESCRIZIONE_AREA: string;
+  COD_CONTENITORE: string;
   DESCRIZIONE: string;
   NUM_UBICAZIONI: number;
   IN_ESAURIMENTO: number;

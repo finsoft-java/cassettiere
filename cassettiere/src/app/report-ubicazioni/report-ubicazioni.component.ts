@@ -52,6 +52,7 @@ export class ReportUbicazioniComponent implements OnInit {
     this.ubicazioniService.getUbicazioniPerArea().subscribe(
       response => {
         this.ubicazioni = response.data;
+        console.log(this.ubicazioni);
       },
       error => {
         this.alertService.error(error);
@@ -60,10 +61,10 @@ export class ReportUbicazioniComponent implements OnInit {
     );
   }
 
-  setArea(codArea: string, editTableComponent: any): void {
+  setArea(contenitore: string, editTableComponent: any): void {
     this.showTable = false;
-    this.service.codArea = codArea;
-    editTableComponent.filter({ COD_AREA: codArea });
+    this.service.codArea = contenitore;
+    editTableComponent.filter({ COD_AREA: contenitore });
     this.showTable = true;
   }
 //TODO

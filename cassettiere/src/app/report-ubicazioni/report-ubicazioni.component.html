@@ -1,15 +1,13 @@
 <h2>
   Stato ubicazioni
 </h2>
-
 <div>
-  <div *ngFor="let u of ubicazioni" class="boxarea" (click)="setArea(u.COD_AREA,myTable)">
-    <div class="boxcodarea">{{ u.COD_AREA }}</div>
+  <div *ngFor="let u of ubicazioni" class="boxarea" (click)="setArea(u.CONTENITORE,myTable)">
+    <div class="boxcodarea">{{ u.COD_AREA }} - {{u.COD_CONTENITORE}}</div>
     <div [style.width]="'' + (100-u.IN_ESAURIMENTO/u.NUM_UBICAZIONI*100) + '%'" class="boxverde"></div>
     <div [style.width]="'' + (u.IN_ESAURIMENTO/u.NUM_UBICAZIONI*100) + '%'" class="boxrosso"></div>
   </div>
 </div>
-
 <app-mat-edit-table [style.visibility]="showTable ? 'visible' : 'hidden'"
   [editable]="false"
   [columns]="columns"
