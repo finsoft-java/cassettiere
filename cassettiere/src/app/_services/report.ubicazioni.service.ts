@@ -1,23 +1,25 @@
+import { UbicazioniArticoli } from './../_models/area';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Ubicazione, ListBean, UbicazionePerArea } from '../_models';
+import { ListBean, UbicazionePerArea } from '../_models';
 import { MockService } from '../mat-edit-table';
 
 @Injectable({ providedIn: 'root' })
-export class ReportUbicazioniService extends MockService<Ubicazione> {
+export class ReportUbicazioniService extends MockService<UbicazioniArticoli> {
   constructor(private http: HttpClient) { super(); }
 
-  codArea?: string;
+  codContenitore?: string;
 
-  getAll(filter: any): Observable<ListBean<Ubicazione>> {
+  getAll(filter: any): Observable<ListBean<UbicazioniArticoli>> {
     if (!filter) {
       filter = {};
     }
-    filter.COD_AREA = this.codArea;
+    console.log(filter);
+    filter.COD_CONTENITORE = this.codContenitore;
     filter.orderby = 'SEGNALAZIONE_ESAURIMENTO DESC,COD_UBICAZIONE';
-    return this.http.get<ListBean<any>>(environment.wsUrl + 'Ubicazioni.php', { params: filter });
+    return this.http.get<ListBean<any>>(environment.wsUrl + 'UbicazioniArticoli.php', { params: filter });
   }
 
   getUbicazioniPerArea(): Observable<ListBean<UbicazionePerArea>> {

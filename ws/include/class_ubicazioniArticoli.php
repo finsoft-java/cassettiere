@@ -8,7 +8,7 @@ class UbicazioniArticoliManager {
         global $panthera;
         $sql  = "";
         $sql0 = "SELECT COUNT(*) AS cnt FROM ubicazioni_articoli ";
-        $sql1 = "SELECT COD_UBICAZIONE, COD_ARTICOLO, QUANTITA_PREVISTA, SEGNALAZIONE_ESAURIMENTO, DISEGNO, DESCRIZIONE, NOTE as COD_CONTENITORE FROM ubicazioni_articoli ";
+        $sql1 = "SELECT COD_UBICAZIONE, COD_CONTENITORE, COD_ARTICOLO, QUANTITA_PREVISTA, SEGNALAZIONE_ESAURIMENTO, DISEGNO, DESCRIZIONE, NOTE as COD_CONTENITORE FROM ubicazioni_articoli ";
         if ($search) {
             $search = strtoupper($search);
             $sql .= "WHERE (upper(COD_UBICAZIONE) like '%$search%' || upper(COD_ARTICOLO) like '%$search%' || upper(DISEGNO) like '%$search%' || upper(DESCRIZIONE) like '%$search%')";
@@ -34,9 +34,21 @@ class UbicazioniArticoliManager {
         return [$ubicazioni_articoli, $count];
     }
     
-    function get_ubicazioneArticoli($cod_ubicazione,$codArticolo) {
+    function getUbicazioneArticoliByContenitorePadre($cod_contenitore) {
         global $panthera;
-        $sql = "SELECT * FROM ubicazioni_articoli p WHERE p.COD_UBICAZIONE = '$cod_ubicazione' AND p.COD_ARTICOLO = '$codArticolo'";
+        $sql = "SELECT * FROM ubicazioni_articoli ua
+                JOIN ubicazioni u ON u.COD_UBICAZIONE = ua.COD_UBICAZIONE
+                WHERE COD_CONTENITORE = '$cod_contenitore'";
+        $ubi = select_list($sql);
+        return $ubi;
+    }
+
+    
+    function getUbicazioneArticoliById($cod_ubicazione, $cod_articolo) {
+        global $panthera;
+        $sql = "SELECT * FROM ubicazioni_articoli 
+                WHERE COD_UBICAZIONE = '$cod_ubicazione'
+                AND COD_ARTICOLO = '$cod_articolo'";
         $ubi = select_single($sql);
         return $ubi;
     }
@@ -95,7 +107,7 @@ class UbicazioniArticoliManager {
         if ($con ->error) {
             print_error(500, $con ->error);
         }
-        return $this->get_ubicazioneArticoli($json_data->COD_UBICAZIONE,$json_data->COD_ARTICOLO);
+        return $this->getUbicazioneArticoliById($json_data->COD_UBICAZIONE,$json_data->COD_ARTICOLO);
     }
     
     function aggiorna($progetto, $json_data) {

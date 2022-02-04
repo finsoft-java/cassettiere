@@ -20,13 +20,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 // require_logged_user_JWT();
 
 $codUbicazione = isset($_GET['COD_UBICAZIONE']) ? $con->escape_string($_GET['COD_UBICAZIONE']) : null;
+$codContenitore = isset($_GET['COD_CONTENITORE']) ? $con->escape_string($_GET['COD_CONTENITORE']) : null;
 $codArticolo = isset($_GET['COD_ARTICOLO']) ? $con->escape_string($_GET['COD_ARTICOLO']) : null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    if ($codUbicazione && $codArticolo) {
-        $object = $ubicazioniArticoliManager->get_ubicazioneArticoli($codUbicazione,$codArticolo);
+    if ($codContenitore) {
+        $object = $ubicazioniArticoliManager->getUbicazioneArticoliByContenitorePadre($codContenitore);
         if (!$object) {
-            print_error(404, 'UbicazioneArticolo inesistente: ' . $codUbicazione. ' ' .$codArticolo);
+            print_error(404, 'Contenitore Padre inesistente: ' . $codContenitore);
+        }
+        header('Content-Type: application/json');
+        echo json_encode(['data' => $object, 'count' => count($object)]);
+    } else if($codUbicazione && $codArticolo){
+        $object = $ubicazioniArticoliManager->getUbicazioneArticoliById($codUbicazione);
+        if (!$object) {
+            print_error(404, 'UbicazioneArticolo inesistente: ' . $codUbicazione);
         }
         header('Content-Type: application/json');
         echo json_encode(['value' => $object]);
@@ -59,13 +67,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (!$json_data) {
         print_error(400, "Missing JSON data");
     }
-    $ubicazioniArticoli = $ubicazioniArticoliManager->get_ubicazioneArticoli($json_data->COD_UBICAZIONE, $json_data->COD_ARTICOLO);
+    $ubicazioniArticoli = $ubicazioniArticoliManager->getUbicazioneArticoliById($json_data->COD_UBICAZIONE, $json_data->COD_ARTICOLO);
     if (!$ubicazioniArticoli) {
         print_error(404, 'Not found');
     }
     $ubicazioniArticoliManager->aggiorna($ubicazioniArticoli, $json_data);
     
-    $ubicazioniArticoli = $ubicazioniArticoliManager->get_ubicazioneArticoli($json_data->COD_UBICAZIONE, $json_data->COD_ARTICOLO);
+    $ubicazioniArticoli = $ubicazioniArticoliManager->getUbicazioneArticoliById($json_data->COD_UBICAZIONE, $json_data->COD_ARTICOLO);
     header('Content-Type: application/json');
     echo json_encode(['value' => $ubicazioniArticoli]);
     
@@ -77,8 +85,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (!$codArticolo) {
         print_error(400, 'Missing cod_ubicazione');
     }    
-    $area_su_db = $ubicazioniArticoliManager->get_ubicazioneArticoli($codUbicazione, $codArticolo);
-    if (!$area_su_db) {
+    $obj = $ubicazioniArticoliManager->getUbicazioneArticoliById($codUbicazione, $codArticolo);
+    if (!$obj) {
         print_error(404, 'Not found');
     }
     

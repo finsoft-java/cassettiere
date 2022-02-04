@@ -1,3 +1,4 @@
+import { UbicazioniArticoli } from './../_models/area';
 import { Component, OnInit } from '@angular/core';
 import { ColumnDefinition } from '../mat-edit-table';
 import { Ubicazione, UbicazionePerArea } from '../_models';
@@ -10,14 +11,14 @@ import { ReportUbicazioniService } from '../_services/report.ubicazioni.service'
   styleUrls: ['./report-ubicazioni.component.css']
 })
 export class ReportUbicazioniComponent implements OnInit {
-  columns: ColumnDefinition<Ubicazione>[] = [
+  columns: ColumnDefinition<UbicazioniArticoli>[] = [
     {
       title: 'Ubicazione',
       data: 'COD_UBICAZIONE'
     },
     {
       title: 'Articolo',
-      data: 'COD_ARTICOLO_CONTENUTO'
+      data: 'COD_ARTICOLO'
     },
     {
       title: 'Descrizione',
@@ -25,7 +26,7 @@ export class ReportUbicazioniComponent implements OnInit {
     },
     {
       title: 'Cod. disegno',
-      data: 'COD_DISEGNO'
+      data: 'DISEGNO'
     },
     {
       title: 'Quantità prevista',
@@ -63,8 +64,8 @@ export class ReportUbicazioniComponent implements OnInit {
 
   setArea(contenitore: string, editTableComponent: any): void {
     this.showTable = false;
-    this.service.codArea = contenitore;
-    editTableComponent.filter({ COD_AREA: contenitore });
+    this.service.codContenitore = contenitore;
+    editTableComponent.filter({ COD_CONTENITORE: contenitore });
     this.showTable = true;
   }
 //TODO
