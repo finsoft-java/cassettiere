@@ -43,7 +43,13 @@ class UbicazioniArticoliManager {
         $ubi = select_list($sql);
         return $ubi;
     }
-
+    function getUbicazioneArticoliByUbi($cod_ubicazione) {
+        global $panthera;
+        $sql = "SELECT * FROM ubicazioni_articoli 
+                WHERE COD_UBICAZIONE = '$cod_ubicazione'";
+        $ubi = select_single($sql);
+        return $ubi;
+    }
     
     function getUbicazioneArticoliById($cod_ubicazione, $cod_articolo) {
         global $panthera;

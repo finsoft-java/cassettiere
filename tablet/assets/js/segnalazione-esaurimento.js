@@ -66,7 +66,7 @@ function chiama_ws_ubicazione() {
         },
         success: function(data, status) {
             console.log(data);
-            $("#dettagli").html(`Articolo <b>${data.value.COD_ARTICOLO_CONTENUTO}</b> ${data.value.DESCR_ARTICOLO}<br/>Quantità prevista <b>${data.value.QUANTITA_PREVISTA}</b>`);
+            $("#dettagli").html(`Articolo <b>${data.value.COD_ARTICOLO}</b> ${data.value.DESCRIZIONE}<br/>Quantità prevista <b>${data.value.QUANTITA_PREVISTA}</b>`);
             if (data.value.SEGNALAZIONE_ESAURIMENTO == 'N') {
                 scheduleAnnulla(30);
                 if (sessionStorage.getItem('user') != null) {
