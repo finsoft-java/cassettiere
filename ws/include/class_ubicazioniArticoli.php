@@ -5,7 +5,6 @@ $ubicazioniArticoliManager = new UbicazioniArticoliManager();
 class UbicazioniArticoliManager {
     
     function getUbicazioniArticoli($search=null, $orderby=null, $skip=null, $top=null) {
-        global $panthera;
         $sql  = "";
         $sql0 = "SELECT COUNT(*) AS cnt FROM ubicazioni_articoli ";
         $sql1 = "SELECT COD_UBICAZIONE, COD_CONTENITORE, COD_ARTICOLO, QUANTITA_PREVISTA, SEGNALAZIONE_ESAURIMENTO, DISEGNO, DESCRIZIONE, NOTE as COD_CONTENITORE FROM ubicazioni_articoli ";
@@ -22,7 +21,7 @@ class UbicazioniArticoliManager {
         //echo $sql0 . $sql;
         $count = select_single_value($sql0 . $sql);
 
-        if ($top != null){
+        if ($top != null) {
             if ($skip != null) {
                 $sql .= " LIMIT $skip,$top";
             } else {
@@ -35,16 +34,15 @@ class UbicazioniArticoliManager {
     }
     
     function getUbicazioneArticoliByContenitorePadre($cod_contenitore) {
-        global $panthera;
-        $sql = "SELECT u.*,ua.COD_ARTICOLO,ua.QUANTITA_PREVISTA,ua.SEGNALAZIONE_ESAURIMENTO,ua.DISEGNO,ua.DESCRIZIONE,ua.NOTE FROM ubicazioni u
-        LEFT JOIN ubicazioni_articoli ua ON u.COD_UBICAZIONE = ua.COD_UBICAZIONE
-        WHERE COD_CONTENITORE = '$cod_contenitore'";
-                //echo $sql;
+        $sql = "SELECT u.*,ua.COD_ARTICOLO,ua.QUANTITA_PREVISTA,ua.SEGNALAZIONE_ESAURIMENTO,ua.DISEGNO,ua.DESCRIZIONE,ua.NOTE
+                FROM ubicazioni u
+                LEFT JOIN ubicazioni_articoli ua ON u.COD_UBICAZIONE = ua.COD_UBICAZIONE
+                WHERE COD_CONTENITORE = '$cod_contenitore'";
         $ubi = select_list($sql);
         return $ubi;
     }
+
     function getUbicazioneArticoliByUbi($cod_ubicazione) {
-        global $panthera;
         $sql = "SELECT * FROM ubicazioni_articoli 
                 WHERE COD_UBICAZIONE = '$cod_ubicazione'";
         $ubi = select_single($sql);
@@ -52,16 +50,22 @@ class UbicazioniArticoliManager {
     }
     
     function getUbicazioneArticoliById($cod_ubicazione, $cod_articolo) {
-        global $panthera;
         $sql = "SELECT * FROM ubicazioni_articoli 
                 WHERE COD_UBICAZIONE = '$cod_ubicazione'
                 AND COD_ARTICOLO = '$cod_articolo'";
         $ubi = select_single($sql);
         return $ubi;
     }
+    
+    function getUbicazioniAlternative($codUbicazione, $codArticolo) {
+        $sql = "SELECT *
+                FROM ubicazioni_articoli
+                WHERE COD_ARTICOLO = '$codArticolo' AND COD_UBICAZIONE <> '$codUbicazione'";
+        $ubi = select_list($sql);
+        return $ubi;
+    }
 
     function crea($json_data) {
-        global $con, $logged_user;
         
         if(isset($json_data->COD_UBICAZIONE)) {
             $codUbi = $json_data->COD_UBICAZIONE;
@@ -110,16 +114,11 @@ class UbicazioniArticoliManager {
                                      "DISEGNO" => $disegno,
                                      "DESCRIZIONE" => $descrizione,
                                      "NOTE" => $note]);
-        mysqli_query($con, $sql);
-        if ($con ->error) {
-            print_error(500, $con ->error);
-        }
+        execute_update($sql);
         return $this->getUbicazioneArticoliById($json_data->COD_UBICAZIONE,$json_data->COD_ARTICOLO);
     }
     
     function aggiorna($progetto, $json_data) {
-        global $con, $STATO_PROGETTO;        
-
         
         if(isset($json_data->COD_UBICAZIONE)) {
             $codUbi = $json_data->COD_UBICAZIONE;
@@ -152,19 +151,12 @@ class UbicazioniArticoliManager {
                                               "NOTE" => $note], 
                                         ["COD_UBICAZIONE" => $json_data->COD_UBICAZIONE,
                                         "COD_ARTICOLO" => $json_data->COD_ARTICOLO]);
-        mysqli_query($con, $sql);
-        if ($con ->error) {
-            print_error(500, $con ->error);
-        }
+        execute_update($sql);
     }
     
-    function elimina($cod_ubicazione,$codArticolo) {
-        global $con;
-        $sql = "DELETE FROM ubicazioni_articoli WHERE COD_UBICAZIONE = '$cod_ubicazione' AND COD_ARTICOLO = '$codArticolo'";  //on delete cascade! (FIXME funziona anche con i questionari?!?)
-        mysqli_query($con, $sql);
-        if ($con ->error) {
-            print_error(500, $con ->error);
-        }
+    function elimina($cod_ubicazione, $codArticolo) {
+        $sql = "DELETE FROM ubicazioni_articoli WHERE COD_UBICAZIONE = '$cod_ubicazione' AND COD_ARTICOLO = '$codArticolo'";
+        execute_update($sql);
     }
 }
 ?>
