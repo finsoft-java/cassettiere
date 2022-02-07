@@ -32,4 +32,9 @@ define('DB_PTH_HOST', 'tcp:myserver.database.windows.net,1433');
 define('DB_PTH_USER', 'my_user');
 define('DB_PTH_PASS', 'my_pwd');
 define('DB_PTH_NAME', 'PANTH01');
+
+/* PARAMETRI PER LETTURA BARCODE CSV */
+define('POS_UBICAZIONE', '2');
+define('POS_ARTICOLO', '0');
+
 ?>
