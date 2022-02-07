@@ -22,7 +22,7 @@ export class ReportUbicazioniComponent implements OnInit {
     },
     {
       title: 'Descrizione',
-      data: 'DESCR_ARTICOLO'
+      data: 'DESCRIZIONE'
     },
     {
       title: 'Cod. disegno',
@@ -37,7 +37,7 @@ export class ReportUbicazioniComponent implements OnInit {
       title: 'In esaurimento',
       data: 'SEGNALAZIONE_ESAURIMENTO',
       width: '2cm',
-      render: (data: any) => (data === 'N' ? 'No' : 'Sì')
+      render: (data: any) => (data == 'N' ? 'No' : 'Sì')
     }
   ];
   service: ReportUbicazioniService;

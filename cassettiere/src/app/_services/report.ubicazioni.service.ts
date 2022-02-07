@@ -7,7 +7,7 @@ import { ListBean, UbicazionePerArea } from '../_models';
 import { MockService } from '../mat-edit-table';
 
 @Injectable({ providedIn: 'root' })
-export class ReportUbicazioniService extends MockService<UbicazioniArticoli> {
+export class ReportUbicazioniService extends MockService<Object> {
   constructor(private http: HttpClient) { super(); }
 
   codContenitore?: string;
