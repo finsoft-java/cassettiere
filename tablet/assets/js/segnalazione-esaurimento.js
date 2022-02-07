@@ -59,14 +59,14 @@ function chiama_ws_ubicazione() {
     hide_errors();
     $("#qrcode").attr("disabled", true);
     $.get({
-        url: BASE_HREF + "/ws/Ubicazioni.php?COD_UBICAZIONE=" + codUbicazione,
+        url: BASE_HREF + "/ws/UbicazioniArticoli.php?COD_UBICAZIONE=" + codUbicazione,
         dataType: 'json',
         headers: {
             'Authorization': 'Bearer ' + sessionStorage.getItem('token')
         },
         success: function(data, status) {
             console.log(data);
-            $("#dettagli").html(`Articolo <b>${data.value.COD_ARTICOLO_CONTENUTO}</b> ${data.value.DESCR_ARTICOLO}<br/>Quantità prevista <b>${data.value.QUANTITA_PREVISTA}</b>`);
+            $("#dettagli").html(`Articolo <b>${data.value.COD_ARTICOLO}</b> ${data.value.DESCRIZIONE}<br/>Quantità prevista <b>${data.value.QUANTITA_PREVISTA}</b>`);
             if (data.value.SEGNALAZIONE_ESAURIMENTO == 'N') {
                 scheduleAnnulla(30);
                 if (sessionStorage.getItem('user') != null) {

@@ -32,7 +32,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         header('Content-Type: application/json');
         echo json_encode(['data' => $object, 'count' => count($object)]);
     } else if($codUbicazione && $codArticolo){
-        $object = $ubicazioniArticoliManager->getUbicazioneArticoliById($codUbicazione);
+        $object = $ubicazioniArticoliManager->getUbicazioneArticoliById($codUbicazione, $codArticolo);
+        if (!$object) {
+            print_error(404, 'UbicazioneArticolo inesistente: ' . $codUbicazione);
+        }
+        header('Content-Type: application/json');
+        echo json_encode(['value' => $object]);
+    } else if($codUbicazione && !$codArticolo){
+        $object = $ubicazioniArticoliManager->getUbicazioneArticoliByUbi($codUbicazione);
         if (!$object) {
             print_error(404, 'UbicazioneArticolo inesistente: ' . $codUbicazione);
         }

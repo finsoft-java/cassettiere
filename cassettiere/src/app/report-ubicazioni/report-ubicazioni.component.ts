@@ -37,7 +37,7 @@ export class ReportUbicazioniComponent implements OnInit {
       title: 'In esaurimento',
       data: 'SEGNALAZIONE_ESAURIMENTO',
       width: '2cm',
-      render: (data: any) => (data == 'N' ? 'No' : 'Sì')
+      render: (data: any) => ((data === 'N' || data === null) ? 'No' : 'Sì')
     }
   ];
   service: ReportUbicazioniService;
