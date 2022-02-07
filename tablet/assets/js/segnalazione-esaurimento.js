@@ -59,7 +59,7 @@ function chiama_ws_ubicazione() {
     hide_errors();
     $("#qrcode").attr("disabled", true);
     $.get({
-        url: BASE_HREF + "/ws/Ubicazioni.php?COD_UBICAZIONE=" + codUbicazione,
+        url: BASE_HREF + "/ws/UbicazioniArticoli.php?COD_UBICAZIONE=" + codUbicazione,
         dataType: 'json',
         headers: {
             'Authorization': 'Bearer ' + sessionStorage.getItem('token')

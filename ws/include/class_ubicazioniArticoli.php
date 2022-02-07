@@ -36,9 +36,9 @@ class UbicazioniArticoliManager {
     
     function getUbicazioneArticoliByContenitorePadre($cod_contenitore) {
         global $panthera;
-        $sql = "SELECT * FROM ubicazioni_articoli ua
-                LEFT JOIN ubicazioni u ON u.COD_UBICAZIONE = ua.COD_UBICAZIONE
-                WHERE COD_CONTENITORE = '$cod_contenitore'";
+        $sql = "SELECT u.*,ua.COD_ARTICOLO,ua.QUANTITA_PREVISTA,ua.SEGNALAZIONE_ESAURIMENTO,ua.DISEGNO,ua.DESCRIZIONE,ua.NOTE FROM ubicazioni u
+        LEFT JOIN ubicazioni_articoli ua ON u.COD_UBICAZIONE = ua.COD_UBICAZIONE
+        WHERE COD_CONTENITORE = '$cod_contenitore'";
                 //echo $sql;
         $ubi = select_list($sql);
         return $ubi;
