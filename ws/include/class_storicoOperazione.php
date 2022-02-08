@@ -90,26 +90,28 @@ class storicoOperazioniManager {
         execute_update($query);
     }
 
-    function segnala_rabbocco_singolo($codUbicazione, $codUtente) {
-        $query = "SELECT count(*) FROM ubicazioni WHERE cod_ubicazione='$codUbicazione'";
+    function segnala_rabbocco_singolo($codUbicazione, $codArticolo, $codUtente) {
+        echo $codUbicazione.' '.$codArticolo;
+        $query = "SELECT count(*) FROM ubicazioni_articoli WHERE cod_ubicazione='$codUbicazione' and cod_articolo = '$codArticolo'";
         $num = select_single_value($query);
         if ($num == 0) {
             print_error(404, "Ubicazione inesistente: $codUbicazione");
         }
 
-        $query = "UPDATE ubicazioni SET segnalazione_esaurimento='N' WHERE cod_ubicazione='$codUbicazione'";
+        $query = "UPDATE ubicazioni_articoli SET segnalazione_esaurimento='N' WHERE cod_ubicazione='$codUbicazione' and cod_articolo = '$codArticolo'";
         execute_update($query);
 
         $query = "INSERT INTO `storico_operazioni` (`COD_UTENTE`, `COD_OPERAZIONE`, `COD_ARTICOLO`, `COD_UBICAZIONE`, `COD_AREA`)
-            SELECT '$codUtente', 'RABBOCCO', COD_ARTICOLO_CONTENUTO, '$codUbicazione', COD_AREA
-            FROM ubicazioni
-            WHERE COD_UBICAZIONE='$codUbicazione'";
+            SELECT '$codUtente', 'RABBOCCO', '$codArticolo', '$codUbicazione', COD_AREA
+            FROM ubicazioni u
+            JOIN contenitori_padre cp on cp.COD_CONTENITORE = u.COD_CONTENITORE
+            WHERE u.COD_UBICAZIONE='$codUbicazione'";
         execute_update($query);
     }
 
     function segnala_rabbocco($lista_codici, $codUtente) {
-        foreach ($lista_codici as $codUbicazione) {
-            $this->segnala_rabbocco_singolo($codUbicazione, $codUtente);
+        foreach ($lista_codici as $ubicazione) {
+            $this->segnala_rabbocco_singolo($ubicazione->COD_UBICAZIONE,$ubicazione->COD_ARTICOLO, $codUtente);
         }
     }
 }

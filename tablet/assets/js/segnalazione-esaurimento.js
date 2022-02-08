@@ -144,6 +144,20 @@ function chiama_ws_ubicazione() {
                     $("#qrcode").focus();
                 }
             });
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(xhr);
+            if (xhr.responseJSON && xhr.responseJSON.error && xhr.responseJSON.error.value) {
+                show_error(xhr.responseJSON.error.value);
+            } else if (xhr.responseText) {
+                show_error(xhr.responseText);
+            } else {
+                show_error("Network error");
+            }
+            erroreBeep();
+            $("#qrcode").val("");
+            $("#qrcode").removeAttr("disabled");
+            $("#qrcode").focus();
         }
     });
     hide_errors();
