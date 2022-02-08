@@ -11,14 +11,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 $logged_user = require_logged_user_JWT();
+$codUbicazione = isset($_POST['COD_UBICAZIONE']) ? $con->escape_string($_POST['COD_UBICAZIONE']) : null;
+$codArticolo = isset($_POST['COD_ARTICOLO']) ? $con->escape_string($_POST['COD_ARTICOLO']) : null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $postdata = file_get_contents("php://input");
-    $request = json_decode($postdata);
-    if (!isset($request->COD_UBICAZIONE)) {
-       print_error(400, 'Missing COD_UBICAZIONE');
+    if (!$codUbicazione || !$codArticolo) {
+       print_error(400, 'Missing COD_UBICAZIONE or COD_ARTICOLO');
     }
-    $storicoOperazioneManager->segnala_esaurimento($request->COD_UBICAZIONE, $logged_user->nome_utente);
+    $storicoOperazioneManager->segnala_esaurimento($codUbicazione, $codArticolo, $logged_user->nome_utente);
 } else {
     //==========================================================
     print_error(400, "Unsupported method in request: " . $_SERVER['REQUEST_METHOD']);

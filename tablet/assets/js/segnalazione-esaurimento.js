@@ -55,6 +55,8 @@ $(document).on("click", "#login", function() {
 });
 
 var barCode = null;
+var codArticolo;
+var codUbicazione;
 
 function chiama_ws_ubicazione() {
     /*
@@ -69,6 +71,8 @@ function chiama_ws_ubicazione() {
             'Authorization': 'Bearer ' + sessionStorage.getItem('token')
         },
         success: function(data, status) {
+            codUbicazione = data.value.COD_UBICAZIONE;
+            codArticolo = data.value.COD_ARTICOLO;
             $.get({
                 url: BASE_HREF + "/ws/UbicazioniArticoli.php?COD_UBICAZIONE=" + data.value.COD_UBICAZIONE + '&COD_ARTICOLO='+ data.value.COD_ARTICOLO,
                 dataType: 'json',
@@ -91,10 +95,9 @@ function chiama_ws_ubicazione() {
                             $("#login").css("display", "");              
                         }
                     } else {
-
                         //chiamo ubicazioniAlternative e faccio vedere solo il codice ubicazione
                         $("#messaggio").html("Esiste già una segnalazione di esaurimento per questa ubicazione.");
-                        $("#annullaEsaurimento").css("display","");
+                        $("#annullaEsaurimento").css("display","block");
                         $("#articoloEsaurito").css("display", "none");
                         scheduleAnnulla(15);
                     }
@@ -115,16 +118,14 @@ function chiama_ws_ubicazione() {
                             console.log('data - UbicazioniAlternative');
                             console.log(data);
                             let ubicazioniAlternative = '';
-                            for(let i = 0; i < data.count; i++ ){
+                            for(let i = 0; i < data.count; i++) {
                                 ubicazioniAlternative += data.data[i].COD_UBICAZIONE;
-                                if(i > 0 && i < data.count){
+                                if(i > 0 && i < data.count) {
                                     ubicazioniAlternative += ', ';
                                 }
                             }
                             console.log(ubicazioniAlternative);
-                            $("#dettagli").append("<br/>Ubicazioni alternative : "+ubicazioniAlternative);
-                            
-
+                            $("#dettagli").append("<br/>Ubicazioni alternative: " + ubicazioniAlternative);
                         }
                     });                
                 },
@@ -208,9 +209,10 @@ function chiama_ws_esaurimento() {
         headers: {
             'Authorization': 'Bearer ' + sessionStorage.getItem('token')
         },
-        data: JSON.stringify({
-            COD_UBICAZIONE: barCode
-        }),
+        data:{
+            COD_UBICAZIONE: codUbicazione,
+            COD_ARTICOLO: codArticolo
+        },
         success: function(data, status) {
             console.log(data);
             $("#messaggio").html("Segnalazione effettuata.");

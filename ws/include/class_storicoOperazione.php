@@ -74,23 +74,19 @@ class storicoOperazioniManager {
         return [$ubicazioni, $count];
     }
 
-    function segnala_esaurimento($codUbicazione, $codUtente) {
-        $query = "SELECT count(*) FROM ubicazioni WHERE cod_ubicazione='$codUbicazione'";
-        $num = select_single_value($query);
-        if ($num == 0) {
-            print_error(404, "Ubicazione inesistente: $codUbicazione");
-        }
-
-        $query = "UPDATE ubicazioni SET segnalazione_esaurimento='Y' WHERE cod_ubicazione='$codUbicazione'";
+    function segnala_esaurimento($codUbicazione, $codArticolo, $codUtente) {
+        
+        $query = "UPDATE ubicazioni_articoli SET segnalazione_esaurimento='Y' WHERE cod_ubicazione='$codUbicazione' AND cod_articolo = '$codArticolo'";
         $num_updated = execute_update($query);
         if ($num_updated == 0) {
-            print_error(404, "Ubicazione inesistente: $codUbicazione");
+            print_error(404, "Ubicazione Articolo inesistente: $codUbicazione - $codArticolo");
         }
 
         $query = "INSERT INTO `storico_operazioni` (`COD_UTENTE`, `COD_OPERAZIONE`, `COD_ARTICOLO`, `COD_UBICAZIONE`, `COD_AREA`)
-            SELECT '$codUtente', 'ESAURIMENTO', COD_ARTICOLO_CONTENUTO, '$codUbicazione', COD_AREA
-            FROM ubicazioni
-            WHERE COD_UBICAZIONE='$codUbicazione'";
+            SELECT '$codUtente', 'ESAURIMENTO', '$codArticolo', '$codUbicazione', COD_AREA
+            FROM ubicazioni u
+            JOIN contenitori_padre cp on cp.COD_CONTENITORE = u.COD_CONTENITORE
+            WHERE u.COD_UBICAZIONE='$codUbicazione'";
         execute_update($query);
     }
 
