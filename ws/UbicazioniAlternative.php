@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
     header('Content-Type: application/json');
     echo json_encode(['data' => $list, 'count' => count($list)]);
-    }*/
+    
 } else {
     //==========================================================
     print_error(400, "Unsupported method in request: " . $_SERVER['REQUEST_METHOD']);

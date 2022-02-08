@@ -1,6 +1,7 @@
 <?php
 
 include("include/all.php");
+$con = connect();
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     //do nothing, HTTP 200
