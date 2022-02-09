@@ -91,7 +91,6 @@ class storicoOperazioniManager {
     }
 
     function segnala_rabbocco_singolo($codUbicazione, $codArticolo, $codUtente) {
-        echo $codUbicazione.' '.$codArticolo;
         $query = "SELECT count(*) FROM ubicazioni_articoli WHERE cod_ubicazione='$codUbicazione' and cod_articolo = '$codArticolo'";
         $num = select_single_value($query);
         if ($num == 0) {

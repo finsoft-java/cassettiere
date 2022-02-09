@@ -7,7 +7,7 @@ class UbicazioniArticoliManager {
     function getUbicazioniArticoli($search=null, $orderby=null, $skip=null, $top=null) {
         $sql  = "";
         $sql0 = "SELECT COUNT(*) AS cnt FROM ubicazioni_articoli ";
-        $sql1 = "SELECT COD_UBICAZIONE, COD_CONTENITORE, COD_ARTICOLO, QUANTITA_PREVISTA, SEGNALAZIONE_ESAURIMENTO, DISEGNO, DESCRIZIONE, NOTE as COD_CONTENITORE FROM ubicazioni_articoli ";
+        $sql1 = "SELECT COD_UBICAZIONE, COD_ARTICOLO, QUANTITA_PREVISTA, SEGNALAZIONE_ESAURIMENTO, DISEGNO, DESCRIZIONE, NOTE FROM ubicazioni_articoli ";
         if ($search) {
             $search = strtoupper($search);
             $sql .= "WHERE (upper(COD_UBICAZIONE) like '%$search%' || upper(COD_ARTICOLO) like '%$search%' || upper(DISEGNO) like '%$search%' || upper(DESCRIZIONE) like '%$search%')";
