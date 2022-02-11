@@ -7,7 +7,7 @@ import { ListBean, UbicazionePerArea } from '../_models';
 import { MockService } from '../mat-edit-table';
 
 @Injectable({ providedIn: 'root' })
-export class ReportUbicazioniService extends MockService<Object> {
+export class ReportUbicazioniService extends MockService<UbicazioniArticoli> {
   constructor(private http: HttpClient) { super(); }
 
   codContenitore?: string;
@@ -16,13 +16,12 @@ export class ReportUbicazioniService extends MockService<Object> {
     if (!filter) {
       filter = {};
     }
-    console.log(filter);
     filter.COD_CONTENITORE = this.codContenitore;
     filter.orderby = 'SEGNALAZIONE_ESAURIMENTO DESC,COD_UBICAZIONE';
-    return this.http.get<ListBean<any>>(environment.wsUrl + 'UbicazioniArticoli.php', { params: filter });
+    return this.http.get<ListBean<UbicazioniArticoli>>(environment.wsUrl + 'UbicazioniArticoli.php', { params: filter });
   }
 
   getUbicazioniPerArea(): Observable<ListBean<UbicazionePerArea>> {
-    return this.http.get<ListBean<any>>(environment.wsUrl + 'UbicazioniPerArea.php');
+    return this.http.get<ListBean<UbicazionePerArea>>(environment.wsUrl + 'UbicazioniPerArea.php');
   }
 }

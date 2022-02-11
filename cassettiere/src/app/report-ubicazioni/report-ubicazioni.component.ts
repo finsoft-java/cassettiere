@@ -69,7 +69,7 @@ export class ReportUbicazioniComponent implements OnInit {
     this.showTable = true;
   }
 //TODO
-  formattazioneCondizionale(row: Ubicazione): any {
+  formattazioneCondizionale(row: UbicazioniArticoli): any {
     //return { color: (row.SEGNALAZIONE_ESAURIMENTO === 'N') ? null : 'red' };
   }
 }
