@@ -3,8 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpCrudService } from './HttpCrudService';
-import { ListBean, ValueBean } from '../_models';
-import { ContenitorePadre } from '../_models/area';
+import { ListBean, ValueBean, ContenitorePadre } from '../_models';
 
 @Injectable({ providedIn: 'root' })
 export class ContenitorePadreService implements HttpCrudService<ContenitorePadre> {

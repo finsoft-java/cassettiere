@@ -13,12 +13,12 @@ import { ReportSegnalazioniService } from '../_services/report.segnalazioni.serv
 export class ReportSegnalazioniComponent implements OnInit {
   filter: any = {};
   myControl = new FormControl();
-  //TODO
   columns: ColumnDefinition<Ubicazione>[] = [
     {
       title: 'Area',
       data: 'COD_AREA',
-      //render: (data, row) => data + ' - ' + row?.DESCRIZIONE_AREA,
+      // commentato perchè troppo lungo
+      // render: (data, row) => data + ' - ' + row?.DESCRIZIONE_AREA,
       width: '3cm'
     },
     {

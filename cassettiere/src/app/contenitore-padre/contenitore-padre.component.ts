@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ContenitorePadre } from '../_models/area';
+import { ContenitorePadre } from '../_models';
 import { ContenitorePadreService } from '../_services/contenitore.padre.service';
 import { AreeService } from '../_services/aree.service';
 import { ColumnDefinition, LabelValue } from '../mat-edit-table/ColumnDefinition';

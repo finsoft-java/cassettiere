@@ -3,7 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ColumnDefinition } from '../mat-edit-table/ColumnDefinition';
-import { StoricoOperazione } from '../_models/area';
+import { StoricoOperazione } from '../_models';
 import { StoricoOperazioniService } from '../_services/storico-operazioni.service';
 import { AlertService } from '../_services/alert.service';
 

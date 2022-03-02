@@ -1,7 +1,6 @@
-import { UbicazioniArticoli } from './../_models/area';
 import { Component, OnInit } from '@angular/core';
 import { ColumnDefinition } from '../mat-edit-table';
-import { Ubicazione, UbicazionePerArea } from '../_models';
+import { UbicazionePerArea, UbicazioniArticoli } from '../_models';
 import { AlertService } from '../_services/alert.service';
 import { ReportUbicazioniService } from '../_services/report.ubicazioni.service';
 
@@ -68,8 +67,8 @@ export class ReportUbicazioniComponent implements OnInit {
     editTableComponent.filter({ COD_CONTENITORE: contenitore });
     this.showTable = true;
   }
-//TODO
+
   formattazioneCondizionale(row: UbicazioniArticoli): any {
-    //return { color: (row.SEGNALAZIONE_ESAURIMENTO === 'N') ? null : 'red' };
+    return { color: (row.SEGNALAZIONE_ESAURIMENTO === 'N') ? null : 'red' };
   }
 }

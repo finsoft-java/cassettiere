@@ -5,7 +5,7 @@ import { AlertService } from '../_services/alert.service';
 import { UbicazioniArticoliService } from '../_services/ubicazioni.articoli.service';
 import { UbicazioniService } from '../_services/ubicazioni.service';
 import { ArticoliService } from '../_services/articoli.service';
-import { UbicazioniArticoli } from '../_models/area';
+import { UbicazioniArticoli } from '../_models/models';
 
 @Component({
   selector: 'app-ubicazioni-articoli',
