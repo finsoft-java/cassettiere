@@ -5,7 +5,7 @@ SELECT a.COD_AREA AS COD_AREA,
     cp.COD_CONTENITORE AS COD_CONTENITORE,
     cp.DESCRIZIONE AS DESCRIZIONE,
     count(0) AS NUM_UBICAZIONI,
-    sum(case when ua.SEGNALAZIONE_ESAURIMENTO = 'N' then 0 else 1 end) AS IN_ESAURIMENTO
+    sum(case when ua.SEGNALAZIONE_ESAURIMENTO = 'Y' then 1 else 0 end) AS IN_ESAURIMENTO
 FROM ubicazioni u
 join contenitori_padre cp on u.COD_CONTENITORE = cp.COD_CONTENITORE
 join aree a on cp.COD_AREA = a.COD_AREA

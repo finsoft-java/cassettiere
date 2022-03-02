@@ -17,8 +17,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         print_error(404, 'Missing barcode');
     } else {
         $pieces = explode(';', $barcode);
-        header('Content-Type: application/json');
-        echo json_encode(['value' => ['COD_UBICAZIONE' => $pieces[POS_UBICAZIONE], 'COD_ARTICOLO' => $pieces[POS_ARTICOLO]]]);
+        
+        if(isset($pieces[POS_UBICAZIONE]) && isset($pieces[POS_ARTICOLO])){
+            header('Content-Type: application/json');
+            echo json_encode(['value' => ['COD_UBICAZIONE' => $pieces[POS_UBICAZIONE], 'COD_ARTICOLO' => $pieces[POS_ARTICOLO]]]);
+        } else {
+            print_error(404, 'barcode Errato');
+        }
     }
 } else {
     //==========================================================
