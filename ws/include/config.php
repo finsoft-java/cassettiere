@@ -34,7 +34,7 @@ define('DB_PTH_PASS', 'my_pwd');
 define('DB_PTH_NAME', 'PANTH01');
 
 /* PARAMETRI PER LETTURA BARCODE CSV */
-define('POS_UBICAZIONE', '2');
+define('POS_UBICAZIONE', '1');
 define('POS_ARTICOLO', '0');
 
 ?>

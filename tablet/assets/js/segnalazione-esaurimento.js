@@ -1,6 +1,6 @@
 
 
-//esempio AAAAA;xxx;UBI-A7-003;1;pippo
+//esempio AAAAA;UBI-A7-003;xxx;1;pippo
 $(document).ready(function(){
     disabilitaLettoreBadge();
     var user = sessionStorage.getItem('user');

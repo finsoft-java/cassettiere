@@ -12,6 +12,7 @@ export interface Articolo {
 export interface Ubicazione {
   COD_UBICAZIONE: string;
   COD_CONTENITORE: string;
+  DESCRIZIONE: string;
 }
 
 export interface ContenitorePadre {

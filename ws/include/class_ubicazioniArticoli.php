@@ -66,91 +66,26 @@ class UbicazioniArticoliManager {
     }
 
     function crea($json_data) {
-        
-        if(isset($json_data->COD_UBICAZIONE)) {
-            $codUbi = $json_data->COD_UBICAZIONE;
-        }else{
-            $codUbi = '';
-        }
-
-        if(isset($json_data->COD_ARTICOLO)) {
-            $codArticolo = $json_data->COD_ARTICOLO;
-        }else{
-            $codArticolo = '';
-        }
-        
-        if(isset($json_data->QUANTITA_PREVISTA)) {
-            $qnt = $json_data->QUANTITA_PREVISTA;
-        }else{
-            $qnt = '';
-        }
-
-        if(isset($json_data->SEGNALAZIONE_ESAURIMENTO)) {
-            $esaurimento = $json_data->SEGNALAZIONE_ESAURIMENTO;
-        }else{
-            $esaurimento = '';
-        }
-
-        if(isset($json_data->DISEGNO)) {
-            $disegno = $json_data->DISEGNO;
-        }else{
-            $disegno = '';
-        }
-        if(isset($json_data->DESCRIZIONE)) {
-            $descrizione = $json_data->DESCRIZIONE;
-        }else{
-            $descrizione = '';
-        }
-        if(isset($json_data->NOTE)) {
-            $note = $json_data->NOTE;
-        }else{
-            $note = '';
-        }
+        global $con;
         $sql = insert("ubicazioni_articoli", [
-                                     "COD_UBICAZIONE" => $codUbi,
-                                     "COD_ARTICOLO" => $codArticolo,
-                                     "QUANTITA_PREVISTA" => $qnt,
-                                     "SEGNALAZIONE_ESAURIMENTO" => $esaurimento,
-                                     "DISEGNO" => $disegno,
-                                     "DESCRIZIONE" => $descrizione,
-                                     "NOTE" => $note]);
+                                     "COD_UBICAZIONE" => $con->escape_string($json_data->COD_UBICAZIONE),
+                                     "COD_ARTICOLO" => $con->escape_string($json_data->COD_ARTICOLO),
+                                     "QUANTITA_PREVISTA" => $con->escape_string($json_data->QUANTITA_PREVISTA),
+                                     "SEGNALAZIONE_ESAURIMENTO" => $con->escape_string($json_data->SEGNALAZIONE_ESAURIMENTO),
+                                     "DISEGNO" => $con->escape_string($json_data->DISEGNO),
+                                     "DESCRIZIONE" => $con->escape_string($json_data->DESCRIZIONE),
+                                     "NOTE" => $con->escape_string($json_data->NOTE)]);
         execute_update($sql);
         return $this->getUbicazioneArticoliById($json_data->COD_UBICAZIONE,$json_data->COD_ARTICOLO);
     }
     
     function aggiorna($progetto, $json_data) {
-        
-        if(isset($json_data->COD_UBICAZIONE)) {
-            $codUbi = $json_data->COD_UBICAZIONE;
-        }else{
-            $codUbi = '';
-        }
-        if(isset($json_data->COD_ARTICOLO)) {
-            $codArticolo = $json_data->COD_ARTICOLO;
-        }else{
-            $codArticolo = '';
-        }        
-        if(isset($json_data->QUANTITA_PREVISTA)) {
-            $qnt = $json_data->QUANTITA_PREVISTA;
-        }else{
-            $qnt = '';
-        }
-        if(isset($json_data->SEGNALAZIONE_ESAURIMENTO)) {
-            $esaurimento = $json_data->SEGNALAZIONE_ESAURIMENTO;
-        }else{
-            $esaurimento = '';
-        }
-        if(isset($json_data->NOTE)) {
-            $note = $json_data->NOTE;
-        }else{
-            $note = '';
-        }
-
-        $sql = update("ubicazioni_articoli", ["QUANTITA_PREVISTA" => $qnt,
-                                              "SEGNALAZIONE_ESAURIMENTO" => $esaurimento,
-                                              "NOTE" => $note], 
-                                        ["COD_UBICAZIONE" => $json_data->COD_UBICAZIONE,
-                                        "COD_ARTICOLO" => $json_data->COD_ARTICOLO]);
+        global $con;
+        $sql = update("ubicazioni_articoli", [ "QUANTITA_PREVISTA" => $con->escape_string($json_data->QUANTITA_PREVISTA),
+                                                "SEGNALAZIONE_ESAURIMENTO" => $con->escape_string($json_data->SEGNALAZIONE_ESAURIMENTO),
+                                              "NOTE" => $con->escape_string($json_data->NOTE)], 
+                                        ["COD_UBICAZIONE" => $con->escape_string($json_data->COD_UBICAZIONE),
+                                        "COD_ARTICOLO" => $con->escape_string($json_data->COD_ARTICOLO)]);
         execute_update($sql);
     }
     

@@ -35,10 +35,10 @@ function require_login(callingPage, role) {
 
 function show_error(msg) {
     $("#error_message p").html(msg);
-    $("#error_message").css("display","");
+    $("#error_message").css("display","block");
 }
 
 function hide_errors() {
     $("#error_message p").html("");
-    $("#error_message").css("display","none");
+    $("#error_message").css("display","");
 }

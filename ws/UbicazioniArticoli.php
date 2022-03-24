@@ -34,14 +34,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     } else if($codUbicazione && $codArticolo){
         $object = $ubicazioniArticoliManager->getUbicazioneArticoliById($codUbicazione, $codArticolo);
         if (!$object) {
-            print_error(404, 'UbicazioneArticolo inesistente: ' . $codUbicazione);
+            print_error(404, "Ubicazione|Articolo inesistente: $codUbicazione|$codArticolo" );
         }
         header('Content-Type: application/json');
         echo json_encode(['value' => $object]);
     } else if($codUbicazione && !$codArticolo){
         $object = $ubicazioniArticoliManager->getUbicazioneArticoliByUbi($codUbicazione);
         if (!$object) {
-            print_error(404, 'UbicazioneArticolo inesistente: ' . $codUbicazione);
+            print_error(404, 'Ubicazione inesistente: ' . $codUbicazione);
         }
         header('Content-Type: application/json');
         echo json_encode(['value' => $object]);

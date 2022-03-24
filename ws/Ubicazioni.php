@@ -44,10 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $postdata = file_get_contents("php://input");
     $json_data = json_decode($postdata);
     
-    if(isset($json_data->ID_PROGETTO)){
-        $id_area = $json_data->ID_PROGETTO;
-    }
-    
     if (!$json_data) {
         print_error(400, "Missing JSON data");
     }

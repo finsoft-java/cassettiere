@@ -24,7 +24,7 @@ export class UbicazioniComponent implements OnInit {
       data: 'COD_UBICAZIONE',
       type: 'input',
       disabled: 'UPDATE',
-      width: '40%'
+      width: '25%'
     },
     {
       title: 'Contenitore Padre',
@@ -37,7 +37,12 @@ export class UbicazioniComponent implements OnInit {
             value: x.COD_CONTENITORE
           }
         )))),
-      width: '40%'
+      width: '25%'
+    },
+    {
+      title: 'Descrizione',
+      data: 'DESCRIZIONE',
+      width: '30%'
     }
   ];
 
@@ -49,7 +54,6 @@ export class UbicazioniComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
     this.arrayEsaurimento.push({ label: 'No', value: 'N' }, { label: 'Si', value: 'Y' });
   }
 

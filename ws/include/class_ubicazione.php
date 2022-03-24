@@ -8,7 +8,7 @@ class UbicazioniManager {
         global $panthera;
         $sql  = "";
         $sql0 = "SELECT COUNT(*) AS cnt FROM ubicazioni ";
-        $sql1 = "SELECT COD_UBICAZIONE,COD_CONTENITORE as COD_CONTENITORE FROM ubicazioni ";
+        $sql1 = "SELECT * FROM ubicazioni ";
         if ($search) {
             $search = strtoupper($search);
             $sql .= "WHERE (upper(COD_UBICAZIONE) like '%$search%')";
@@ -42,56 +42,29 @@ class UbicazioniManager {
     }
 
     function crea($json_data) {
-        global $con, $logged_user;
+        global $con;
         
-        if(isset($json_data->COD_UBICAZIONE)) {
-            $codUbi = $json_data->COD_UBICAZIONE;
-        }else{
-            $codUbi = '';
-        }
-        if(isset($json_data->COD_CONTENITORE)) {
-            $codContenitore = $json_data->COD_CONTENITORE;
-        }else{
-            $codContenitore = '';
-        }
-        $sql = insert("ubicazioni", ["COD_UBICAZIONE" => $codUbi,
-                                     "COD_CONTENITORE" => $codContenitore]);
-        mysqli_query($con, $sql);
-        if ($con ->error) {
-            print_error(500, $con ->error);
-        }
+        $sql = insert("ubicazioni", ["COD_UBICAZIONE" => $con->escape_string($json_data->COD_UBICAZIONE),
+                                    "COD_CONTENITORE" => $con->escape_string($json_data->COD_CONTENITORE),
+                                    "DESCRIZIONE" => $con->escape_string($json_data->DESCRIZIONE)]);
+        execute_update($sql);
         return $this->get_ubicazione($json_data->COD_UBICAZIONE);
     }
     
     function aggiorna($progetto, $json_data) {
-        global $con, $STATO_PROGETTO;        
+        global $con;
 
-        if(isset($json_data->COD_UBICAZIONE)) {
-            $codUbi = $json_data->COD_UBICAZIONE;
-        }else{
-            $codUbi = '';
-        }
-        if(isset($json_data->COD_CONTENITORE)) {
-            $codContenitore = $json_data->COD_CONTENITORE;
-        }else{
-            $codContenitore = '';
-        }
-
-        $sql = update("ubicazioni", ["COD_CONTENITORE" => $json_data->COD_CONTENITORE], 
-                               ["COD_UBICAZIONE" => $json_data->COD_UBICAZIONE]);
-        mysqli_query($con, $sql);
-        if ($con ->error) {
-            print_error(500, $con ->error);
-        }
+        $sql = update("ubicazioni", ["COD_CONTENITORE" => $con->escape_string($json_data->COD_CONTENITORE),
+                                    "DESCRIZIONE" => $con->escape_string($json_data->DESCRIZIONE)], 
+                               ["COD_UBICAZIONE" => $con->escape_string($json_data->COD_UBICAZIONE)]);
+        execute_update($sql);
     }
     
     function elimina($cod_ubicazione) {
         global $con;
+        $cod_ubicazione = $con->escape_string($cod_ubicazione);
         $sql = "DELETE FROM ubicazioni WHERE COD_UBICAZIONE = '$cod_ubicazione'";  //on delete cascade! (FIXME funziona anche con i questionari?!?)
-        mysqli_query($con, $sql);
-        if ($con ->error) {
-            print_error(500, $con ->error);
-        }
+        execute_update($sql);
     }
 
     function get_ubicazioni_per_area() {
