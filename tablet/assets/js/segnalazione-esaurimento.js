@@ -92,7 +92,7 @@ function chiama_ws_ubicazione() {
                             $("#articoloEsaurito").css("display", "block");    
                         } else {
                             $("#messaggio").html("Per dichiarare l'esaurimento di un prodotto occorre il login.");
-                            $("#login").css("display", "");              
+                            $("#login").css("display", "block");              
                         }
                     } else {
                         //chiamo ubicazioniAlternative e faccio vedere solo il codice ubicazione
@@ -274,6 +274,12 @@ function scheduleLogout() {
         console.log("Logout 60sec timeout");
         logout();
     }, 60000);
+}
+
+function logout(){
+    //localStorage.clear();
+    sessionStorage.clear();
+    window.location.reload();
 }
 
 var oldbarCode = null;

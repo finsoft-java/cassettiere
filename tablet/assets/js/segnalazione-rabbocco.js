@@ -172,6 +172,12 @@ function chiama_ws_rabbocco() {
     });
 }
 
+function logout() {
+    //localStorage.clear();
+    sessionStorage.clear();
+    window.location.reload();
+}
+
 function elimina(codUbicazione) {
     scheduleLogout();
     var index = ubicazioni.findIndex(x => x.COD_UBICAZIONE == codUbicazione);
