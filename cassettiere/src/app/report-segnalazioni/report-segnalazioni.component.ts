@@ -20,6 +20,12 @@ export class ReportSegnalazioniComponent implements OnInit {
       // commentato perchè troppo lungo
       // render: (data, row) => data + ' - ' + row?.DESCRIZIONE_AREA,
       width: '3cm'
+    },{
+      title: 'Cont. Padre',
+      data: 'COD_CONTENITORE',
+      // commentato perchè troppo lungo
+      // render: (data, row) => data + ' - ' + row?.DESCRIZIONE_AREA,
+      width: '3cm'
     },
     {
       title: 'Ubicazione',
