@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { ColumnDefinition, LabelValue } from '../mat-edit-table/ColumnDefinition';
 import { AlertService } from '../_services/alert.service';
@@ -6,6 +7,7 @@ import { UbicazioniArticoliService } from '../_services/ubicazioni.articoli.serv
 import { UbicazioniService } from '../_services/ubicazioni.service';
 import { ArticoliService } from '../_services/articoli.service';
 import { UbicazioniArticoli } from '../_models/models';
+import { MatEditTableComponent } from '../mat-edit-table/mat-edit-table.component';
 
 @Component({
   selector: 'app-ubicazioni-articoli',
@@ -92,15 +94,24 @@ export class UbicazioniArticoliComponent implements OnInit {
     }
   ];
 
+  @ViewChild('myTable')
+  editTableComponent!: MatEditTableComponent<UbicazioniArticoli>;
+
   constructor(private ubiArtSvc: UbicazioniArticoliService,
               private alertService: AlertService,
               private ubiSvc: UbicazioniService,
-              private articoliSvc: ArticoliService) {
+              private articoliSvc: ArticoliService,
+              private route: ActivatedRoute) {
     this.service = ubiArtSvc;
     this.alert = alertService;
   }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      if (params.search) {
+        this.filter.search = params.search;
+      }
+    });
   }
 
   filterRow(editTableComponent: any): void {

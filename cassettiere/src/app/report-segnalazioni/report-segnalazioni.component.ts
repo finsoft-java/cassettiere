@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ColumnDefinition } from '../mat-edit-table';
 import { Ubicazione } from '../_models';
 import { AlertService } from '../_services/alert.service';
@@ -20,11 +21,10 @@ export class ReportSegnalazioniComponent implements OnInit {
       // commentato perchè troppo lungo
       // render: (data, row) => data + ' - ' + row?.DESCRIZIONE_AREA,
       width: '3cm'
-    },{
+    },
+    {
       title: 'Cont. Padre',
-      data: 'COD_CONTENITORE',
-      // commentato perchè troppo lungo
-      // render: (data, row) => data + ' - ' + row?.DESCRIZIONE_AREA,
+      data: 'DES_UBICAZIONE', // attenzione non e' COD_CONTENIORE!
       width: '3cm'
     },
     {
@@ -63,7 +63,8 @@ export class ReportSegnalazioniComponent implements OnInit {
   service!: ReportSegnalazioniService;
 
   constructor(private svc: ReportSegnalazioniService,
-    private alertService: AlertService) {
+    private alertService: AlertService,
+    private router: Router) {
     this.service = svc;
   }
 
@@ -87,5 +88,10 @@ export class ReportSegnalazioniComponent implements OnInit {
 
   showError(msg: string) {
     this.alertService.error(msg);
+  }
+
+  gotoUbicazioneArticolo($evt: any) {
+    console.log($evt);
+    this.router.navigate(['/ubicazioni-articoli', { filter: $evt.codArticolo }]);
   }
 }

@@ -13,7 +13,8 @@
       <th mat-header-cell *matHeaderCellDef>
         {{col.title}}
       </th>
-      <td mat-cell *matCellDef="let row; let rowNum = index;" [style.width]="col.width" [ngStyle]="getFormattazioneCondizionale(row)">
+      <td mat-cell *matCellDef="let row; let rowNum = index;" [style.width]="col.width" [ngStyle]="getFormattazioneCondizionale(row)"
+        (click)="onclick">
        
         <div *ngIf="rowNum !== editRowNumber">
             <div *ngIf="col.data === ACTIONS_INDEX; spanHeader" >

@@ -46,6 +46,9 @@ export class MatEditTableComponent<T> implements OnInit {
   pageSizeOptions: number[] = [5, 10, 20, 50];
 
   @Input()
+  onclick?: (() => void);
+
+  @Input()
   /** Timeout in secondi */
   autorefresh?: number;
 
