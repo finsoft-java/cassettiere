@@ -3,6 +3,9 @@ require_login("segnalazione-rabbocco.html", "magazziniere");
 $(document).ready(function(){
     disabilitaLettoreBadge();
     scheduleLogout();
+    if(loca){
+        popola
+    }
 });
 
 document.getElementById("qrcode").addEventListener("keyup", function(event) {
@@ -69,6 +72,8 @@ function chiama_ws_ubicazione() {
                 },
                 success: function(data, status) {
                     var ubicazione = data.value;
+                    console.log('ubicazione');
+                    console.log(ubicazione);
                     if (ubicazione.SEGNALAZIONE_ESAURIMENTO == 'N') {
                         show_error("Questa ubicazione non risulta essere in sofferenza");
                         // lo faccio lo stesso o no?
@@ -78,6 +83,8 @@ function chiama_ws_ubicazione() {
                         $("#lista").append(`<li style="width:100%;line-height: 38px;padding:10px 15px;border-bottom:1px solid #000;">Articolo <b>${ubicazione.COD_ARTICOLO}</b> ${ubicazione.DESCRIZIONE}<br/>Quantità prevista <b>${ubicazione.QUANTITA_PREVISTA}</b> <button class="btn btn-danger" style="float:right" onclick="elimina('${ubicazione.COD_UBICAZIONE}')"> Elimina </button></li>`);
                         
                     }
+                    localStorage.setItem('dati_rabbocco', JSON.stringify(ubicazioni));
+                    console.log(localStorage.getItem('dati_rabbocco'));
                     abilita_qrcode();
                     abilita_o_disabilita_bottoni();
                     beep();
@@ -114,15 +121,6 @@ function chiama_ws_ubicazione() {
             abilita_o_disabilita_bottoni();
         }
     });
-
-
-
-    
-}
-function scrollTextareaToEnd(jqueryid) {
-    alert
-	var textarea=$(jqueryid)[0]
-	textarea.scrollTop = textarea.scrollHeight;
 }
 
 function beep() {
