@@ -22,20 +22,27 @@
     color: #000;
   }
   .btn.btn-success{
-    background-color:#b7edf6;
-    border-color: #b7edf6;
+    background-color:#fff;
+    border-color: #fff;
+  }
+  .btn.btn-success:hover{
+    color: #000
+  }
+  .btn-success:not(:disabled):not(.disabled).active, .btn-success:not(:disabled):not(.disabled):active, .show > .btn-success.dropdown-toggle{
+    background-color: initial !important;
+    border-color: initial !important;
   }
   .btn-success.disabled, .btn-success:disabled {
     color: #000;
   }
   .btn.btn-danger{
-    background-color:#cccccc;
-    border-color: #cccccc;
+    background-color:#fff;
+    border-color: #fff;
     color: #000;
   }
   .btn.btn-success.rabbocco{
-    background-color:#9eeab8;
-    border-color: #9eeab8;
+    background-color:#fff;
+    border-color: #fff;
     margin-right: 15px;
   }
   .btn.btn-success.esaurimento{
@@ -329,10 +336,10 @@
   }
 
   .bg-esaurimento {
-    background-color: #9eeab8;
+    background-color: #ff374a;
   }
   .bg-rabbocco {
-    background-color: #b7edf6;
+    background-color: #28ff71;
   }
   h4.header {
     padding-left: 0px;
