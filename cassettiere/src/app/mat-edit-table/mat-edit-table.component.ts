@@ -45,8 +45,11 @@ export class MatEditTableComponent<T> implements OnInit {
   @Input()
   pageSizeOptions: number[] = [5, 10, 20, 50];
 
+  /**
+   * A function executed on row click (not button click, we hope), for example a route redirect
+   */
   @Input()
-  onclick?: (() => void);
+  onclick?: ((x: T) => void);
 
   @Input()
   /** Timeout in secondi */
@@ -439,5 +442,11 @@ export class MatEditTableComponent<T> implements OnInit {
       const blob = new Blob([csv], { type: 'text/csv;charset=UTF-8' });
       saveAs(blob, this.CSV_FILE_NAME);
     });
+  }
+
+  handleClickRow(row: T) {
+    if (this.onclick) {
+      this.onclick(row);
+    }
   }
 }

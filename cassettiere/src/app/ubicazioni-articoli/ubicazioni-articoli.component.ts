@@ -110,6 +110,7 @@ export class UbicazioniArticoliComponent implements OnInit {
     this.route.params.subscribe(params => {
       if (params.search) {
         this.filter.search = params.search;
+        // TODO this.filterRow(this.editTableComponent);
       }
     });
   }
