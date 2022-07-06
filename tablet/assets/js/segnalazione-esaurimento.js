@@ -29,7 +29,8 @@ document.getElementById("qrcode").addEventListener("keyup", function(event) {
 });
 
 setInterval(function() {
-    $("#qrcode").focus();
+    console.log("Focusing esaurimento");
+    $("#qrcode").get(0).focus();
 }, 1000);
 
 $(document).on("click", "#annullaEsaurimento", annulla);
