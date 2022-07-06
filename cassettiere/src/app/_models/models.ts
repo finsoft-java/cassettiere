@@ -28,7 +28,21 @@ export interface StoricoOperazione {
   COD_OPERAZIONE: string;
   COD_ARTICOLO: string;
   COD_UBICAZIONE: string;
+  DES_UBICAZIONE: string;
   COD_AREA: string;
+  TIMESTAMP: string;
+}
+
+export interface Segnalazione {
+  COD_AREA: string;
+  COD_ARTICOLO: string;
+  COD_UBICAZIONE: string;
+  DES_UBICAZIONE: string;
+  COD_ARTICOLO_CONTENUTO: string;
+  DESCR_ARTICOLO: string;
+  COD_DISEGNO: string;
+  QUANTITA_PREVISTA: number;
+  COD_UTENTE: string;
   TIMESTAMP: string;
 }
 

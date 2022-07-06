@@ -2,14 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Ubicazione, ListBean } from '../_models';
+import { ListBean, Segnalazione } from '../_models';
 import { MockService } from '../mat-edit-table';
 
 @Injectable({ providedIn: 'root' })
-export class ReportSegnalazioniService extends MockService<Ubicazione> {
+export class ReportSegnalazioniService extends MockService<Segnalazione> {
   constructor(private http: HttpClient) { super(); }
 
-  getAll(filter: any): Observable<ListBean<any>> {
-    return this.http.get<ListBean<any>>(environment.wsUrl + 'SegnalazioniAttive.php', { params: filter });
+  getAll(filter: any): Observable<ListBean<Segnalazione>> {
+    return this.http.get<ListBean<Segnalazione>>(environment.wsUrl + 'SegnalazioniAttive.php', { params: filter });
   }
 }

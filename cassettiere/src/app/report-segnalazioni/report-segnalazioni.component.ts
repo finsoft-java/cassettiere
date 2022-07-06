@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ColumnDefinition } from '../mat-edit-table';
-import { Ubicazione } from '../_models';
+import { Segnalazione } from '../_models';
 import { AlertService } from '../_services/alert.service';
 import { ReportSegnalazioniService } from '../_services/report.segnalazioni.service';
 
@@ -14,7 +14,7 @@ import { ReportSegnalazioniService } from '../_services/report.segnalazioni.serv
 export class ReportSegnalazioniComponent implements OnInit {
   filter: any = {};
   myControl = new FormControl();
-  columns: ColumnDefinition<Ubicazione>[] = [
+  columns: ColumnDefinition<Segnalazione>[] = [
     {
       title: 'Area',
       data: 'COD_AREA',
@@ -90,8 +90,8 @@ export class ReportSegnalazioniComponent implements OnInit {
     this.alertService.error(msg);
   }
 
-  gotoUbicazioneArticolo($evt: any) {
-    console.log($evt);
-    this.router.navigate(['/ubicazioni-articoli', { filter: $evt.codArticolo }]);
+  gotoUbicazioneArticolo(row: Segnalazione) {
+    console.log(row);
+    this.router.navigate(['/ubicazioni-articoli', { filter: row.COD_UBICAZIONE }]);
   }
 }

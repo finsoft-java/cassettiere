@@ -18,7 +18,8 @@ document.getElementById("qrcode").addEventListener("keyup", function(event) {
 });
 
 setInterval(function() {
-    $("#qrcode").focus();
+    console.log("Focusing rabbocco");
+    $("#qrcode").get(0).focus();
 }, 1000);
 
 var ubicazioni = [];
