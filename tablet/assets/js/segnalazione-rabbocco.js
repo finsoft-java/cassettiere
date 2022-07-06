@@ -3,8 +3,8 @@ require_login("segnalazione-rabbocco.html", "magazziniere");
 $(document).ready(function(){
     disabilitaLettoreBadge();
     scheduleLogout();
-    if(loca){
-        popola
+    if(localStorage.getItem('dati_rabbocco') != null){
+        popolaDatiRabbocco();
     }
 });
 
@@ -28,6 +28,16 @@ $(document).on("click", "#annullaRabbocco", function() {
 });
 
 $(document).on("click", "#confermaRabbocco", chiama_ws_rabbocco);
+
+
+function popolaDatiRabbocco(){
+    var elencoUbicazioni = JSON.parse(localStorage.getItem('dati_rabbocco'));
+    let lista = "";
+    for(let i = 0; i < elencoUbicazioni.length; i++){
+        lista += `<li style="width:100%;line-height: 38px;padding:10px 15px;border-bottom:1px solid #000;">Articolo <b>${elencoUbicazioni[i].COD_ARTICOLO}</b> ${elencoUbicazioni[i].DESCRIZIONE}<br/>Quantità prevista <b>${elencoUbicazioni[i].QUANTITA_PREVISTA}</b> <button class="btn btn-danger" style="float:right" onclick="elimina('${elencoUbicazioni[i].COD_UBICAZIONE}')"> Elimina </button></li>`;
+    }
+    $("#lista").append(lista);
+}
 
 function init() {
     ubicazioni = [];
@@ -84,7 +94,6 @@ function chiama_ws_ubicazione() {
                         
                     }
                     localStorage.setItem('dati_rabbocco', JSON.stringify(ubicazioni));
-                    console.log(localStorage.getItem('dati_rabbocco'));
                     abilita_qrcode();
                     abilita_o_disabilita_bottoni();
                     beep();
@@ -184,8 +193,16 @@ function logout() {
 
 function elimina(codUbicazione) {
     scheduleLogout();
+    if(ubicazioni == null || ubicazioni == ''){
+        ubicazioni =  JSON.parse(localStorage.getItem('dati_rabbocco'));
+    }
     var index = ubicazioni.findIndex(x => x.COD_UBICAZIONE == codUbicazione);
+    console.log(ubicazioni);
+    console.log(codUbicazione);
+    console.log(index);
     ubicazioni.splice(index, 1);
+    localStorage.removeItem("dati_rabbocco");
+    localStorage.setItem('dati_rabbocco',JSON.stringify(ubicazioni));
     $("#lista").find("li")[index].remove();
     beep();
 }
