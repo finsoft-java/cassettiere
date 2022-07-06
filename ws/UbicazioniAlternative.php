@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-require_logged_user_JWT();
+//require_logged_user_JWT();
 
 $codUbicazione = isset($_GET['COD_UBICAZIONE']) ? $con->escape_string($_GET['COD_UBICAZIONE']) : null;
 $codArticolo = isset($_GET['COD_ARTICOLO']) ? $con->escape_string($_GET['COD_ARTICOLO']) : null;

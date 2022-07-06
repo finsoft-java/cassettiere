@@ -92,7 +92,7 @@ function chiama_ws_ubicazione() {
                             $("#articoloEsaurito").css("display", "block");    
                         } else {
                             $("#messaggio").html("Per dichiarare l'esaurimento di un prodotto occorre il login.");
-                            $("#login").css("display", "");              
+                            $("#login").css("display", "block");              
                         }
                     } else {
                         //chiamo ubicazioniAlternative e faccio vedere solo il codice ubicazione
@@ -162,54 +162,6 @@ function chiama_ws_ubicazione() {
     });
     hide_errors();
     $("#qrcode").attr("disabled", true);
-    /*
-    $.get({
-        url: BASE_HREF + "/ws/UbicazioniArticoli.php?COD_UBICAZIONE=" + barCode,
-        dataType: 'json',
-        headers: {
-            'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-        },
-        success: function(data, status) {
-            console.log(data);
-            $("#dettagli").html(`Articolo <b>${data.value.COD_ARTICOLO}</b> ${data.value.DESCRIZIONE}<br/>Quantità prevista <b>${data.value.QUANTITA_PREVISTA}</b>`);
-            if (data.value.SEGNALAZIONE_ESAURIMENTO == 'N') {
-                scheduleAnnulla(30);
-                if (sessionStorage.getItem('user') != null) {
-                    $("#messaggio").html("Stai per dichiarare l'esaurimento di questa ubicazione. Confermi?");
-                    $("#articoloEsaurito").removeAttr("disabled");            
-                    $("#annullaEsaurimento").css("display","");
-                    $("#articoloEsaurito").css("display", "");    
-                } else {
-                    $("#messaggio").html("Per dichiarare l'esaurimento di un prodotto occorre il login.");
-                    $("#login").css("display", "");              
-                }
-            } else {
-                $("#messaggio").html("Esiste già una segnalazione di esaurimento per questa ubicazione.");
-                $("#annullaEsaurimento").css("display","");
-                $("#articoloEsaurito").css("display", "none");
-                scheduleAnnulla(15);
-            }
-            $("#qrcode").val("");
-            $("#qrcode").removeAttr("disabled");
-            $("#qrcode").focus();
-            beep();
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            console.log(xhr);
-            if (xhr.responseJSON && xhr.responseJSON.error && xhr.responseJSON.error.value) {
-                show_error(xhr.responseJSON.error.value);
-            } else if (xhr.responseText) {
-                show_error(xhr.responseText);
-            } else {
-                show_error("Network error");
-            }
-            erroreBeep();
-            $("#qrcode").val("");
-            $("#qrcode").removeAttr("disabled");
-            $("#qrcode").focus();
-        }
-    });
-    */
 }
 
 function chiama_ws_esaurimento() {
@@ -274,6 +226,12 @@ function scheduleLogout() {
         console.log("Logout 60sec timeout");
         logout();
     }, 60000);
+}
+
+function logout(){
+    //localStorage.clear();
+    sessionStorage.clear();
+    window.location.reload();
 }
 
 var oldbarCode = null;
