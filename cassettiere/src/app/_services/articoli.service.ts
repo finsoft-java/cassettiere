@@ -11,7 +11,6 @@ export class ArticoliService extends MockService<Articolo> {
   constructor(private http: HttpClient) { super(); }
 
   getAll(filter?: any): Observable<ListBean<Articolo>> {
-    console.log(filter);
     if (!filter) {
       filter = {};
     }

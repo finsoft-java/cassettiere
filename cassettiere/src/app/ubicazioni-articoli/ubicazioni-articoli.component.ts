@@ -118,7 +118,6 @@ export class UbicazioniArticoliComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      console.log(params.filter);
       if (params.filter) {
         this.filter.search = params.filter;
       }

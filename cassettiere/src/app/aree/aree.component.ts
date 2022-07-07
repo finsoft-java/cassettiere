@@ -35,7 +35,6 @@ export class AreeComponent implements OnInit {
     this.alert = alertSvc;
   }
   setError(errore: any) {
-    console.log(errore);
     this.alert.error(errore);
   }
   ngOnInit(): void {

@@ -5,6 +5,11 @@ $(document).ready(function(){
     scheduleLogout();
     if(localStorage.getItem('dati_rabbocco') != null){
         popolaDatiRabbocco();
+        if(sessionStorage.getItem("user") != localStorage.getItem('utente_rabbocco')){
+            show_error("Rabbocco non confermato dall'utente: "+localStorage.getItem('utente_rabbocco'));
+        }        
+        $("#confermaRabbocco").attr("disabled", false); 
+        $("#annullaRabbocco").attr("disabled", false);
     }
 });
 
@@ -94,7 +99,9 @@ function chiama_ws_ubicazione() {
                         $("#lista").append(`<li style="width:100%;line-height: 38px;padding:10px 15px;border-bottom:1px solid #000;">Articolo <b>${ubicazione.COD_ARTICOLO}</b> ${ubicazione.DESCRIZIONE}<br/>Quantità prevista <b>${ubicazione.QUANTITA_PREVISTA}</b> <button class="btn btn-danger" style="float:right" onclick="elimina('${ubicazione.COD_UBICAZIONE}')"> Elimina </button></li>`);
                         
                     }
+                    sessionStorage.getItem('requiredRole');
                     localStorage.setItem('dati_rabbocco', JSON.stringify(ubicazioni));
+                    localStorage.setItem('utente_rabbocco', sessionStorage.getItem("user"));
                     abilita_qrcode();
                     abilita_o_disabilita_bottoni();
                     beep();
@@ -198,12 +205,16 @@ function elimina(codUbicazione) {
         ubicazioni =  JSON.parse(localStorage.getItem('dati_rabbocco'));
     }
     var index = ubicazioni.findIndex(x => x.COD_UBICAZIONE == codUbicazione);
-    console.log(ubicazioni);
-    console.log(codUbicazione);
-    console.log(index);
     ubicazioni.splice(index, 1);
     localStorage.removeItem("dati_rabbocco");
     localStorage.setItem('dati_rabbocco',JSON.stringify(ubicazioni));
+    if(ubicazioni.length == 0){
+        localStorage.removeItem("dati_rabbocco");
+        localStorage.removeItem("utente_rabbocco");
+        $("#error_message").css('display','').find("p").html("");
+        $("#confermaRabbocco").attr("disabled", true); 
+        $("#annullaRabbocco").attr("disabled", true);
+    }
     $("#lista").find("li")[index].remove();
     beep();
 }

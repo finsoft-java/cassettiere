@@ -70,7 +70,6 @@ export class UbicazioniComponent implements OnInit {
   }
 
   setError(errore: any) {
-    console.log(errore);
     this.alert.error(errore);
   }
 }
