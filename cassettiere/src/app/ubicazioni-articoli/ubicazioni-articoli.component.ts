@@ -95,12 +95,16 @@ export class UbicazioniArticoliComponent implements OnInit, AfterViewInit {
     }
   ];
 
+  // Questo è il bottone che azzera la segnalazione
   actions: Action<UbicazioniArticoli>[] = [
     {
       title: 'Azzera',
       icon: 'done',
       color: 'primary',
-      onClick: (row: UbicazioniArticoli) => { row.SEGNALAZIONE_ESAURIMENTO = 'N'; this.service.update(row); }
+      onClick: (row: UbicazioniArticoli) => {
+        row.SEGNALAZIONE_ESAURIMENTO = 'N';
+        this.service.update(row).subscribe();
+      }
     }
   ];
 
