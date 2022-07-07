@@ -52,7 +52,6 @@ export class ReportUbicazioniComponent implements OnInit {
     this.ubicazioniService.getUbicazioniPerArea().subscribe(
       response => {
         this.ubicazioni = response.data;
-        console.log(this.ubicazioni);
       },
       error => {
         this.alertService.error(error);

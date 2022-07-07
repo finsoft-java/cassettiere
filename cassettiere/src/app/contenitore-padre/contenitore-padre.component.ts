@@ -61,7 +61,6 @@ export class ContenitorePadreComponent implements OnInit {
     );
     this.areeService.getAll().subscribe(
       response => {
-        console.log(response);
         for (let i = 0; i < response.data.length; i++) {
           this.arrayAree.push({
             label: response.data[i].COD_AREA + ' - ' + response.data[i].DESCRIZIONE,
@@ -86,7 +85,6 @@ export class ContenitorePadreComponent implements OnInit {
   }
 
   setError(errore: any) {
-    console.log(errore);
     this.alert.error(errore);
   }
 }

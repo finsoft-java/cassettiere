@@ -108,8 +108,6 @@ export class UbicazioniArticoliComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      console.log(params.filter);
-      console.log('editTableComponent -> ',this.editTableComponent);
       if (params.filter) {
         this.filter.search = params.filter; 
       }
@@ -123,7 +121,6 @@ export class UbicazioniArticoliComponent implements OnInit, AfterViewInit {
  }
 
   filterRow(editTableComponent: any): void {
-    console.log('editTableComponent -> ',this.editTableComponent);
     if (this.filter.search) {
       this.filter.search = this.filter.search.trim();
     }
