@@ -8,7 +8,7 @@ import { MatEditTableLabels } from './MatEditTableLabels';
 import { HttpCrudService } from '../_services/HttpCrudService';
 import { ColumnDefinition } from './ColumnDefinition';
 import { MockService } from '.';
-import { Router } from '@angular/router';
+import { Action } from './Action';
 
 @Component({
   selector: 'app-mat-edit-table',
@@ -46,18 +46,16 @@ export class MatEditTableComponent<T> implements OnInit {
   @Input()
   pageSizeOptions: number[] = [5, 10, 20, 50];
 
-  /**
-   * A function executed on row click (not button click, we hope), for example a route redirect
-   */
-  @Input()
-  onclick?: ((x: T, r: Router) => void);
-
   @Input()
   /** Timeout in secondi */
   autorefresh?: number;
 
   @Input()
-  formattazioneCondizionale?: (row: T) => any; // map of style attributes
+  conditionalFormatting?: (row: T) => any; // map of style attributes
+
+  /** Optional argument, more buttons that have to appear on each row */
+  @Input()
+  actions: Action<T>[] = [];
 
   @Output()
   create: EventEmitter<T> = new EventEmitter();
@@ -67,6 +65,8 @@ export class MatEditTableComponent<T> implements OnInit {
   delete: EventEmitter<T> = new EventEmitter();
   @Output()
   errorMessage: EventEmitter<any> = new EventEmitter();
+  @Output()
+  clickRow: EventEmitter<T> = new EventEmitter();
 
   @ViewChild(MatPaginator, { static: true })
   paginator!: MatPaginator;
@@ -95,7 +95,7 @@ export class MatEditTableComponent<T> implements OnInit {
 
   @ViewChild('tableFormRow') tableFormRow: any;
 
-  constructor(private router: Router) {}
+  constructor() {}
 
   ngOnInit(): void {
     if (this.editable) {
@@ -362,9 +362,9 @@ export class MatEditTableComponent<T> implements OnInit {
     );
   }
 
-  getFormattazioneCondizionale(row: T): any {
-    if (this.formattazioneCondizionale) {
-      return this.formattazioneCondizionale(row);
+  getConditionalFormatting(row: T): any {
+    if (this.conditionalFormatting) {
+      return this.conditionalFormatting(row);
     }
     return null;
   }
@@ -445,13 +445,5 @@ export class MatEditTableComponent<T> implements OnInit {
       const blob = new Blob([csv], { type: 'text/csv;charset=UTF-8' });
       saveAs(blob, this.CSV_FILE_NAME);
     });
-  }
-
-  handleClickRow(row: T) {
-    console.log("handleClickRow",row);
-
-    if (this.onclick) {
-      this.onclick(row, this.router);
-    }
   }
 }

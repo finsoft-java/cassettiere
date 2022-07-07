@@ -8,6 +8,7 @@ import { UbicazioniService } from '../_services/ubicazioni.service';
 import { ArticoliService } from '../_services/articoli.service';
 import { UbicazioniArticoli } from '../_models/models';
 import { MatEditTableComponent } from '../mat-edit-table/mat-edit-table.component';
+import { Action } from '../mat-edit-table/Action';
 
 @Component({
   selector: 'app-ubicazioni-articoli',
@@ -94,6 +95,15 @@ export class UbicazioniArticoliComponent implements OnInit, AfterViewInit {
     }
   ];
 
+  actions: Action<UbicazioniArticoli>[] = [
+    {
+      title: 'Azzera',
+      icon: 'done',
+      color: 'primary',
+      onClick: (row: UbicazioniArticoli) => { row.SEGNALAZIONE_ESAURIMENTO = 'N'; this.service.update(row); }
+    }
+  ];
+
   @ViewChild('myTable')
   editTableComponent!: MatEditTableComponent<UbicazioniArticoli>;
 
@@ -109,21 +119,19 @@ export class UbicazioniArticoliComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       console.log(params.filter);
-      console.log('editTableComponent -> ',this.editTableComponent);
       if (params.filter) {
-        this.filter.search = params.filter; 
+        this.filter.search = params.filter;
       }
     });
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     if (this.filter.search) {
       this.filterRow(this.editTableComponent);
     }
- }
+  }
 
   filterRow(editTableComponent: any): void {
-    console.log('editTableComponent -> ',this.editTableComponent);
     if (this.filter.search) {
       this.filter.search = this.filter.search.trim();
     }

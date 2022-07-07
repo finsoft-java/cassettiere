@@ -9,7 +9,7 @@
   [service]="service"
   [autorefresh]="60"
   (errorMessage)="showError($event)"
-  [onclick]="gotoUbicazioneArticolo"
+  (clickRow)="gotoUbicazioneArticolo($event)"
   #myTable
 >
   <mat-expansion-panel hideToggle>
