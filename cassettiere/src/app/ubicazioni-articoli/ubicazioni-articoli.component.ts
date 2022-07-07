@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { ColumnDefinition, LabelValue } from '../mat-edit-table/ColumnDefinition';
@@ -14,7 +14,7 @@ import { MatEditTableComponent } from '../mat-edit-table/mat-edit-table.componen
   templateUrl: './ubicazioni-articoli.component.html',
   styleUrls: ['./ubicazioni-articoli.component.css']
 })
-export class UbicazioniArticoliComponent implements OnInit {
+export class UbicazioniArticoliComponent implements OnInit, AfterViewInit {
   arrayAree: LabelValue[] = [];
   service: UbicazioniArticoliService;
   filter: any = {};
@@ -108,14 +108,22 @@ export class UbicazioniArticoliComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      if (params.search) {
-        this.filter.search = params.search;
-        // TODO this.filterRow(this.editTableComponent);
+      console.log(params.filter);
+      console.log('editTableComponent -> ',this.editTableComponent);
+      if (params.filter) {
+        this.filter.search = params.filter; 
       }
     });
   }
 
+  ngAfterViewInit(){
+    if (this.filter.search) {
+      this.filterRow(this.editTableComponent);
+    }
+ }
+
   filterRow(editTableComponent: any): void {
+    console.log('editTableComponent -> ',this.editTableComponent);
     if (this.filter.search) {
       this.filter.search = this.filter.search.trim();
     }

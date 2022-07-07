@@ -8,6 +8,7 @@ import { MatEditTableLabels } from './MatEditTableLabels';
 import { HttpCrudService } from '../_services/HttpCrudService';
 import { ColumnDefinition } from './ColumnDefinition';
 import { MockService } from '.';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mat-edit-table',
@@ -49,7 +50,7 @@ export class MatEditTableComponent<T> implements OnInit {
    * A function executed on row click (not button click, we hope), for example a route redirect
    */
   @Input()
-  onclick?: ((x: T) => void);
+  onclick?: ((x: T, r: Router) => void);
 
   @Input()
   /** Timeout in secondi */
@@ -93,6 +94,8 @@ export class MatEditTableComponent<T> implements OnInit {
   CSV_FILE_NAME = 'Export.csv';
 
   @ViewChild('tableFormRow') tableFormRow: any;
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     if (this.editable) {
@@ -445,8 +448,10 @@ export class MatEditTableComponent<T> implements OnInit {
   }
 
   handleClickRow(row: T) {
+    console.log("handleClickRow",row);
+
     if (this.onclick) {
-      this.onclick(row);
+      this.onclick(row, this.router);
     }
   }
 }

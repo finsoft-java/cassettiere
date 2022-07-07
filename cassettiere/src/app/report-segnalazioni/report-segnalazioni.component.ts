@@ -90,8 +90,7 @@ export class ReportSegnalazioniComponent implements OnInit {
     this.alertService.error(msg);
   }
 
-  gotoUbicazioneArticolo(row: Segnalazione) {
-    console.log(row);
-    this.router.navigate(['/ubicazioni-articoli', { filter: row.COD_UBICAZIONE }]);
+  gotoUbicazioneArticolo(row: any, router: Router) {
+    router.navigate(['/ubicazioni-articoli', { filter: row.COD_UBICAZIONE }]);
   }
 }
