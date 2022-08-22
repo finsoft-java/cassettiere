@@ -164,7 +164,9 @@ function chiama_ws_rabbocco() {
     $("#annullaRabbocco").attr("disabled", true);
     $("#messaggio").html("Dichiarazione in corso...");
     //var listaUbicazioni = ubicazioni.map(x => x.COD_UBICAZIONE);
-
+    if(ubicazioni == null || ubicazioni == ''){
+        ubicazioni =  JSON.parse(localStorage.getItem('dati_rabbocco'));
+    }
     $.post({
         url: BASE_HREF + "ws/SegnalazioneRabbocco.php",
         headers: {
@@ -172,7 +174,7 @@ function chiama_ws_rabbocco() {
         },
         data: JSON.stringify(ubicazioni),
         success: function(data, status) {
-            console.log(data);
+            localStorage.removeItem("dati_rabbocco");
             init();
             beep();
             setTimeout("logout()", 500); // dopo la conferma, il tempo di sentire il bip e facciamo logout
@@ -194,7 +196,6 @@ function chiama_ws_rabbocco() {
 }
 
 function logout() {
-    //localStorage.clear();
     sessionStorage.clear();
     window.location.reload();
 }
